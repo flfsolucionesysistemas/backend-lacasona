@@ -44,13 +44,13 @@ exports.loginUser= async(req, res)=>{
 
 exports.useradd= async (req, res) =>{
     let variable = req.body;
-    let tipo_user = variable.id_tipoPersona;
+    let tipo_user = variable.id_tipo_persona;
     let result;
     let newUser = {};
     switch(tipo_user){
         case 3://persona cliente
                 newUser = {
-                    id_tipoPersona: tipo_user,
+                    id_tipo_persona: tipo_user,
                     id_localidad: variable.localidad,
                     nombre: variable.nombre,
                     apellido: variable.apellido,
