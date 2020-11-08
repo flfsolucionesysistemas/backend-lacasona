@@ -3,16 +3,11 @@ const jwt = require('../config/jwt');
 const helpers = require('../config/helpers');
 
 exports.loginUser= async(req, res)=>{
-    console.log(req.body);
-
 	var params = req.body	
 	var nombreUser = params.usuario;
     var pass = params.clave;
-    
-    // ('SELECT * FROM persona WHERE nombre_usuario = ?', [nombreUser]);    
-    let row = await pool.query (' SELECT * FROM persona ' +
-                                ' INNER JOIN tipo_persona ON persona.id_tipo_persona = tipo_persona.id_tipo_persona ' +
-                                ' WHERE nombre_usuario = ?', [nombreUser]);
+		
+    let row = await pool.query ('SELECT * FROM persona INNER JOIN tipo_persona ON persona.id_tipo_persona = tipo_persona.id_tipo_persona WHERE nombre_usuario = ?', [nombreUser]);
 		if (row){
             let usuario = row[0];
             console.log(usuario);
@@ -31,6 +26,7 @@ exports.loginUser= async(req, res)=>{
 							});	
 						}else{
                             res.status(200).send(usuario);
+            
 						}
 					}else{
 						res.status(404).send({message : 'El usuario no ha podido loguearse, revisar contraseña.'});	
@@ -39,7 +35,7 @@ exports.loginUser= async(req, res)=>{
 			}			
 		else{
 			
-				res.status(404).send({message :'El usuario ingresado no corresponde a un usuario registrado.'});				
+				res.status(404).send({message :'El usuario no esta registrado.'});				
 			}
 		
 	}	
@@ -48,22 +44,22 @@ exports.loginUser= async(req, res)=>{
 
 exports.useradd= async (req, res) =>{
     let variable = req.body;
-    let tipo_user = variable.tipo_user;
+    let tipo_user = variable.id_tipoPersona;
     let result;
     let newUser = {};
     switch(tipo_user){
         case 3://persona cliente
                 newUser = {
-                    id_tipo_persona: tipo_user,
+                    id_tipoPersona: tipo_user,
                     id_localidad: variable.localidad,
                     nombre: variable.nombre,
                     apellido: variable.apellido,
                     email: variable.email,
-                    telefono: variable.tel,
+                    telefono: variable.telefono,
                     estado: variable.estado,
                     activo:1
                     };
-                    newUser.clave_usuario= await helpers.encryptPassword(clave);
+                    //newUser.clave_usuario= await helpers.encryptPassword(clave);
                     result = await pool.query('INSERT INTO persona set ?', [newUser]);
                     res.status(200).send({result});
             
@@ -84,24 +80,55 @@ exports.useradd= async (req, res) =>{
                     nombre_usuario: variable.dni,
                     clave_usuario: variable.dni,
                     email: variable.email,
-                    telefono: variable.tel,
+                    telefono: variable.telefono,
                     activo:1
                     };
-                    newUser.clave_usuario= await helpers.encryptPassword(clave_usuario);
+                    newUser.clave_usuario= await helpers.encryptPassword(variable.dni);
                     result = await pool.query('INSERT INTO persona set ?', [newUser]);
                     res.status(200).send({result});
           
     }
    
 }
-exports.leousuario= function(req,res){
-    let body = req.body;
-    console.log(Object.values(body) +"entra");
+
+exports.updateUser = async (req, res) =>{
+    let datos = req.body;
+   /*updateUser = {
+        id_tipo_persona: tipo_user,
+        id_localidad: variable.localidad,
+        dni: variable.dni,
+        nombre: variable.nombre,
+        apellido: variable.apellido,
+        nombre_usuario: variable.dni,
+        clave_usuario: variable.dni,
+        email: variable.email,
+        telefono: variable.tel,
+        activo:1
+        };*/
+    let clave_usuario= await helpers.encryptPassword(datos.clave);
+    let result = await pool.query("UPDATE persona SET dni = '"+datos.dni+"',nombre = '"+datos.nombre+"',apellido = '"+datos.apellido+"', nombre_usuario = '"+datos.nombre_usuario+"', clave_usuario='"+clave_usuario+"',email='"+datos.email+"',telefono='"+datos.telefono+"' WHERE id_persona = "+datos.id_persona+"");
+    res.status(200).send({result});
+}
+
+exports.deleteUser = async (req, res) =>{
+    let idUser = req.params.idUser;
+    let result = await pool.query("UPDATE persona SET activo = 0 WHERE id_persona="+idUser);
+    res.status(200).send({result});
+}
+exports.getUserActivo= async (req, res) =>{
+    let valor = req.params.activos;
+    let setValor;
+    console.log(req.params.activos);
+    if(valor==='activos'){
+        setValor=1;
+    }
+    else{
+        setValor=0;
+    }
+    let body = await pool.query ('SELECT * FROM persona WHERE activo = ?', [setValor]);
+	
     if(body != null){
-        res.json({
-            ok:true,
-            usuario:body
-        });
+        res.status(200).send({body});
        
     }
     else{
@@ -111,17 +138,29 @@ exports.leousuario= function(req,res){
         }); 
     }
 }
-
-exports.updateUser = async (req, res) =>{
-    let datos = req.body;
-    let clave_usuario= await helpers.encryptPassword(datos.clave);
-    let result = await pool.query("UPDATE persona SET dni = '" 
-                                +datos.dni+"',nombre = '"
-                                +datos.nombre+"',apellido = '"
-                                +datos.apellido+"', nombre_usuario = '"
-                                +datos.usuario+"', clave_usuario='"
-                                +clave_usuario+"',email='"
-                                +datos.email+"',telefono='"
-                                +datos.telefono+"' WHERE id_persona = "+datos.id_persona+"");
-    res.status(200).send({result});
+exports.getUserId= async (req, res) =>{
+    let valor = req.params.idUser;
+    console.log(req.params.idUser);
+    
+    let body = await pool.query ('SELECT * FROM persona join localidad on localidad.id_localidad=persona.id_localidad WHERE id_persona = '+valor);
+	
+    if(body != null){
+        res.status(200).send({body});
+       
+    }
+    else{
+        return res.status(400).json({
+            ok:false
+            
+        }); 
+    }
 }
+exports.addHC = async (req, res)=>{
+    let datos = req.body;
+    
+    let clave_usuario= await helpers.encryptPassword(datos.clave);
+    let result = await pool.query("UPDATE persona SET dni = '"+datos.dni+"',nombre = '"+datos.nombre+"',apellido = '"+datos.apellido+"', nombre_usuario = '"+datos.usuario+"', clave_usuario='"+clave_usuario+"',email='"+datos.email+"',telefono='"+datos.telefono+"' WHERE id_persona = "+datos.id_persona+"");
+    res.status(200).send({result});
+    let codigo_hc;
+}
+

@@ -10,7 +10,7 @@ var flash = require('connect-flash');
 var bodyParser = require('body-parser');
 
 
-// var indexRouter = require('./routes/index');
+var indexRouter = require('./router/index');
 var usersRouter = require('./router/users');
 
 var app = express();
