@@ -3,7 +3,7 @@ let config = {
     database:{
         host: 'localhost',
         user: 'root',
-        password:'everLAST*160',
+        password:'USrrh7H6fb',
         database:'la_casona_web'
     },
     /*database:{
