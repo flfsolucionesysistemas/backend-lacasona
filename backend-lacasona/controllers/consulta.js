@@ -24,7 +24,7 @@ exports.addConsulta= async (req, res) =>{
 	
 		newEntrevista = {
 				id_persona: idPersona,				
-				fecha_creacion: Now(),
+				fecha_creacion: '2020-11-11'',
 				costo:1000
 				};				
 		result = await pool.query('INSERT INTO entrevista set ?', [newEntrevista]);
