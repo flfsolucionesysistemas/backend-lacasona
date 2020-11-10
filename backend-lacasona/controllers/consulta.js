@@ -17,14 +17,30 @@ exports.addConsulta= async (req, res) =>{
 				activo:1
 				};				
 	result = await pool.query('INSERT INTO persona set ?', [newUser]);
-	res.status(200).send({result});            
-
+		
     if(result != null){
-        res.status(200).send({result});       
+        //res.status(200).send({idPeronsa});       
+		let idPersona = result.insertId;
+	
+		newEntrevista = {
+				id_persona: idPersona,				
+				fecha_creacion: Now(),
+				costo:1000
+				};				
+		result = await pool.query('INSERT INTO entrevista set ?', [newEntrevista]);
+		
+		let idEntrevista = result.insertId;
+		if(result != null){
+			res.status(200).send({idEntrevista});       
+		}else{
+			return res.status(400).json({
+				error:'error al crear la entrevista'            
+			});
+		}
     }
     else{
         return res.status(400).json({
-            ok:false            
+            error:'error al crear el usuario tipo 3'            
         }); 
     }
 
