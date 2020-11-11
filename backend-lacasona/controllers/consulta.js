@@ -1,6 +1,7 @@
 const pool = require('../config/database');
 const jwt = require('../config/jwt');
 const helpers = require('../config/helpers');
+var nodemailer = require('nodemailer');
 
 exports.addConsulta= async (req, res) =>{
     let variable = req.body;
@@ -21,17 +22,56 @@ exports.addConsulta= async (req, res) =>{
     if(result != null){
         //res.status(200).send({idPeronsa});       
 		let idPersona = result.insertId;
-	
+		
 		newEntrevista = {
 				id_persona: idPersona,				
+<<<<<<< HEAD
 				fecha_creacion: '2020-11-11'',
+=======
+				fecha_creacion: '2020-11-11',
+>>>>>>> 987efc3b58e803519f80824f6de9f8563b35e902
 				costo:1000
 				};				
 		result = await pool.query('INSERT INTO entrevista set ?', [newEntrevista]);
 		
 		let idEntrevista = result.insertId;
 		if(result != null){
-			res.status(200).send({idEntrevista});       
+			res.status(200).send({idEntrevista}); 
+			updateTurno = {
+				id_tipo_turno: idEntrevista,
+				tipo_turno: 'entrevista',
+				estado: 0,
+				observacion:'asignado'
+				};
+			try {    
+				result = await pool.query('UPDATE turno SET ? WHERE id_turno = ?', [updateTurno, variable.id_turno]);
+				console.log({result});
+			} catch(err) {
+				// If promise is rejected
+				console.error(err);
+			}
+			//Creamos el objeto de transporte para el envio de Email
+			var transporter = nodemailer.createTransport({
+				service: 'Gmail',
+				auth: {
+				user: 'analia.f93@gmail.com',
+				pass: '22demayo'
+				}
+			});
+			var email="Bienvenido a 'la casona web'. Nos comunicamos con Ud. pro que ha solicitado su primer consulta";
+			var mailOptions = {
+				from: 'LaCasonaWeb',
+				to: variable.email,
+				subject: 'Consulta la casona web',
+				text: email
+			};
+			transporter.sendMail(mailOptions, function(error, info){
+				if (error) {
+				console.log(error);
+				} else {
+				console.log('Email enviado: ' + info.response);
+				}
+			});
 		}else{
 			return res.status(400).json({
 				error:'error al crear la entrevista'            
@@ -40,7 +80,7 @@ exports.addConsulta= async (req, res) =>{
     }
     else{
         return res.status(400).json({
-            error:'error al crear el usuario tipo 3'            
+            error:'Error al cargar persona'            
         }); 
     }
 

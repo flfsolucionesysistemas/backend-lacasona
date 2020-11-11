@@ -44,6 +44,7 @@ exports.loginUser= async(req, res)=>{
 
 exports.useradd= async (req, res) =>{
     let variable = req.body;
+    console.log("body"+req.body);
     let tipo_user = variable.id_tipo_persona;
     let result;
     let newUser = {};
@@ -60,15 +61,34 @@ exports.useradd= async (req, res) =>{
                     activo:1
                     };
                     //newUser.clave_usuario= await helpers.encryptPassword(clave);
-                    result = await pool.query('INSERT INTO persona set ?', [newUser]);
-                    res.status(200).send({result});
+                    try {
+                        result = await pool.query('INSERT INTO persona set ?', [newUser]);
+                        res.status(200).send({result});
+                    } catch(err) {
+                            // If promise is rejected
+                            console.error(err);
+                        }
             
             break;
         case 4://persona paciente, update de cliente
             
                 let clave_usuario= await helpers.encryptPassword(variable.dni);
-                result = await pool.query("UPDATE persona SET id_tipo_persona="+tipo_user+",dni = '"+variable.dni+"', nombre_usuario = '"+variable.dni+"', clave_usuario='"+clave_usuario+"',estado='"+variable.estado+"' WHERE id_persona = "+variable.id_persona+"");
-                res.status(200).send({result});
+                //update table set ? where id = ?, [objeto,id]
+                newUser = {
+                    id_tipo_persona: tipo_user,
+                    dni: variable.dni,
+                    nombre_usuario: variable.dni,
+                    clave_usuario: clave_usuario,
+                    estado: variable.estado,
+                    activo:1
+                    };
+                try {    
+                    result = await pool.query('UPDATE persona SET ? WHERE id_persona = ?', [newUser, variable.id_persona]);
+                    res.status(200).send({result});
+                } catch(err) {
+                    // If promise is rejected
+                    console.error(err);
+                }
             break;
         default://persona profesional o admin
                 newUser = {
@@ -84,9 +104,13 @@ exports.useradd= async (req, res) =>{
                     activo:1
                     };
                     newUser.clave_usuario= await helpers.encryptPassword(variable.dni);
-                    result = await pool.query('INSERT INTO persona set ?', [newUser]);
-                    res.status(200).send({result});
-          
+                    try{
+                        result = await pool.query('INSERT INTO persona set ?', [newUser]);
+                        res.status(200).send({result});
+                    } catch(err) {
+                        // If promise is rejected
+                        console.error(err);
+                    }
     }
    
 }
@@ -149,18 +173,8 @@ exports.getUserId= async (req, res) =>{
        
     }
     else{
-        return res.status(400).json({
-            ok:false
-            
-        }); 
+        res.status(400).send("error"); 
     }
 }
-exports.addHC = async (req, res)=>{
-    let datos = req.body;
-    
-    let clave_usuario= await helpers.encryptPassword(datos.clave);
-    let result = await pool.query("UPDATE persona SET dni = '"+datos.dni+"',nombre = '"+datos.nombre+"',apellido = '"+datos.apellido+"', nombre_usuario = '"+datos.usuario+"', clave_usuario='"+clave_usuario+"',email='"+datos.email+"',telefono='"+datos.telefono+"' WHERE id_persona = "+datos.id_persona+"");
-    res.status(200).send({result});
-    let codigo_hc;
-}
+
 
