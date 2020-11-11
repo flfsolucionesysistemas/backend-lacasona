@@ -24,6 +24,7 @@
     "mysql": "^2.18.1",
     "nodemon": "^2.0.6",
     "passport": "^0.4.1",
-    "timeago.js": "^4.0.2"
+    "timeago.js": "^4.0.2",
+    "nodemailer": "^6.4.2"
   }
 }
