@@ -35,7 +35,7 @@ exports.addConsulta= async (req, res) =>{
 			res.status(200).send({idEntrevista}); 
 			updateTurno = {
 				id_tipo_turno: idEntrevista,
-				tipo_turno: 'entrevista',
+				turno_tratamiento: 0,
 				estado: 0,
 				observacion:'asignado'
 				};
