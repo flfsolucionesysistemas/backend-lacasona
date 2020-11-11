@@ -50,8 +50,8 @@ exports.addConsulta= async (req, res) =>{
 			var transporter = nodemailer.createTransport({
 				service: 'Gmail',
 				auth: {
-				user: 'analia.f93@gmail.com',
-				pass: '22demayo'
+				user: 'flf.solucionesysistemas@gmail.com',
+				pass: 'everLAST2020'
 				}
 			});
 			var email="Bienvenido a 'la casona web'. Nos comunicamos con Ud. pro que ha solicitado su primer consulta";
