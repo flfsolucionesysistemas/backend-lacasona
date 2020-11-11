@@ -12,5 +12,6 @@ router.post('/login', ctrlUsuario.loginUser);
 router.put('/updateUser', ctrlUsuario.updateUser);
 router.delete('/deleteUser/:idUser', ctrlUsuario.deleteUser);
 router.get('/getUser/:activos',ctrlUsuario.getUserActivo);
+router.get('/getUserTipo/:tipo',ctrlUsuario.getUserTipo);
 
 module.exports = router;
