@@ -7,9 +7,9 @@ router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
 
-router.post('/addTipo',ctrlTiposPersona.addTipo);
-router.put('/updateTipo', ctrlTiposPersona.updateTipo);
-router.delete('/deleteTipo/:idTipo', ctrlTiposPersona.deleteTipo);
+//router.post('/addTipo',ctrlTiposPersona.addTipo);
+//router.put('/updateTipo', ctrlTiposPersona.updateTipo);
+//router.delete('/deleteTipo/:idTipo', ctrlTiposPersona.deleteTipo);
 router.get('/getTiposPersona/:activos',ctrlTiposPersona.getTiposPersona);
 
 module.exports = router;
