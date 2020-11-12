@@ -10,6 +10,6 @@ router.get('/', function(req, res, next) {
 //router.post('/addTipo',ctrlTiposPersona.addTipo);
 //router.put('/updateTipo', ctrlTiposPersona.updateTipo);
 //router.delete('/deleteTipo/:idTipo', ctrlTiposPersona.deleteTipo);
-router.get('/getTiposPersona/:activos',ctrlTiposPersona.getTiposPersona);
+router.get('/getTiposPersona',ctrlTiposPersona.getTiposPersona);
 
 module.exports = router;
