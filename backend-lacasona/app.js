@@ -15,6 +15,7 @@ var usersRouter = require('./router/users');
 var globalRouter = require('./router/global');
 var turnoRouter = require('./router/turno');
 var consultaRouter = require('./router/consulta');
+var tiposPersonaRouter = require('./router/tipos_persona');
 
 var app = express();
 
@@ -59,6 +60,7 @@ app.use('/users', usersRouter);
 app.use('/global', globalRouter);
 app.use('/turno', turnoRouter);
 app.use('/consulta', consultaRouter);
+app.use('/tipos_persona', tiposPersonaRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
