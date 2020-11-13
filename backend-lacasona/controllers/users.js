@@ -33,18 +33,14 @@ exports.loginUser= async(req, res)=>{
 					}
 				
 			}			
-		else{
-			
+		else{			
 				res.status(404).send({message :'El usuario no esta registrado.'});				
 			}
 		
 	}	
 
-
-
 exports.useradd= async (req, res) =>{
     let variable = req.body;
-    console.log("body"+req.body);
     let tipo_user = variable.id_tipo_persona;
     let result;
     let newUser = {};
@@ -176,7 +172,6 @@ exports.getUserId= async (req, res) =>{
         res.status(400).send("error"); 
     }
 }
-
 
 exports.getUserTipo= async (req, res) =>{
     let valor = req.params.tipo;
