@@ -40,96 +40,94 @@ exports.loginUser= async(req, res)=>{
 	}	
 
 exports.useradd= async (req, res) =>{
-    let variable = req.body;
-    let tipo_user = variable.id_tipo_persona;
-    let result;
-    let newUser = {};
+    let newUser = req.body;
+    let tipo_user = newUser.id_tipo_persona;
+    
     switch(tipo_user){
         case 3://persona cliente
-                newUser = {
-                    id_tipo_persona: tipo_user,
-                    id_localidad: variable.localidad,
-                    nombre: variable.nombre,
-                    apellido: variable.apellido,
-                    email: variable.email,
-                    telefono: variable.telefono,
-                    estado: variable.estado,
-                    activo:1
-                    };
-                    //newUser.clave_usuario= await helpers.encryptPassword(clave);
-                    try {
-                        result = await pool.query('INSERT INTO persona set ?', [newUser]);
-                        res.status(200).send({result});
-                    } catch(err) {
-                            // If promise is rejected
-                            console.error(err);
+                 await pool.query('INSERT INTO persona set ?', [newUser], function(err, sql, fields){
+                        if(err){
+                            res.status(400).json({
+                                error: 'No se ha podido guardar el cliente'
+                            });
                         }
+                        else{
+                            console.log('entra');
+                            res.status(200).send({sql});
+                        }
+                    });
+                        
             
             break;
         case 4://persona paciente, update de cliente
             
-                let clave_usuario= await helpers.encryptPassword(variable.dni);
+                let clave_usuario= await helpers.encryptPassword(newUser.dni);
                 //update table set ? where id = ?, [objeto,id]
-                newUser = {
+                updateUser = {
                     id_tipo_persona: tipo_user,
-                    dni: variable.dni,
-                    nombre_usuario: variable.dni,
+                    dni: newUser.dni,
+                    nombre_usuario: newUser.dni,
                     clave_usuario: clave_usuario,
-                    estado: variable.estado,
+                    estado: newUser.estado,
                     activo:1
                     };
-                try {    
-                    result = await pool.query('UPDATE persona SET ? WHERE id_persona = ?', [newUser, variable.id_persona]);
-                    res.status(200).send({result});
-                } catch(err) {
-                    // If promise is rejected
-                    console.error(err);
-                }
+                await pool.query('UPDATE persona SET ? WHERE id_persona = ?', [updateUser, newUser.id_persona], function(err, sql, fields){
+                    if(err){
+                        res.status(400).json({
+                            error: 'No se ha podido guardar el paciente'
+                        });
+                    }
+                    else{
+                        console.log('entra');
+                        res.status(200).send({sql});
+                    }
+                });
+                    
             break;
         default://persona profesional o admin
-                newUser = {
+                user = {
                     id_tipo_persona: tipo_user,
-                    id_localidad: variable.localidad,
-                    dni: variable.dni,
-                    nombre: variable.nombre,
-                    apellido: variable.apellido,
-                    nombre_usuario: variable.dni,
-                    clave_usuario: variable.dni,
-                    email: variable.email,
-                    telefono: variable.telefono,
+                    id_localidad: newUser.localidad,
+                    dni: newUser.dni,
+                    nombre: newUser.nombre,
+                    apellido: newUser.apellido,
+                    nombre_usuario: newUser.dni,
+                    clave_usuario: newUser.dni,
+                    email: newUser.email,
+                    telefono: newUser.telefono,
                     activo:1
                     };
-                    newUser.clave_usuario= await helpers.encryptPassword(variable.dni);
-                    try{
-                        result = await pool.query('INSERT INTO persona set ?', [newUser]);
-                        res.status(200).send({result});
-                    } catch(err) {
-                        // If promise is rejected
-                        console.error(err);
-                    }
+                    user.clave_usuario= await helpers.encryptPassword(newUser.dni);
+                    await pool.query('INSERT INTO persona set ?', [user], function(err, sql, fields){
+                        if(err){
+                            res.status(400).json({
+                                error: 'No se ha podido guardar el profesional'
+                            });
+                        }
+                        else{
+                            console.log('entra');
+                            res.status(200).send({sql});
+                        }
+                    });
+                        
     }
    
 }
 
 exports.updateUser = async (req, res) =>{
     let datos = req.body;
-   /*updateUser = {
-        id_tipo_persona: tipo_user,
-        id_localidad: variable.localidad,
-        dni: variable.dni,
-        nombre: variable.nombre,
-        apellido: variable.apellido,
-        nombre_usuario: variable.dni,
-        clave_usuario: variable.dni,
-        email: variable.email,
-        telefono: variable.tel,
-        activo:1
-        };*/
-    let clave_usuario= await helpers.encryptPassword(datos.clave);
-    let result = await pool.query("UPDATE persona SET dni = '"+datos.dni+"',nombre = '"+datos.nombre+"',apellido = '"+datos.apellido+"', nombre_usuario = '"+datos.nombre_usuario+"', clave_usuario='"+clave_usuario+"',email='"+datos.email+"',telefono='"+datos.telefono+"' WHERE id_persona = "+datos.id_persona+"");
-    res.status(200).send({result});
+   
+    await pool.query('UPDATE persona SET ? WHERE id_persona = ?',[datos,datos.id_persona],  function(err, sql, fields){
+        if(err){
+            res.status(400).json({
+                error: 'No se ha modificar el usuario'
+            });
+        }
+        else{
+            res.status(200).send({sql});
+        }
+    });
 }
-
 exports.deleteUser = async (req, res) =>{
     let idUser = req.params.idUser;
     let result = await pool.query("UPDATE persona SET activo = 0 WHERE id_persona="+idUser);

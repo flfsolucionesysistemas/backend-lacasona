@@ -1,0 +1,21 @@
+users/add
+{
+    "id_tipo_persona":3,
+    "id_localidad":1,
+    "nombre":"oli",
+    "apellido":"luque",
+    "email":"oliluque@gmail.com",
+    "telefono":3704320046,
+    "estado":"consulta",
+    "activo":1  
+}
+
+hc/addHC
+{
+    "id_persona":48,
+    "id_tipo_persona":3,
+    "dni":"54649670",
+    "estado":"aceptado",
+    "id_provincia":1,
+    "id_localidad":1
+}

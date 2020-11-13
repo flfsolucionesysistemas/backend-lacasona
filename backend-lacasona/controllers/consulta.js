@@ -5,8 +5,7 @@ var nodemailer = require('nodemailer');
 
 exports.addConsulta= async (req, res) =>{
     let variable = req.body;
-	    
-    let result;
+	let result;
     let newUser = {};
     newUser = {
 				id_tipo_persona: 3,				
