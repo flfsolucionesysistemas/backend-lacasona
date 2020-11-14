@@ -11,13 +11,8 @@ CREATE TABLE `localidad` (
   `id_provincia` TINYINT UNSIGNED NOT NULL ,
   `nombre` VARCHAR(50) NOT NULL ,
   `codigopostal` SMALLINT(6) NOT NULL ,
-  PRIMARY KEY (`id_localidad``) ,
-  INDEX `fk_localidad_provincia_idx` (`id_provincia` ASC) ,
-  CONSTRAINT `fk_localidad_provincia`
-    FOREIGN KEY (`id_provincia` )
-    REFERENCES `provincia` (`id_localidad` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+  PRIMARY KEY (`id_localidad`),
+  KEY `id_provincia` (`id_provincia`))
 ENGINE = InnoDB DEFAULT CHARACTER SET = latin1;
 
 
