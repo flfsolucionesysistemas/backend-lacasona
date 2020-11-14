@@ -11,7 +11,7 @@ CREATE TABLE `localidad` (
   `id_provincia` TINYINT UNSIGNED NOT NULL ,
   `nombre` VARCHAR(50) NOT NULL ,
   `codigopostal` SMALLINT(6) NOT NULL ,
-  PRIMARY KEY (`id`) ,
+  PRIMARY KEY (`id_localidad``) ,
   INDEX `fk_localidad_provincia_idx` (`id_provincia` ASC) ,
   CONSTRAINT `fk_localidad_provincia`
     FOREIGN KEY (`id_provincia` )
