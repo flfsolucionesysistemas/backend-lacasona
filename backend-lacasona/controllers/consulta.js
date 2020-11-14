@@ -6,6 +6,7 @@ var nodemailer = require('nodemailer');
 exports.addConsulta= async (req, res) =>{
     let variable = req.body;
 	let result;
+	let costo_en = variable.costo_entrevista;
     let newUser = {};
     newUser = {
 				id_tipo_persona: 3,				
@@ -25,7 +26,7 @@ exports.addConsulta= async (req, res) =>{
 		newEntrevista = {
 				id_persona: idPersona,				
 				fecha_creacion: new Date(),
-				costo:1000
+				costo:costo_en
 				};				
 		result = await pool.query('INSERT INTO entrevista set ?', [newEntrevista]);
 		
