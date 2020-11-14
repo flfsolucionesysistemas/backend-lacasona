@@ -11,5 +11,7 @@ router.get('/', function(req, res, next) {
 //router.put('/updateTipo', ctrlTiposPersona.updateTipo);
 //router.delete('/deleteTipo/:idTipo', ctrlTiposPersona.deleteTipo);
 router.get('/getTiposPersona',ctrlTiposPersona.getTiposPersona);
+router.get('/getTiposPersonaGestionables', ctrlTiposPersona.getTiposPersonaGestionables);
+
 
 module.exports = router;
