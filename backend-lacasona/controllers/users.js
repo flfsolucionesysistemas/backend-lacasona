@@ -174,7 +174,7 @@ exports.getUserId= async (req, res) =>{
 exports.getUserTipo= async (req, res) =>{
     let valor = req.params.tipo;
     
-    let body = await pool.query ('SELECT * FROM persona WHERE id_tipo_persona = ?', [valor]);
+    let body = await pool.query ('SELECT * FROM persona WHERE activo = 1 and id_tipo_persona = ?', [valor]);
 	
     if(body != null){
         res.status(200).send({body});
