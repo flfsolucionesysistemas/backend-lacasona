@@ -26,8 +26,9 @@ exports.addTurno = async (req, res) =>{
 exports.getTurnosDisponiblesTipo = async (req, res) =>{
     let tipo = req.params.id_tipo;
     //id_tipo = 0 entrevista; id_tipo = 1 sesiones/programa
-	let body = await pool.query ('SELECT * FROM turno WHERE turno_tratamiento = '+tipo+' and estado = 1 and fecha >= CURDATE() and hora <= DATE_FORMAT(NOW( ), "%H:%i:%S")');
 	
+	let body = await pool.query ('SELECT * FROM turno WHERE turno_tratamiento = 0 and estado = 1 and (fecha > CURDATE() OR  (fecha = CURDATE() and hora >= DATE_FORMAT(NOW( ), "%H:%i:%S")))');
+	//let body = await pool.query ('SELECT * FROM turno WHERE turno_tratamiento = '+tipo+' and estado = 1 and fecha >= CURDATE() and hora <= DATE_FORMAT(NOW( ), "%H:%i:%S")');
 	if(body != null){
         res.status(200).send({body});      
     }
