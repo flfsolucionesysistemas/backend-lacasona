@@ -7,7 +7,7 @@ exports.loginUser= async(req, res)=>{
 	var nombreUser = params.usuario;
     var pass = params.clave;
 		
-    let row = await pool.query ('SELECT * FROM persona INNER JOIN tipo_persona ON persona.id_tipo_persona = tipo_persona.id_tipo_persona WHERE nombre_usuario = ?', [nombreUser]);
+    let row = await pool.query ('SELECT * FROM persona as p INNER JOIN tipo_persona as tp ON p.id_tipo_persona = tp.id_tipo_persona WHERE p.nombre_usuario = ?', [nombreUser]);
 		if (row){
             let usuario = row[0];
             console.log(usuario);
@@ -42,27 +42,30 @@ exports.loginUser= async(req, res)=>{
 exports.useradd= async (req, res) =>{
     let newUser = req.body;
     let tipo_user = newUser.id_tipo_persona;
-    
+    let clave_usuario;
+    if(newUser.dni){
+        clave_usuario= await helpers.encryptPassword(newUser.dni);
+    }
+        
     switch(tipo_user){
         case 3://persona cliente
-                 await pool.query('INSERT INTO persona set ?', [newUser], function(err, sql, fields){
+                 await pool.query('INSERT INTO persona set ?', [newUser], function(err, result){
                         if(err){
                             res.status(400).json({
                                 error: 'No se ha podido guardar el cliente'
                             });
                         }
                         else{
-                            console.log('entra');
-                            res.status(200).send({sql});
+                            let query= result.insertId;
+                             res.status(200).send({query});
+                            //res.status(200).send(sql);
                         }
                     });
                         
             
             break;
         case 4://persona paciente, update de cliente
-            
-                let clave_usuario= await helpers.encryptPassword(newUser.dni);
-                //update table set ? where id = ?, [objeto,id]
+        
                 updateUser = {
                     id_tipo_persona: tipo_user,
                     dni: newUser.dni,
@@ -71,33 +74,33 @@ exports.useradd= async (req, res) =>{
                     estado: newUser.estado,
                     activo:1
                     };
-                await pool.query('UPDATE persona SET ? WHERE id_persona = ?', [updateUser, newUser.id_persona], function(err, sql, fields){
+                await pool.query('UPDATE persona SET ? WHERE id_persona = ?', [updateUser, newUser.id_persona], function(err, result){
                     if(err){
                         res.status(400).json({
                             error: 'No se ha podido guardar el paciente'
                         });
                     }
                     else{
-                        console.log('entra');
-                        res.status(200).send({sql});
+                        let query= result.affectedRows;
+                        res.status(200).send({query});
                     }
                 });
                     
             break;
         default://persona profesional o admin
-                user = {
+          user = {
                     id_tipo_persona: tipo_user,
                     id_localidad: newUser.localidad,
                     dni: newUser.dni,
                     nombre: newUser.nombre,
                     apellido: newUser.apellido,
                     nombre_usuario: newUser.dni,
-                    clave_usuario: newUser.dni,
+                    clave_usuario: clave_usuario,
                     email: newUser.email,
                     telefono: newUser.telefono,
                     activo:1
                     };
-                    user.clave_usuario= await helpers.encryptPassword(newUser.dni);
+                   // user.clave_usuario= await helpers.encryptPassword(newUser.dni);
                     await pool.query('INSERT INTO persona set ?', [user], function(err, sql, fields){
                         if(err){
                             res.status(400).json({
@@ -105,7 +108,6 @@ exports.useradd= async (req, res) =>{
                             });
                         }
                         else{
-                            console.log('entra');
                             res.status(200).send({sql});
                         }
                     });

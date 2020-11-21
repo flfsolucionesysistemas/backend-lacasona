@@ -27,7 +27,7 @@ exports.getTurnosDisponiblesTipo = async (req, res) =>{
     let tipo = req.params.id_tipo;
     //id_tipo = 0 entrevista; id_tipo = 1 sesiones/programa
 	
-	let body = await pool.query ('SELECT * FROM turno WHERE turno_tratamiento = 0 and estado = 1 and (fecha > CURDATE() OR  (fecha = CURDATE() and hora >= DATE_FORMAT(NOW( ), "%H:%i:%S")))');
+	let body = await pool.query ('SELECT * FROM turno WHERE turno_tratamiento = '+tipo+' and estado = 1 and (fecha > CURDATE() OR  (fecha = CURDATE() and hora >= DATE_FORMAT(NOW( ), "%H:%i:%S")))');
 	//let body = await pool.query ('SELECT * FROM turno WHERE turno_tratamiento = '+tipo+' and estado = 1 and fecha >= CURDATE() and hora <= DATE_FORMAT(NOW( ), "%H:%i:%S")');
 	if(body != null){
         res.status(200).send({body});      
@@ -37,4 +37,25 @@ exports.getTurnosDisponiblesTipo = async (req, res) =>{
             ok:false           
         }); 
     }
+}
+
+exports.asiganarTurno=async(req,res)=>{
+    let datos=req.body;
+    updateTurno = {
+        id_tipo_turno: datos.id_tipo_turno,
+        turno_tratamiento: datos.turno_tratamiento,
+        estado: 0,
+        observacion:'asignado'
+        };
+    await pool.query('UPDATE turno SET ? WHERE id_turno = ?', [updateTurno, datos.id_turno],function(err,sql){
+        if(err){
+            res.status(400).json({
+                error:"error al asignar turno"
+            });
+        }
+        else{
+            let query= sql.affectedRows;
+             res.status(200).send({query});
+        }
+    });
 }

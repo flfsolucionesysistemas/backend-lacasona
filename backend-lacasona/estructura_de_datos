@@ -19,3 +19,19 @@ hc/addHC
     "id_provincia":1,
     "id_localidad":1
 }
+tratamiento/add{
+    id_historia_clinica:datos.hc,
+    id_patologia:datos.id_patologia,
+    fase:"lala",
+    costo:datos.costo ,
+    descripcion:datos.descripcion 
+}
+consulta/add{    
+    "nombre":"xx",
+    "apellido":xx",
+    "email":"xx",
+    "telefono":345325588,
+    "id_localidad":1,
+    "id_turno":13,
+    "costo_entrevista":300
+}

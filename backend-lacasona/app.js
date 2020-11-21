@@ -18,6 +18,7 @@ var consultaRouter = require('./router/consulta');
 var tiposPersonaRouter = require('./router/tipos_persona');
 var HCRouter = require('./router/historia_clinica');
 var patologiaRouter = require('./router/patologia');
+var tratamientoRouter = require('./router/tratamiento');
 
 
 var app = express();
@@ -66,6 +67,7 @@ app.use('/consulta', consultaRouter);
 app.use('/tipos_persona', tiposPersonaRouter);
 app.use('/hc', HCRouter);
 app.use('/patologia', patologiaRouter);
+app.use('/tratamiento',tratamientoRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
