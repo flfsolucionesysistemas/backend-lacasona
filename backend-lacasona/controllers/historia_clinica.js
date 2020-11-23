@@ -15,7 +15,7 @@ exports.addHC = async (req, res)=>{
         })
         .then(function(res) {
           if(res.status==200 && Object.values(res.data)==1) {
-            res.status(200).send({sql});
+            console.log("OK");
           }
         })
         .catch(function(err) {
@@ -38,7 +38,7 @@ exports.addHC = async (req, res)=>{
       }
       else{
           console.log(result.insertId);
-          return res.status(200).send({id:result.insertId});
+          return res.status(200).send({result});
       }
   });
     
