@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var ctrlTratamoento = require('../controllers/tratamiento');
+var ctrlTratamiento = require('../controllers/tratamiento');
 
-router.post('/add',ctrlTratamoento.add);
+router.post('/add',ctrlTratamiento.add);
 module.exports = router;
