@@ -23,6 +23,21 @@ exports.addTurno = async (req, res) =>{
         });
     }
 }
+exports.update = async (req, res)=>{
+    let datos = req.body;
+    let id_turno = datos.id_turno;
+    await pool.query ('UPDATE turno SET ? WHERE id_turno = ?', [datos, id_turno],function(err,sql){
+        if(err){
+            res.status(400).json({
+                error:"error al asignar turno"
+            });
+        }
+        else{
+            let query= sql.affectedRows;
+             res.status(200).send({sql});
+        }
+    });
+}
 exports.getTurnosDisponiblesTipo = async (req, res) =>{
     let tipo = req.params.id_tipo;
     //id_tipo = 0 entrevista; id_tipo = 1 sesiones/programa
@@ -31,6 +46,44 @@ exports.getTurnosDisponiblesTipo = async (req, res) =>{
 	//let body = await pool.query ('SELECT * FROM turno WHERE turno_tratamiento = '+tipo+' and estado = 1 and fecha >= CURDATE() and hora <= DATE_FORMAT(NOW( ), "%H:%i:%S")');
 	if(body != null){
         res.status(200).send({body});      
+    }
+    else{
+        return res.status(400).json({
+            ok:false           
+        }); 
+    }
+}
+//LISTA DE TURNOS ORDENADO POR FECHA DESCENDIENTE
+exports.getTurnos = async (req, res) =>{
+     
+	let turnos = await pool.query ('SELECT * FROM turno ORDER BY fecha DESC');
+	if(turnos != null){
+        res.status(200).send(turnos);      
+    }
+    else{
+        return res.status(400).json({
+            ok:false           
+        }); 
+    }
+}
+exports.getTurnosAsignados = async (req, res) =>{
+     
+	let turnos = await pool.query ('SELECT * FROM turno WHERE estado = 0 and (fecha > CURDATE() OR (fecha = CURDATE() and hora >= DATE_FORMAT(NOW( ), "%H:%i:%S"))) order by hora asc');
+	if(turnos != null){
+        res.status(200).send(turnos);      
+    }
+    else{
+        return res.status(400).json({
+            ok:false           
+        }); 
+    }
+}
+
+exports.getTurnosLimit = async (req, res) =>{
+     console.log(req.params.limit);
+	let turnos = await pool.query ('SELECT * FROM turno ORDER BY fecha DESC limit '+req.params.limit);
+	if(turnos != null){
+        res.status(200).send(turnos);      
     }
     else{
         return res.status(400).json({
