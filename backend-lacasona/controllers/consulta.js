@@ -66,36 +66,17 @@ exports.addConsulta= async (req, res) =>{
 							console.log('Email enviado: ' + info.response);
 							}
 						});
-					res.status(200).send("ok");
+					res.status(200).json({
+						mensaje:"Turno reservado"
+					});
 					} catch(err) {
 						// If promise is rejected
 						console.error(err);
 					}
-					//Creamos el objeto de transporte para el envio de Email
-					/*var transporter = nodemailer.createTransport({
-						service: 'Gmail',
-						auth: {
-						user: 'flf.solucionesysistemas@gmail.com',
-						pass: 'everLAST2020'
-						}
-					});
-					var email="Bienvenido a 'la casona web'. Nos comunicamos con Ud. pro que ha solicitado su primer consulta";
-					var mailOptions = {
-						from: 'LaCasonaWeb',
-						to: variable.email,
-						subject: 'Consulta la casona web',
-						text: email
-					};
-					transporter.sendMail(mailOptions, function(error, info){
-						if (error) {
-						console.log(error);
-						} else {
-						console.log('Email enviado: ' + info.response);
-						}
-					});*/
+					
 				}else{
 					return res.status(400).json({
-						error:'error al crear la entrevista'            
+						error:'Error al crear la entrevista'            
 					});
 				}	
 			
