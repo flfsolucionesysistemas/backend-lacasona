@@ -21,7 +21,8 @@ exports.addConsulta= async (req, res) =>{
 		if(sql== null){
 		
 			res.status(400).json({
-				error: 'No se ha podido guardar el cliente'
+				status:400,
+				mensaje: 'No se ha podido guardar datos de la persona'
 			});
 		}
 		else{
@@ -67,7 +68,8 @@ exports.addConsulta= async (req, res) =>{
 							}
 						});
 					res.status(200).json({
-						mensaje:"Turno reservado"
+						status:200,
+						mensaje:"Su turno se asigno correctamente, recibirá un correo electronico"
 					});
 					} catch(err) {
 						// If promise is rejected
@@ -76,7 +78,8 @@ exports.addConsulta= async (req, res) =>{
 					
 				}else{
 					return res.status(400).json({
-						error:'Error al crear la entrevista'            
+						status:400,
+						mensaje:'No se ha podido asignar el turno'            
 					});
 				}	
 			
