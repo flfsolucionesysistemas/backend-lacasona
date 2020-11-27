@@ -14,7 +14,7 @@ exports.addHC = async (req, res)=>{
             
         })
         .then(function(res) {
-          if(res.status==200 && Object.values(res.data)==1) {
+          if(res.status==200 ) {
             console.log("OK");
           }
         })
@@ -22,8 +22,8 @@ exports.addHC = async (req, res)=>{
           console.log(err);
         });
     
-    let codigo_hc = datos.id_provincia+"-"+datos.id_localidad+"-"+datos.dni.substr(-3)+"-"+id_persona_paciente;
-    console.log(codigo_hc);
+    let codigo_hc = datos.cgip;
+    //console.log(codigo_hc);
     let newHC = {
         id_persona_paciente: id_persona_paciente,
         id_persona_creacion: id_persona_creacion,
