@@ -4,7 +4,7 @@ const axios = require('axios');
 exports.addHC = async (req, res)=>{
     let datos = req.body;
     let id_persona_paciente = datos.id_persona;
-    let id_persona_creacion = 2;
+    let id_persona_creacion = datos.id_persona_creacion;
     //utilizo metodo ya creado  
         axios.post('http://localhost:3000/users/add',{
             "id_persona": id_persona_paciente,
@@ -38,7 +38,7 @@ exports.addHC = async (req, res)=>{
       }
       else{
           console.log(result.insertId);
-          return res.status(200).send({result});
+          return res.status(200).send(result);
       }
   });
     
