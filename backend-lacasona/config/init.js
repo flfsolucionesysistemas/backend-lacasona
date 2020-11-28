@@ -1,5 +1,5 @@
 let config = {
-    port:3001,
+    port:3000,
     database:{
         host: '52.14.22.254',
         user: 'root',
