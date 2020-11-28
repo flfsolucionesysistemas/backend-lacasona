@@ -44,3 +44,28 @@ exports.addHC = async (req, res)=>{
     
 }
 
+exports.addHCTratamiento= async(req,res)=>{
+    let data = req.body;
+   
+    if(data!=null){
+        await pool.query('INSERT INTO hc_tratamiento set ?', [data], function(err, sql){
+            if(err){
+                console.log(err);
+                res.status(400).json({
+                    mensaje: 'Ocurrio un problema al intentar guardar'
+                });
+            }
+            else{
+                console.log(sql);
+                res.status(200).json({
+                mensaje: 'Relacion HC y Tratamiento ok.'
+                }); 
+            }
+        });
+    }
+    else{
+        res.status(400).json({
+            mensaje: 'No se obtuvieron correctamente los datos'
+        });  
+    }
+}
