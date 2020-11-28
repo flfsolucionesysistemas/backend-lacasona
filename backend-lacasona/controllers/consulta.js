@@ -122,8 +122,8 @@ exports.registroEntrevista = async (req, res) =>{
 	axios.put('http://localhost:3000/users/updateUser',{
 		"id_persona": datos.id_cliente,
 		"obra_social": datos.obra_social,
-		"numero_afiliado": datos.numero_afiliado,
-		"fecha_nacimiento": datos.fecha_nacimiento
+		"numero_afiliado": datos.numero_afiliado
+		/*"fecha_nacimiento": datos.fecha_nacimiento*/
 		
 	})
 	.then(function(res) {
