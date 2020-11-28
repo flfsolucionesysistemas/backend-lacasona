@@ -34,7 +34,7 @@ exports.updateTratamiento = async(req,res)=>{
         }
     });
 }
-exports.listaTratamietos=async(req,res)=>{
+exports.listaTratamientos=async(req,res)=>{
     await pool.query('SELECT * FROM tratamiento', function(err, lista_tratamiento){
         if (err) {
             res.json({
@@ -52,7 +52,7 @@ exports.listaTratamietos=async(req,res)=>{
     });
 }
 
-exports.listaTratamietosActivos=async(req,res)=>{
+exports.listaTratamientosActivos=async(req,res)=>{
     let valor = req.params.valor ;
     if(valor== 0||valor ==1){ 
        await pool.query('SELECT * FROM tratamiento where activo = ?',[valor] , function(err, lista_tratamientos){
