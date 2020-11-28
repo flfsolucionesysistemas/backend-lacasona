@@ -122,9 +122,8 @@ exports.registroEntrevista = async (req, res) =>{
 	axios.put('http://localhost:3000/users/updateUser',{
 		"id_persona": datos.id_cliente,
 		"obra_social": datos.obra_social,
-		"numero_afiliado": datos.numero_afiliado
-		/*"fecha_nacimiento": datos.fecha_nacimiento*/
-		
+		"numero_afiliado": datos.numero_afiliado,
+		"fecha_nacimiento": datos.fecha_nacimiento		
 	})
 	.then(function(res) {
 	  if(res.status==200 ) {
@@ -135,7 +134,7 @@ exports.registroEntrevista = async (req, res) =>{
 	  console.log(err);
 	});
 	let contenido ='<h1>Esto es un test de html-pdf</h1><p>Estoy generando PDF a partir de este código HTML sencillo</p>';
-	pdf.create(contenido).toFile('./salida.pdf', function(err, res) {
+	pdf.create(contenido).toFile('./registro_entrevista/registro_entrevista_' + datos.id_cliente + '.pdf', function(err, res) {
 		if (err){
 			console.log(err);
 		} else {
@@ -158,7 +157,7 @@ exports.registroEntrevista = async (req, res) =>{
 					text: contenido,
 					attachments: [
 						{
-							filename: 'salida.pdf',                                         
+							filename: './registro_entrevista/registro_entrevista_' + datos.id_cliente + '.pdf',                                         
 							contentType: 'application/pdf'
 						}]
 				};
