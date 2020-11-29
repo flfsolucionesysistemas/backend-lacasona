@@ -266,7 +266,7 @@ CREATE TABLE `persona` (
   KEY `id_tipo_persona` (`id_tipo_persona`),
   KEY `id_localidad` (`id_localidad`),
   CONSTRAINT `persona_ibfk_1` FOREIGN KEY (`id_tipo_persona`) REFERENCES `tipo_persona` (`id_tipo_persona`),
-  CONSTRAINT `persona_ibfk_2` FOREIGN KEY (`id_localidad`) REFERENCES `localidad_old` (`id_localidad`)
+  CONSTRAINT `persona_ibfk_2` FOREIGN KEY (`id_localidad`) REFERENCES `localidad` (`id_localidad`)
 ) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

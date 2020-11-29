@@ -3,6 +3,7 @@ var nodemailer = require('nodemailer');
 const axios = require('axios');
 const pdf = require('html-pdf');
 const fs = require('fs');
+const PDFDocument = require('pdfkit');
 let administradores=[];
 let emailProfesional;
 
@@ -134,7 +135,16 @@ exports.registroEntrevista = async (req, res) =>{
 	  console.log(err);
 	});
 	let contenido ='<h1>Esto es un test de html-pdf</h1><p>Estoy generando PDF a partir de este código HTML sencillo</p>';
-	pdf.create(contenido).toFile('./registro_entrevista/registro_entrevista_' + datos.id_cliente + '.pdf', function(err, res) {
+                  const doc = new PDFDocument;
+                  doc.pipe(fs.createWriteStream("./testeer.pdf"));
+                  const content = `
+                  Código QR para la persona  
+                  Gobierno de la Provincia de Corrientes - 2020
+                  Mail: `;
+                  doc.text(content, 100, 100);
+                  doc.end();
+	//pdf.create(contenido).toFile('./registro_entrevista/registro_entrevista_'+datos.id_cliente+'.pdf', function(err, res) {
+	pdf.create(contenido).toFile('./registro_entrevista.pdf', function(err, res) {
 		if (err){
 			console.log(err);
 		} else {
@@ -165,11 +175,16 @@ exports.registroEntrevista = async (req, res) =>{
 				transporter.sendMail(mailOptions, function(error, info){
 					if (error) {
 					console.log(error);
+					res.status(400).json({
+						mensaje:"No se envio el correo"
+					})
 					} else {
 					console.log('Email enviado: ' + info.response);
-					
+					res.status(200).json({
+						mensaje:"Se genero y envio correctamente el registro de entrevista"
+					})
 					}
-				});
+				});			
 			})
 		}
 	});
