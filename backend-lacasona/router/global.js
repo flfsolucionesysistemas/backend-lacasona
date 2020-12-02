@@ -5,5 +5,6 @@ var ctrlGlobal = require('../controllers/global');
 //router.get('/getProvincias',ctrlGlobal.getProvincias);
 router.get('/getLocalidadesPorProvincia/:idProvincia',ctrlGlobal.getLocalidadesPorProvincia);
 router.get('/getProvincias',ctrlGlobal.getProvincias);
+router.get('/getIdProvincias/:idLocalidad',ctrlGlobal.getIdProvincia);
 
 module.exports = router;
