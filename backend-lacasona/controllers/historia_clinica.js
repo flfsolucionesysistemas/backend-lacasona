@@ -5,7 +5,7 @@ exports.addHC = async (req, res)=>{
     let datos = req.body;
     let id_persona_paciente = datos.id_persona;
     let id_persona_creacion = datos.id_persona_creacion;
-        updateUser={
+     /*   updateUser={
             "id_persona": id_persona_paciente,
             "id_tipo_persona": 4,
             "dni": datos.dni,
@@ -19,9 +19,9 @@ exports.addHC = async (req, res)=>{
         else{
             console.log('Se guardo el paciente');
         }
-    });
+    });*/
     //utilizo metodo ya creado  
-        /*axios.post('http://localhost:3000/users/add',{
+        axios.post('http://localhost:3000/users/add',{
             "id_persona": id_persona_paciente,
             "id_tipo_persona": 4,
             "dni": datos.dni,
@@ -35,7 +35,7 @@ exports.addHC = async (req, res)=>{
         })
         .catch(function(err) {
           console.log(err);
-        });*/
+        });
     
     let codigo_hc = datos.cgip;
     //console.log(codigo_hc);
