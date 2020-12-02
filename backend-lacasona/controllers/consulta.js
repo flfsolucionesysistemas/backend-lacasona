@@ -1,7 +1,7 @@
 const pool = require('../config/database');
 var nodemailer = require('nodemailer');
 const axios = require('axios');
-const pdf = require('html-pdf');
+//const pdf = require('html-pdf');
 const fs = require('fs');
 const PDFDocument = require('pdfkit');
 let administradores=[];
@@ -114,8 +114,10 @@ exports.addConsulta= async (req, res) =>{
 	
 		}
 
-exports.registroEntrevista = async (req, res) =>{
+/*exports.registroEntrevista = async (req, res) =>{
 	let datos = req.body;
+	let ramdon= Math.random();
+	
 
 	axios.get('http://localhost:3000/users/getUserId/'+datos.id_profesional).then(resul=>
 	emailProfesional=resul.data[0].email);
@@ -135,21 +137,17 @@ exports.registroEntrevista = async (req, res) =>{
 	  console.log(err);
 	});
 	let contenido ='<h1>Esto es un test de html-pdf</h1><p>Estoy generando PDF a partir de este código HTML sencillo</p>';
-                  const doc = new PDFDocument;
-                  doc.pipe(fs.createWriteStream("./testeer.pdf"));
-                  const content = `
-                  Código QR para la persona  
-                  Gobierno de la Provincia de Corrientes - 2020
-                  Mail: `;
-                  doc.text(content, 100, 100);
-                  doc.end();
+    const doc = new PDFDocument;
+    doc.pipe(fs.createWriteStream('./registro_entrevista/registro_entrevista_'+datos.id_cliente+random+'.pdf'));
+    const content = contenido;
+    doc.text(content, 100, 100);
+    doc.end();
 	//pdf.create(contenido).toFile('./registro_entrevista/registro_entrevista_'+datos.id_cliente+'.pdf', function(err, res) {
-	pdf.create(contenido).toFile('./registro_entrevista.pdf', function(err, res) {
 		if (err){
 			console.log(err);
 		} else {
 			console.log(res);
-			fs.readFile('./salida.pdf',function(err,data){
+			fs.readFile('./registro_entrevista/registro_entrevista_'+datos.id_cliente+'.pdf',function(err,data){
 				if(err)throw err;
 				console.log(data);
 				var transporter = nodemailer.createTransport({
@@ -188,7 +186,104 @@ exports.registroEntrevista = async (req, res) =>{
 			})
 		}
 	});
+}*/
+
+exports.registroEntrevista = async (req, res) =>{
+	let datos = req.body;
+	let ramdon= Math.random();
+	
+	axios.put('http://localhost:3000/users/updateUser',{
+		"id_persona": datos.id_cliente,
+		"obra_social": datos.obra_social,
+		"numero_afiliado": datos.numero_afiliado,
+		"fecha_nacimiento": datos.fecha_nacimiento		
+	})
+	.then(function(res) {
+	  if(res.status==200 ) {
+		console.log("OK");
+	  }
+	})
+	.catch(function(err) {
+	  console.log(err);
+	});
+	axios.get('http://localhost:3000/users/getUserId/'+datos.id_profesional)
+	.then(function(resul){
+		emailProfesional=resul.data[0].email
+		console.log(emailProfesional);
+		var pdf = new PDFDocument({
+			size: 'LEGAL', // See other page sizes here: https://github.com/devongovett/pdfkit/blob/d95b826475dd325fb29ef007a9c1bf7a527e9808/lib/page.coffee#L69
+			info: {
+			  Title: 'Tile of File Here',
+			  Author: 'Some Author',
+			}
+		  });
+		  pdf.text(JSON.stringify(datos));
+		  pdf.pipe(
+			fs.createWriteStream('./registro_entrevista/registro_entrevista_'+datos.id_cliente+ramdon+'.pdf')
+		  )
+		  .on('finish', function () {
+			console.log('PDF closed');
+		  });
+		  var transporter = nodemailer.createTransport({
+			service: 'Gmail',
+			auth: {
+			user: 'flf.solucionesysistemas@gmail.com',
+			pass: 'everLAST2020'
+			}
+		});
+		
+		var mailOptions = {
+			from: 'LaCasonaWeb',
+			to: emailProfesional,
+			subject: 'Registro-primer-entrevista la casona web',
+			text: "pruebo email.com",
+			attachments: [
+				{
+					"path": './registro_entrevista/registro_entrevista_' +datos.id_cliente+ramdon+ '.pdf'                                         
+					//contentType: 'application/pdf'
+				}]
+		};
+		
+		transporter.sendMail(mailOptions, function(error, info){
+			if (error) {
+			console.log(error);
+			res.status(400).json({
+				mensaje:"No se envio el correo"
+			})
+			} else {
+			console.log('Email enviado: ' + info.response);
+			
+			}
+		});		
+		  pdf.end();
+		  res.status(200).json({
+			mensaje:"Se genero y envio correctamente el registro de entrevista"
+		})
+	});
+	
+	
 	
 
-}
+	/*var pdf = new PDFDocument({
+		size: 'LEGAL', // See other page sizes here: https://github.com/devongovett/pdfkit/blob/d95b826475dd325fb29ef007a9c1bf7a527e9808/lib/page.coffee#L69
+		info: {
+		  Title: 'Tile of File Here',
+		  Author: 'Some Author',
+		}
+	  });
+	  pdf.text(emailProfesional);
+	  pdf.pipe(
+		fs.createWriteStream('./registro_entrevista/registro_entrevista_'+datos.id_cliente+ramdon+'.pdf')
+	  )
+	  .on('finish', function () {
+		console.log('PDF closed');
+	  });
+	  pdf.end();*/
+
 	
+}
+
+
+
+
+
