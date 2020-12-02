@@ -33,7 +33,7 @@ exports.getProvincias= async (req, res) =>{
 
 exports.getIdProvincia = async (req, res) =>{
     let valor = req.params.idLocalidad;
-	let body = await pool.query ('SELECT idProvincia FROM localidad WHERE activo = 1 and id_provincia =' + valor);
+	let body = await pool.query ('SELECT id_provincia FROM localidad WHERE activo = 1 and id_provincia =' + valor);
 	
     if(body != null){
         res.status(200).send({body});      
