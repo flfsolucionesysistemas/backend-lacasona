@@ -218,8 +218,9 @@ exports.registroEntrevista = async (req, res) =>{
 			}
 		  });
 		  pdf.fontSize(20)
-			   .text('Formulario de registración de entrevista', 100, 100)
-			   .text('Fecha: '+datos.fecha+'  Tipo de consulta: '+datos.tipo_consulta+ ' Telefono: '+datos.telefono );
+			   .text('Formulario de registración de entrevista', 100, 100);
+		  pdf.fontSize(11)
+			   .text('Fecha: '+datos.fecha+'-  Tipo de consulta: '+datos.tipo_consulta+ '- Telefono: '+datos.telefono );
 		  /*pdf.addPage()
 			   .fontSize(12)
 			   .text('Fecha: '+datos.fecha+'  Tipo de consulta: '+datos.tipo_consulta+ ' Telefono: '+datos.telefono );*/
