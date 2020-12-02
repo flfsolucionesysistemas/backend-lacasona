@@ -217,7 +217,12 @@ exports.registroEntrevista = async (req, res) =>{
 			  Author: 'Some Author',
 			}
 		  });
-		  pdf.text(JSON.stringify(datos));
+		  pdf.fontSize(20)
+			   .text('Formulario de registración de entrevista', 100, 100)
+			   .text('Fecha: '+datos.fecha+'  Tipo de consulta: '+datos.tipo_consulta+ ' Telefono: '+datos.telefono );
+		  /*pdf.addPage()
+			   .fontSize(12)
+			   .text('Fecha: '+datos.fecha+'  Tipo de consulta: '+datos.tipo_consulta+ ' Telefono: '+datos.telefono );*/
 		  pdf.pipe(
 			fs.createWriteStream('./registro_entrevista/registro_entrevista_'+datos.id_cliente+ramdon+'.pdf')
 		  )
