@@ -84,3 +84,18 @@ exports.addHCTratamiento= async(req,res)=>{
         });  
     }
 }
+
+exports.getHCPorPersona= async (req, res) =>{
+    let valor = req.params.idPersona;
+	console.log(valor);
+	let body = await pool.query ('SELECT * FROM historia_clinica WHERE id_persona_paciente = ?', [valor]);
+	
+    if(body != null){
+        res.status(200).send({body});      
+    }
+    else{
+        return res.status(400).json({
+            ok:false           
+        }); 
+    }
+}
