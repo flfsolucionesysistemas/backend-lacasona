@@ -1,20 +1,27 @@
 const pool = require('../config/database');
 const axios = require('axios');
+const helpers = require('../config/helpers');
 
 exports.addHC = async (req, res)=>{
     let datos = req.body;
     let id_persona_paciente = datos.id_persona;
     let id_persona_creacion = datos.id_persona_creacion;
-     /*   updateUser={
-            "id_persona": id_persona_paciente,
-            "id_tipo_persona": 4,
-            "dni": datos.dni,
-            "estado": datos.estado
-        }    
+    
+    /*let clave_usuario= await helpers.encryptPassword(datos.dni);
+    
+    updateUser = {
+        id_tipo_persona: 4,
+        dni: datos.dni,
+        nombre_usuario: datos.dni,
+        clave_usuario: clave_usuario,
+        estado: datos.estado,
+        activo:1
+        };
             
-    await pool.query('UPDATE persona SET ? WHERE id_persona = ?', [updateUser, updateUser.id_persona], function(err, result){
+    await pool.query('UPDATE persona SET ? WHERE id_persona = ?', [updateUser, id_persona_paciente], function(err, result){
         if(err){
            console.log('No se ha podido guardar el paciente');
+           console.log(err);
         }
         else{
             console.log('Se guardo el paciente');
@@ -83,4 +90,49 @@ exports.addHCTratamiento= async(req,res)=>{
             mensaje: 'No se obtuvieron correctamente los datos'
         });  
     }
+}
+
+exports.updateHCTra=async(req,res)=>{
+    let datos = req.body;
+    if(datos.id_hc_tratamiento!=null){
+        await pool.query('UPDATE hc_tratamiento SET ? WHERE id_hc_tratamiento = ?', [datos, datos.id_hc_tratamiento ], function(err, sql){
+            if(err){
+                console.log(err);
+                res.status(400).json({
+                    mensaje: 'Ocurrio un problema al modificar la asignacion de tratamiento'
+                });
+            }
+            else{
+                console.log(sql);
+                res.status(200).json({
+                mensaje: 'Se modifico Tratamiento ok.'
+                }); 
+            }
+        });
+    }
+    else{
+        res.status(400).json({
+            mensaje: 'Los datos no estan bien cargados'
+        });
+    }
+    
+}
+
+exports.addEvolucion=async(req,res)=>{
+    let datos = req.body;
+    await pool.query('INSERT INTO evolucion set ?', [datos], function(err, sql){
+        if(err){
+            console.log(err);
+            res.status(400).json({
+                mensaje: 'Ocurrio un problema al intentar guardar'
+            });
+        }
+        else{
+            console.log(sql);
+            res.status(200).json({
+            mensaje: 'Seguardo correctamente',
+            sql:sql
+            }); 
+        }
+    });
 }

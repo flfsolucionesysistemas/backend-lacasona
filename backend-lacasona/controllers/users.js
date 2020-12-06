@@ -121,7 +121,9 @@ exports.updateUser = async (req, res) =>{
    
     await pool.query('UPDATE persona SET ? WHERE id_persona = ?',[datos,datos.id_persona],  function(err, sql, fields){
         if(err){
+            console.log(err);
             res.status(400).json({
+
                 error: 'No se ha modificar el usuario'
             });
         }
