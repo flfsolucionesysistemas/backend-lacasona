@@ -57,7 +57,7 @@ exports.updateProvincia = async (req, res) =>{
         }
         else{
             /*res.status(200).send({sql});*/
-			res.status(200).json({mensaje: 'Provincia actualizada'}); 
+			res.status(200).json({sql},{mensaje: 'Provincia actualizada'}); 
         }
     });
 }
