@@ -44,3 +44,20 @@ exports.getIdProvincia = async (req, res) =>{
         }); 
     }
 }
+
+
+exports.updateProvincia = async (req, res) =>{
+    let datos = req.body;
+   
+    await pool.query('UPDATE provincia SET ? WHERE id_provincia= ?',[datos,datos.id_provincia],  function(err, sql, fields){
+        if(err){
+            res.status(400).json({
+                error: 'No se ha podido modificar la provincia'
+            });
+        }
+        else{
+            /*res.status(200).send({sql});*/
+			res.status(200).json({sql, mensaje: 'Provincia actualizada'}); 
+        }
+    });
+}
