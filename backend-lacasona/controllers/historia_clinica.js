@@ -92,7 +92,7 @@ exports.addHCTratamiento= async(req,res)=>{
     }
 }
 
-<<<<<<< HEAD
+
 exports.updateHCTra=async(req,res)=>{
     let datos = req.body;
     if(datos.id_hc_tratamiento!=null){
@@ -136,7 +136,7 @@ exports.addEvolucion=async(req,res)=>{
             }); 
         }
     });
-=======
+
 exports.getHCPorPersona= async (req, res) =>{
     let valor = req.params.idPersona;
 	console.log(valor);
@@ -150,5 +150,4 @@ exports.getHCPorPersona= async (req, res) =>{
             ok:false           
         }); 
     }
->>>>>>> 2ca4640a5be7e2bb00799c11ff9688fc0bdff809
 }
