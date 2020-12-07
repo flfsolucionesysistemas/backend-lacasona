@@ -136,6 +136,7 @@ exports.addEvolucion=async(req,res)=>{
             }); 
         }
     });
+}
 
 exports.getHCPorPersona= async (req, res) =>{
     let valor = req.params.idPersona;
