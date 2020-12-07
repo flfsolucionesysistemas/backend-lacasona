@@ -31,7 +31,7 @@ CREATE TABLE `entrevista` (
   PRIMARY KEY (`id_entrevista`),
   KEY `id_persona` (`id_persona`),
   CONSTRAINT `entrevista_ibfk_1` FOREIGN KEY (`id_persona`) REFERENCES `persona` (`id_persona`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,7 +40,7 @@ CREATE TABLE `entrevista` (
 
 LOCK TABLES `entrevista` WRITE;
 /*!40000 ALTER TABLE `entrevista` DISABLE KEYS */;
-INSERT INTO `entrevista` VALUES (4,44,'2020-11-11 00:00:00',NULL,1000),(5,45,'2020-11-11 22:02:15',NULL,1000),(6,46,'2020-11-11 22:05:07',NULL,1000),(7,47,'2020-11-11 23:50:26',NULL,1000),(8,50,'2020-11-13 22:26:05',NULL,1000);
+INSERT INTO `entrevista` VALUES (64,129,'2020-12-04 16:39:48',NULL,2500),(65,130,'2020-12-04 16:52:30',NULL,2500),(66,131,'2020-12-04 16:55:57',NULL,2500),(67,132,'2020-12-05 18:48:58',NULL,2500),(68,133,'2020-12-06 18:45:05',NULL,2500);
 /*!40000 ALTER TABLE `entrevista` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -55,15 +55,22 @@ CREATE TABLE `evolucion` (
   `id_evolucion` int NOT NULL AUTO_INCREMENT,
   `id_persona_creacion` int NOT NULL,
   `id_tratamiento` int NOT NULL,
-  `descripcion` varchar(300) DEFAULT NULL,
-  `fecha_creacion` datetime NOT NULL,
-  `medicacion` varchar(300) DEFAULT NULL,
+  `hora_inicio` time DEFAULT NULL,
+  `hora_cierre` time DEFAULT NULL,
+  `intervenciones_realizadas` varchar(500) DEFAULT NULL,
+  `respuesta_intervencion` varchar(500) DEFAULT NULL,
+  `consideraciones_evolucion` varchar(500) DEFAULT NULL,
+  `participantes_evaluacion` varchar(500) DEFAULT NULL,
+  `resultado_evaluacion` varchar(500) DEFAULT NULL,
+  `consideraciones_evaluacion` varchar(500) DEFAULT NULL,
+  `es_evolucion` tinyint(1) DEFAULT NULL,
+  `fecha_creacion` date DEFAULT NULL,
   PRIMARY KEY (`id_evolucion`),
   KEY `id_persona_creacion` (`id_persona_creacion`),
   KEY `id_tratamiento` (`id_tratamiento`),
   CONSTRAINT `evolucion_ibfk_1` FOREIGN KEY (`id_persona_creacion`) REFERENCES `persona` (`id_persona`),
   CONSTRAINT `evolucion_ibfk_2` FOREIGN KEY (`id_tratamiento`) REFERENCES `tratamiento` (`id_tratamiento`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -72,7 +79,37 @@ CREATE TABLE `evolucion` (
 
 LOCK TABLES `evolucion` WRITE;
 /*!40000 ALTER TABLE `evolucion` DISABLE KEYS */;
+INSERT INTO `evolucion` VALUES (3,3,31,'20:45:00','21:45:00','inter','respue','','','','',1,NULL),(4,3,31,'08:22:00','09:22:00','intervencion','respuesta','nada','','','',1,'2020-12-07'),(5,3,31,'08:24:00','09:24:00','nueva intervencion','otro','otro','','','',1,'2020-12-07'),(6,3,31,'08:27:00','09:28:00','primera intervencion','nada ','nada','','','',1,'2020-12-07'),(7,3,31,'08:44:00','00:00:00','intervenciones','','','','','',1,'2020-12-07'),(8,3,31,'08:48:00','00:00:00','test','','','','','',1,'2020-12-07');
 /*!40000 ALTER TABLE `evolucion` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `hc_tratamiento`
+--
+
+DROP TABLE IF EXISTS `hc_tratamiento`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `hc_tratamiento` (
+  `id_hc_tratamiento` int unsigned NOT NULL AUTO_INCREMENT,
+  `id_hc` int NOT NULL,
+  `id_tratamiento` int NOT NULL,
+  `fecha_inicio` date DEFAULT NULL,
+  `fecha_alta` date DEFAULT NULL,
+  `consideraciones_alta` varchar(255) DEFAULT NULL,
+  `motivo_alta` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id_hc_tratamiento`)
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `hc_tratamiento`
+--
+
+LOCK TABLES `hc_tratamiento` WRITE;
+/*!40000 ALTER TABLE `hc_tratamiento` DISABLE KEYS */;
+INSERT INTO `hc_tratamiento` VALUES (11,94,31,NULL,NULL,'probando update',NULL),(12,95,31,NULL,NULL,NULL,NULL),(13,96,31,NULL,NULL,NULL,NULL),(14,98,31,'2020-12-06',NULL,NULL,NULL);
+/*!40000 ALTER TABLE `hc_tratamiento` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -93,7 +130,7 @@ CREATE TABLE `historia_clinica` (
   KEY `id_persona_creacion` (`id_persona_creacion`),
   CONSTRAINT `historia_clinica_ibfk_1` FOREIGN KEY (`id_persona_paciente`) REFERENCES `persona` (`id_persona`),
   CONSTRAINT `historia_clinica_ibfk_2` FOREIGN KEY (`id_persona_creacion`) REFERENCES `persona` (`id_persona`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=99 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -102,6 +139,7 @@ CREATE TABLE `historia_clinica` (
 
 LOCK TABLES `historia_clinica` WRITE;
 /*!40000 ALTER TABLE `historia_clinica` DISABLE KEYS */;
+INSERT INTO `historia_clinica` VALUES (94,129,3,'8-3112-678-129','2020-12-04 16:41:11'),(95,130,3,'18-5084-567-130','2020-12-04 16:53:46'),(96,131,3,'5-6756-678-131','2020-12-04 16:57:41'),(97,131,3,'5-6756-123-131','2020-12-04 17:18:47'),(98,133,3,'15-8964-234-133','2020-12-06 18:46:47');
 /*!40000 ALTER TABLE `historia_clinica` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -199,7 +237,7 @@ CREATE TABLE `patologia` (
   `descripcion` varchar(200) DEFAULT NULL,
   `activo` tinyint(1) NOT NULL,
   PRIMARY KEY (`id_patologia`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -208,6 +246,7 @@ CREATE TABLE `patologia` (
 
 LOCK TABLES `patologia` WRITE;
 /*!40000 ALTER TABLE `patologia` DISABLE KEYS */;
+INSERT INTO `patologia` VALUES (1,'Trastornos del neurodesarrollo','Las enfermedades mentales vinculadas a alteraciones en el neurodesarrollo forman un tipo de enfermedad mental caracterizado por la presencia de una serie de deficit',1),(2,'Trastornos del espectro de la esquizofrenia','Este tipo de enfermedad presenta una sintomatología común, y es la presencia de síntomas tanto positivos',1),(3,'Trastorno Bipolar y trastornos relacionados',' tipo de enfermedad mental caracterizado por la alternancia entre dos polos emocionales opuestos, manía (o hipomanía si los síntomas son menores) y depresión.',1),(4,' Trastornos depresivos','Las características básicas de este tipo de enfermedades mentales se basan en la presencia de un estado de tristeza patológica y persistente acompañada de anhedonia o falta de placer',1),(5,'Trastornos de ansiedad',' los trastornos de ansiedad pueden identificarse debido al alto nivel de activación psicofisiológica que provocan junto con la presencia de un elevado afecto negativo o malestar.',1),(9,'Patología 1','patologia ',0),(10,'Nueva patologia','',1);
 /*!40000 ALTER TABLE `patologia` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -250,7 +289,7 @@ DROP TABLE IF EXISTS `persona`;
 CREATE TABLE `persona` (
   `id_persona` int NOT NULL AUTO_INCREMENT,
   `id_tipo_persona` int NOT NULL,
-  `id_localidad` int NOT NULL,
+  `id_localidad` int unsigned NOT NULL,
   `dni` varchar(100) DEFAULT NULL,
   `nombre` varchar(100) NOT NULL,
   `apellido` varchar(100) NOT NULL,
@@ -260,14 +299,19 @@ CREATE TABLE `persona` (
   `telefono` varchar(100) DEFAULT NULL,
   `estado` varchar(100) DEFAULT NULL,
   `activo` tinyint(1) NOT NULL,
+  `obra_social` varchar(50) DEFAULT NULL,
+  `numero_afiliado` varchar(50) DEFAULT NULL,
+  `fecha_nacimiento` date DEFAULT NULL,
+  `cgip` varchar(50) DEFAULT NULL,
+  `numero_matricula` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id_persona`),
   UNIQUE KEY `dni` (`dni`),
   UNIQUE KEY `email` (`email`),
   KEY `id_tipo_persona` (`id_tipo_persona`),
   KEY `id_localidad` (`id_localidad`),
-  CONSTRAINT `persona_ibfk_1` FOREIGN KEY (`id_tipo_persona`) REFERENCES `tipo_persona` (`id_tipo_persona`),
-  CONSTRAINT `persona_ibfk_2` FOREIGN KEY (`id_localidad`) REFERENCES `localidad` (`id_localidad`)
-) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=latin1;
+  CONSTRAINT `localidad_ibfk_2` FOREIGN KEY (`id_localidad`) REFERENCES `localidad` (`id_localidad`),
+  CONSTRAINT `persona_ibfk_1` FOREIGN KEY (`id_tipo_persona`) REFERENCES `tipo_persona` (`id_tipo_persona`)
+) ENGINE=InnoDB AUTO_INCREMENT=134 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -276,7 +320,7 @@ CREATE TABLE `persona` (
 
 LOCK TABLES `persona` WRITE;
 /*!40000 ALTER TABLE `persona` DISABLE KEYS */;
-INSERT INTO `persona` VALUES (2,1,1,NULL,'luis','luque','luiluq','$2a$10$Ni0Px.tkqy1jmlrxHCQ3ierS14/D9RNqySa.zr7DUi6W1eHBA8ALi','luis@lsui.com',NULL,NULL,1),(3,2,1,'31685932','Cristian','Faure','crifau','$2a$10$Ni0Px.tkqy1jmlrxHCQ3ierS14/D9RNqySa.zr7DUi6W1eHBA8ALi','cristian@cristian.com','345154013027',NULL,1),(5,1,1,NULL,'analia','faure','anafau','$2a$10$Ni0Px.tkqy1jmlrxHCQ3ierS14/D9RNqySa.zr7DUi6W1eHBA8ALi','analia@analia.com',NULL,NULL,1),(6,4,1,'0','marcelo ','test m','marcelo','$2a$10$Kq1W7oeeubp.L3hb6NSdX.OYSE99dIzOns57kjyT48cFu0vQGuBr6','marcelomarcelo.com','123456789',NULL,1),(7,5,1,NULL,'super','super','super1','$2a$10$Ni0Px.tkqy1jmlrxHCQ3ierS14/D9RNqySa.zr7DUi6W1eHBA8ALi','flf.solucionesysistemas@gmail.com',NULL,NULL,1),(44,3,1,NULL,'analia','faure',NULL,NULL,'analia.f93@gmail.com','345454670',NULL,1),(45,3,3,NULL,'Roberto','Gomez',NULL,NULL,'licagua@gmail.com','3454224455',NULL,0),(46,3,5,NULL,'Cristela','Lopez',NULL,NULL,'lopez@lopez','345456057',NULL,1),(47,3,7,NULL,'marcelo','gonzalez',NULL,NULL,'mgonza726@hotmail.com','3456',NULL,1),(48,2,1,'11255625','Luisa','Ragone','11255625','$2a$10$niuQegRw6ezVDvqdMpysE.X5yvBnXzg1hnD.xI8O62HdLApN4aCmm','luisa@ragone.com','4275957',NULL,1),(49,2,1,'35699095','Pamela','Aguirre','35699095','$2a$10$nxygeC83.IgsdtOkhZldQ.qjrKP7zfa70WYVzZJaV2RtfzCR7zzBe','pamela.dy2@gmail.com','345154017315',NULL,1),(50,3,3,NULL,'benencio','juare',NULL,NULL,'juare@juare.com','245',NULL,0),(51,2,1,'345','Diego','Gonzalez','345','$2a$10$HBFwnYWcbQ1OrttfH2y8Z.EiLYl5NszwuhxxrOOqJRAI8dvBSispu','diego@diego.com','345',NULL,0);
+INSERT INTO `persona` VALUES (2,1,6372,'31000000','luis','luque','luiluq','$2a$10$Ni0Px.tkqy1jmlrxHCQ3ierS14/D9RNqySa.zr7DUi6W1eHBA8ALi','luque.hectorluis@gmail.com','123',NULL,1,NULL,NULL,NULL,NULL,NULL),(3,2,5402,'31685932','Cristian','Faure','crifau','$2a$10$Ni0Px.tkqy1jmlrxHCQ3ierS14/D9RNqySa.zr7DUi6W1eHBA8ALi','licagua@gmail.com','345154013027',NULL,1,NULL,NULL,NULL,NULL,'12pp'),(5,1,5084,'30.000.000','analia','faure','anafau','$2a$10$Ni0Px.tkqy1jmlrxHCQ3ierS14/D9RNqySa.zr7DUi6W1eHBA8ALi','analia.f93@gmail.com','3704320046',NULL,1,NULL,NULL,NULL,NULL,NULL),(129,4,3112,'12345678','Esteban','Lopez','12345678','$2a$10$1oXwwUKk3pdS9StgZyDCMuPdXRIH.y8qZXYOozTknq/NDikzK4bb2','estlop@correo.com','345 156 013028','admintido',1,'osde','321321','1980-05-20',NULL,NULL),(130,4,5084,'1234567','Claudia','Juarez','1234567','$2a$10$A62ooBtoh8i88GanGcKzVOAlN8cjIWXhcDeiVDUSmXoqKbG4enMJC','clajua@correo.com','03774 153156189','admintido',1,'no','','1985-07-26',NULL,NULL),(131,3,6756,'123','Cesar','lala','','','cesbor@correo.com','345 156018090','no admitido',0,'ose','123','1985-06-25',NULL,''),(132,3,8520,NULL,'jordi','alba',NULL,NULL,'joralb@correo.com','0123',NULL,1,NULL,NULL,NULL,NULL,NULL),(133,4,8964,'1234','eden','hazard','1234','$2a$10$WYCa5rh3u4eCqIrOliUDMe5cBy42L3ziQweHF.TELwkz5gCSft7Qy','edehaz@correo.com','4275957','admitido',1,'no','','1992-03-26',NULL,NULL);
 /*!40000 ALTER TABLE `persona` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -304,7 +348,7 @@ CREATE TABLE `provincia` (
 
 LOCK TABLES `provincia` WRITE;
 /*!40000 ALTER TABLE `provincia` DISABLE KEYS */;
-INSERT INTO `provincia` VALUES (1,'Ciudad Autónoma de Buenos Aires (CABA)','AR-C',1,1.50),(2,'Buenos Aires','AR-B',1,1.50),(3,'Catamarca','AR-K',1,1.50),(4,'Córdoba','AR-X',1,1.50),(5,'Corrientes','AR-W',1,1.00),(6,'Entre Ríos','AR-E',1,1.00),(7,'Jujuy','AR-Y',1,1.00),(8,'Mendoza','AR-M',1,1.00),(9,'La Rioja','AR-F',1,1.00),(10,'Salta','AR-A',1,1.00),(11,'San Juan','AR-J',1,1.00),(12,'San Luis','AR-D',1,1.00),(13,'Santa Fe','AR-S',1,1.50),(14,'Santiago del Estero','AR-G',1,1.00),(15,'Tucumán','AR-T',1,1.00),(16,'Chaco','AR-H',1,1.00),(17,'Chubut','AR-U',1,1.00),(18,'Formosa','AR-P',1,1.00),(19,'Misiones','AR-N',1,1.00),(20,'Neuquén','AR-Q',1,1.00),(21,'La Pampa','AR-L',1,1.00),(22,'Río Negro','AR-R',1,1.00),(23,'Santa Cruz','AR-Z',1,1.00),(24,'Tierra del Fuego','AR-V',1,1.00);
+INSERT INTO `provincia` VALUES (1,'Ciudad Autónoma de Buenos Aires (CABA)','AR-C',1,1.60),(2,'Buenos Aires','AR-B',1,1.60),(3,'Catamarca','AR-K',1,1.10),(4,'Córdoba','AR-X',1,1.50),(5,'Corrientes','AR-W',1,1.20),(6,'Entre Ríos','AR-E',1,1.00),(7,'Jujuy','AR-Y',1,1.30),(8,'Mendoza','AR-M',1,2.00),(9,'La Rioja','AR-F',1,1.00),(10,'Salta','AR-A',1,1.30),(11,'San Juan','AR-J',1,2.00),(12,'San Luis','AR-D',1,1.00),(13,'Santa Fe','AR-S',1,1.50),(14,'Santiago del Estero','AR-G',1,1.00),(15,'Tucumán','AR-T',1,1.00),(16,'Chaco','AR-H',1,1.00),(17,'Chubut','AR-U',1,1.00),(18,'Formosa','AR-P',1,1.00),(19,'Misiones','AR-N',1,1.00),(20,'Neuquén','AR-Q',1,1.00),(21,'La Pampa','AR-L',1,1.00),(22,'Río Negro','AR-R',1,1.00),(23,'Santa Cruz','AR-Z',1,1.00),(24,'Tierra del Fuego','AR-V',1,1.00);
 /*!40000 ALTER TABLE `provincia` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -371,7 +415,7 @@ CREATE TABLE `tipo_persona` (
   `activo` tinyint(1) NOT NULL,
   `gestionable` tinyint DEFAULT NULL,
   PRIMARY KEY (`id_tipo_persona`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -380,7 +424,7 @@ CREATE TABLE `tipo_persona` (
 
 LOCK TABLES `tipo_persona` WRITE;
 /*!40000 ALTER TABLE `tipo_persona` DISABLE KEYS */;
-INSERT INTO `tipo_persona` VALUES (1,'Admin','admin del sistema',1,1),(2,'Profesional','Trabajador de la salud',1,1),(3,'Cliente','Solicitante de consulta',1,0),(4,'Paciente','paciente',1,1),(5,'Super','super usuario del sistema',1,0);
+INSERT INTO `tipo_persona` VALUES (1,'Admin','admin del sistema',1,1),(2,'Profesional','Trabajador de la salud',1,1),(3,'Cliente','Solicitante de consulta',1,0),(4,'Paciente','paciente',1,1),(5,'Super','super usuario del sistema',1,0),(6,'Rechazado','No fue apto para ttratamiento',1,0);
 /*!40000 ALTER TABLE `tipo_persona` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -393,16 +437,19 @@ DROP TABLE IF EXISTS `tratamiento`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `tratamiento` (
   `id_tratamiento` int NOT NULL AUTO_INCREMENT,
-  `id_historia_clinica` int NOT NULL,
-  `id_patologia` int NOT NULL,
-  `fase` varchar(100) NOT NULL,
-  `costo` int DEFAULT NULL,
-  PRIMARY KEY (`id_tratamiento`),
-  KEY `id_historia_clinica` (`id_historia_clinica`),
-  KEY `id_patologia` (`id_patologia`),
-  CONSTRAINT `tratamiento_ibfk_1` FOREIGN KEY (`id_historia_clinica`) REFERENCES `historia_clinica` (`id_historia_clinica`),
-  CONSTRAINT `tratamiento_ibfk_2` FOREIGN KEY (`id_patologia`) REFERENCES `patologia` (`id_patologia`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `derivacion_psicoterapia` varchar(50) DEFAULT '-',
+  `sesiones_grupales` int DEFAULT '0',
+  `sesiones_psiquiatricas` int DEFAULT '0',
+  `sesiones_psicologicas` int DEFAULT '0',
+  `frecuencia` varchar(50) DEFAULT '-',
+  `abordaje` varchar(50) DEFAULT '-',
+  `otras_prestaciones` varchar(50) DEFAULT '-',
+  `tiempo_probable` varchar(50) DEFAULT '-',
+  `programa_tratamiento` varchar(50) DEFAULT NULL,
+  `activo` tinyint(1) DEFAULT '1',
+  `costo_mensual` decimal(9,2) DEFAULT NULL,
+  PRIMARY KEY (`id_tratamiento`)
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -411,6 +458,7 @@ CREATE TABLE `tratamiento` (
 
 LOCK TABLES `tratamiento` WRITE;
 /*!40000 ALTER TABLE `tratamiento` DISABLE KEYS */;
+INSERT INTO `tratamiento` VALUES (17,'si',0,8,0,'semanal','individual','psicodiagnostico','6 meses','tratamiento ',1,5000.00),(18,'NO',10,24,0,'quincenal','individual','otros','12 meses','Tratamiento Cuatros',1,90000.00),(20,'no',10,5,5,'semanal','nada','no','10 meses','Tratamiento nuevo',1,2500.00),(26,'',0,0,0,'','','','12 meses','test',1,3000.00),(31,'',4,4,4,'MENSUAL','MULTIPLE','','6 meses','DI 1 ALGO',1,NULL);
 /*!40000 ALTER TABLE `tratamiento` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -431,7 +479,7 @@ CREATE TABLE `turno` (
   `id_tipo_turno` int DEFAULT NULL,
   `costo_base` decimal(10,2) DEFAULT NULL,
   PRIMARY KEY (`id_turno`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -440,7 +488,7 @@ CREATE TABLE `turno` (
 
 LOCK TABLES `turno` WRITE;
 /*!40000 ALTER TABLE `turno` DISABLE KEYS */;
-INSERT INTO `turno` VALUES (1,'2020-11-11','asignado',0,'10:00:00',0,6,2500.00),(2,'2020-11-12','asignado',0,'10:00:00',0,5,2500.00),(3,'2020-11-13','asignado',0,'09:00:00',0,4,2500.00),(4,'2020-11-14',NULL,1,'09:00:00',1,NULL,2500.00),(5,'2020-11-13',NULL,0,'16:00:00',0,NULL,2500.00),(6,'2020-11-13',NULL,0,'17:00:00',1,NULL,2500.00),(7,'2020-11-16',NULL,0,'09:00:00',1,NULL,2500.00),(8,'2020-11-16',NULL,0,'10:00:00',1,NULL,2500.00),(9,'2020-11-16','asignado',0,'11:00:00',0,7,2500.00),(10,'2020-11-16',NULL,0,'12:00:00',1,NULL,2500.00),(11,'2020-11-17',NULL,0,'09:00:00',1,NULL,2500.00),(12,'2020-11-17',NULL,0,'10:00:00',1,NULL,2500.00),(13,'2020-11-17','asignado',0,'11:00:00',0,8,2500.00),(14,'2020-11-17',NULL,0,'12:00:00',1,NULL,2500.00);
+INSERT INTO `turno` VALUES (1,'2020-12-11','',0,'10:00:00',1,0,2500.00),(4,'2020-12-10','',1,'11:00:00',1,0,0.00),(7,'2020-12-10','',0,'09:00:00',1,0,2500.00),(8,'2020-12-10','',0,'10:00:00',1,0,2500.00),(14,'2020-12-10','',0,'16:00:00',1,0,2500.00),(19,'2020-12-17','',1,'12:00:00',1,0,0.00),(21,'2020-12-21','',0,'12:00:00',1,0,2500.00),(22,'2020-12-21','asignado',0,'11:00:00',0,67,2500.00),(23,'2020-12-21','asignado',0,'10:00:00',0,68,2500.00),(24,'2020-12-21','asignado',0,'09:00:00',0,65,2500.00),(25,'2020-12-20','',0,'09:00:00',1,0,2500.00),(26,'2020-12-20','asignado',0,'10:00:00',0,64,2500.00),(27,'2020-12-20','',0,'11:00:00',1,0,2500.00),(28,'2020-12-15','asignado',0,'12:00:00',0,66,2500.00),(29,'2020-12-16','',0,'12:00:00',1,0,2500.00),(30,'2020-12-30','',0,'11:00:00',1,0,2500.00),(31,'2020-12-30','',0,'10:00:00',1,0,2500.00),(32,'2020-12-30','',0,'09:00:00',1,0,2500.00);
 /*!40000 ALTER TABLE `turno` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -453,4 +501,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-11-14 17:50:22
+-- Dump completed on 2020-12-07  9:04:25
