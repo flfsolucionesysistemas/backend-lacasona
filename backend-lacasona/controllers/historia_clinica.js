@@ -168,3 +168,26 @@ exports.getHCTratamientoPorHC= async (req, res) =>{
         }); 
     }
 }
+
+
+exports.getHCTratamientoSinFechaAlta= async (req, res) =>{
+    let valor = req.params.idPaciente;
+	
+	let body = await pool.query ('SELECT hc.id_historia_clinica, ' + 
+							'hc.numero_historia_clinica, ' + 
+							'hct.fecha_inicio, ' +
+							'hct.fecha_alta, ' +
+							'hct.id_hc_tratamiento  ' +
+							'FROM historia_clinica  AS hc '+ 
+							'INNER JOIN hc_tratamiento AS hct ON hct.id_hc = hc.id_historia_clinica ' +
+							'WHERE hct.fecha_alta is null AND hc.id_persona_paciente = ?', [valor]);
+	
+    if(body != null){
+        res.status(200).send({body});      
+    }
+    else{
+        return res.status(400).json({
+            ok:false           
+        }); 
+    }
+}

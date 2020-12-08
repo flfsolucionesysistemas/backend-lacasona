@@ -8,5 +8,6 @@ router.get('/getHCTratamientoPorHC/:idHC',ctrlHC.getHCTratamientoPorHC);
 router.put('/updateHCTratamiento',ctrlHC.updateHCTra);
 router.get('/getHCPorPersona/:idPersona',ctrlHC.getHCPorPersona);
 router.post('/addEvolucion',ctrlHC.addEvolucion);
+router.get('/getHCTratamientoSinFechaAlta/:idPaciente',ctrlHC.getHCTratamientoSinFechaAlta);
 
 module.exports = router;
