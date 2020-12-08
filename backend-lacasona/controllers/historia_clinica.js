@@ -173,7 +173,7 @@ exports.getHCTratamientoPorHC= async (req, res) =>{
 exports.getHCTratamientoSinFechaAlta= async (req, res) =>{
     /*let valor = req.params.idPaciente;*/
 	
-	let body = await pool.query ('SELECT p.id_persona, p.nombre, p.apellido, t.programa_tratamiento, hct.fecha_inicio, hct.fecha_alta, hc.numero_historia_clinica ' +
+	let body = await pool.query ('SELECT p.id_persona, p.nombre, p.apellido, p.dni, t.programa_tratamiento, hct.fecha_inicio, hct.fecha_alta, hc.numero_historia_clinica ' +
 			'FROM persona AS p ' +
 			'INNER JOIN historia_clinica AS hc ON hc.id_persona_paciente = p.id_persona ' + 
 			'INNER JOIN hc_tratamiento AS hct ON hct.id_hc = hc.id_historia_clinica ' +
