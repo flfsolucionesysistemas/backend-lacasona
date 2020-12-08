@@ -178,7 +178,7 @@ let body = await pool.query ('SELECT p.id_persona, p.nombre, p.apellido, t.progr
 			'INNER JOIN historia_clinica AS hc ON hc.id_persona_paciente = p.id_persona ' + 
 			'INNER JOIN hc_tratamiento AS hct ON hct.id_hc = hc.id_historia_clinica ' +
 			'INNER JOIN tratamiento AS t ON t.id_tratamiento = hct.id_tratamiento ' + 
-			'WHERE hct.fecha_alta is null';
+			'WHERE hct.fecha_alta is null;';
 		
     if(body != null){
         res.status(200).send({body});      
