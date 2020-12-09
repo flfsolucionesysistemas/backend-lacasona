@@ -88,19 +88,21 @@ exports.getTratamientoIdPaciente = async(req,res)=>{
                 err
             });
         } else {
-            if(lista_tratamientos){
-                res.json({
-                    resultado: true,
-                    mensaje: 'No posee tratamientos en curso',
-                    
-                });  
-            } 
-            else{
+            if(lista_tratamientos[0]){
+                console.log(lista_tratamientos[0].id_tratamiento);
                 res.json({
                     resultado: true,
                     mensaje: 'Los tratamientos se listaron adecuadamente',
                     sql:lista_tratamientos
                 });
+                
+            } 
+            else{
+                res.json({
+                    resultado: true,
+                    mensaje: 'No posee tratamientos en curso',
+                    
+                }); 
             }
             
         }
