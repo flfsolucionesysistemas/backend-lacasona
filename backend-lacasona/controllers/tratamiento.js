@@ -109,3 +109,34 @@ exports.getTratamientoIdPaciente = async(req,res)=>{
       
       });
 }
+
+exports.getTratamientoIdPacienteConInfoTratamiento = async(req,res)=>{
+    await pool.query('SELECT hct.id_tratamiento,hct.fecha_alta, t.derivacion_psicoterapia, t.sesiones_grupales, t.sesiones_psiquiatricas, t.sesiones_psicologicas, t.frecuencia, t.abordaje, t.otras_prestaciones, t.tiempo_probable, t.programa_tratamiento, t.costo_mensual from hc_tratamiento as hct inner join historia_clinica as hc on hct.id_hc=hc.id_historia_clinica inner join persona as p on hc.id_persona_paciente=p.id_persona inner join tratamiento as t on t.id_tratamiento = hct.id_tratamiento where p.id_persona ='+req.params.idPaciente+' and hct.fecha_alta is null ', function(err, lista_tratamientos){
+        if (err) {
+            res.json({
+                resultado: false,
+                mensaje: 'No se pudieron listar los tratamientos',
+                err
+            });
+        } else {
+            if(lista_tratamientos[0]){
+                console.log(lista_tratamientos[0].id_tratamiento);
+                res.json({
+                    resultado: true,
+                    mensaje: 'Los tratamientos se listaron adecuadamente',
+                    sql:lista_tratamientos
+                });
+                
+            } 
+            else{
+                res.json({
+                    resultado: true,
+                    mensaje: 'No posee tratamientos en curso',
+                    
+                }); 
+            }
+            
+        }
+      
+      });
+}
