@@ -220,6 +220,9 @@ exports.registroEntrevista = async (req, res) =>{
 		  pdf.fontSize(20)
 			   .text('Formulario de registración de entrevista', 100, 100)
 			   .text('');
+		  pdf.fontSize(18)
+			   .text('Admitido: '+datos.admitido, 100, 100)
+			   .text('');
 		  pdf.fontSize(11)
 			   .text('Fecha: '+datos.fecha+'-  Tipo de consulta: '+datos.tipo_consulta)
 			   .text('Obra social: '+datos.obra_social+'-  N° de afiliado: '+datos.numero_afiliado )

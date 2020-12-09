@@ -78,3 +78,32 @@ exports.listaTratamientosActivos=async(req,res)=>{
     });
 }
 }
+
+exports.getTratamientoIdPaciente = async(req,res)=>{
+    await pool.query('SELECT hct.id_tratamiento,hct.fecha_alta from hc_tratamiento as hct inner join historia_clinica as hc on hct.id_hc=hc.id_historia_clinica inner join persona as p on hc.id_persona_paciente=p.id_persona where p.id_persona='+req.params.idPaciente+' and hct.fecha_alta is null ', function(err, lista_tratamientos){
+        if (err) {
+            res.json({
+                resultado: false,
+                mensaje: 'No se pudieron listar los tratamientos',
+                err
+            });
+        } else {
+            if(lista_tratamientos){
+                res.json({
+                    resultado: true,
+                    mensaje: 'No posee tratamientos en curso',
+                    
+                });  
+            } 
+            else{
+                res.json({
+                    resultado: true,
+                    mensaje: 'Los tratamientos se listaron adecuadamente',
+                    sql:lista_tratamientos
+                });
+            }
+            
+        }
+      
+      });
+}

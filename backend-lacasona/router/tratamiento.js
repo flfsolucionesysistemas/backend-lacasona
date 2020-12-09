@@ -6,4 +6,5 @@ router.post('/add',ctrlTratamiento.add);
 router.put('/update',ctrlTratamiento.updateTratamiento);
 router.get('/listar',ctrlTratamiento.listaTratamientos);
 router.get('/listarActivos/:valor',ctrlTratamiento.listaTratamientosActivos);
+router.get('/tratamientoIdPaciente/:idPaciente',ctrlTratamiento.getTratamientoIdPaciente);
 module.exports = router;

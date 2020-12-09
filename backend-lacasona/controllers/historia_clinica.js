@@ -189,3 +189,4 @@ exports.getHCTratamientoSinFechaAlta= async (req, res) =>{
         }); 
     }
 }
+
