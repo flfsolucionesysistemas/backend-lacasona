@@ -90,7 +90,7 @@ exports.useradd= async (req, res) =>{
         default://persona profesional o admin
           user = {
                     id_tipo_persona: tipo_user,
-                    id_localidad: newUser.localidad,
+                    id_localidad: newUser.id_localidad,
                     dni: newUser.dni,
                     nombre: newUser.nombre,
                     apellido: newUser.apellido,
@@ -103,6 +103,7 @@ exports.useradd= async (req, res) =>{
                    // user.clave_usuario= await helpers.encryptPassword(newUser.dni);
                     await pool.query('INSERT INTO persona set ?', [user], function(err, sql, fields){
                         if(err){
+                            console.log(err);
                             res.status(400).json({
                                 error: 'No se ha podido guardar el profesional'
                             });
