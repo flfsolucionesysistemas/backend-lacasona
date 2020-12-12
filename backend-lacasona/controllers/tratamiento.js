@@ -143,7 +143,7 @@ exports.getTratamientoIdPacienteConInfoTratamiento = async(req,res)=>{
 exports.getEvolucionFase = async(req,res)=>{
     idPaciente=req.params.idPaciente;
 
-    await pool.query('SELECT t.fases, e.fase, e.consideraciones_evaluacion,e.id_evolucion, e.fecha_creacion FROM hc_tratamiento as hct inner join tratamiento as t on hct.id_tratamiento=t.id_tratamiento inner join evolucion as e on e.id_hc_tratamiento=hct.id_hc_tratamiento inner join historia_clinica as hc on hct.id_hc=hc.id_historia_clinica inner join persona as p on hc.id_persona_paciente=p.id_persona where e.es_evolucion=0 and p.id_persona ='+idPaciente+' order by e.id_evolucion desc limit 1' , function(err, sql){
+    await pool.query('SELECT t.fases, e.fase, e.consideraciones_evaluacion,e.id_evolucion, e.fecha_creacion FROM hc_tratamiento as hct inner join tratamiento as t on hct.id_tratamiento=t.id_tratamiento inner join evolucion as e on e.id_hc_tratamiento=hct.id_hc_tratamiento inner join historia_clinica as hc on hct.id_hc=hc.id_historia_clinica inner join persona as p on hc.id_persona_paciente=p.id_persona where e.es_evolucion=0 and p.id_persona ='+idPaciente+' order by e.id_evolucion desc' , function(err, sql){
         if (err) {
             res.json({
                 resultado: false,
