@@ -165,7 +165,7 @@ exports.getHCPorPersona= async (req, res) =>{
 exports.getHCTratamientoPorHC= async (req, res) =>{
     let valor = req.params.idHC;
 	/*console.log(valor);*/
-	let body = await pool.query ('SELECT * FROM hc_tratamiento WHERE id_hc = ?', [valor]);
+	let body = await pool.query ('SELECT * FROM hc_tratamiento WHERE fecha_alta is null and id_hc = ?', [valor]);
 	
     if(body != null){
         res.status(200).send({body});      
