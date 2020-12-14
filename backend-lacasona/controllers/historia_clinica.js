@@ -128,6 +128,7 @@ exports.addEvolucion=async(req,res)=>{
       resultUpdate= await pool.query('UPDATE evolucion SET avanzo=1 WHERE id_evolucion = '+result[0].id_evolucion); 
       console.log(resultUpdate+"update");
     }
+    
     await pool.query('INSERT INTO evolucion set ?', [datos], function(err, sql){
         if(err){
             console.log(err);
