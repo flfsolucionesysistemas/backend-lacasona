@@ -10,5 +10,7 @@ router.put('/update',ctrlTurno.update);
 router.get('/getTurnos',ctrlTurno.getTurnos);
 router.get('/getTurnosLimit/:limit',ctrlTurno.getTurnosLimit);
 router.get('/getTurnosAsignados',ctrlTurno.getTurnosAsignados);
+router.get('/getTurnoFecha/:fecha',ctrlTurno.getTurnosFecha);
+router.get('/getFechas/:fecha1/:fecha2',ctrlTurno.getTurnosFechas);
 
 module.exports = router;

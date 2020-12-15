@@ -114,3 +114,34 @@ exports.asiganarTurno=async(req,res)=>{
         }
     });
 }
+
+exports.getTurnosFecha = async (req, res) =>{
+     
+	await pool.query ('SELECT * FROM turno where fecha ="'+req.params.fecha+'"' ,function(err,sql){
+        if(err){
+            console.log(err);
+            res.status(400).json({
+                error:"error al asignar turno"
+            });
+        }
+        else{
+            //let query= sql.affectedRows;
+             res.status(200).send(sql);
+        }
+    });
+}
+exports.getTurnosFechas = async (req, res) =>{
+     
+	await pool.query ('SELECT * FROM turno where fecha BETWEEN "'+req.params.fecha1+'" AND "'+req.params.fecha2+'" order by id_turno asc' ,function(err,sql){
+        if(err){
+            console.log(err);
+            res.status(400).json({
+                error:"error al asignar turno"
+            });
+        }
+        else{
+            //let query= sql.affectedRows;
+             res.status(200).send(sql);
+        }
+    });
+}
