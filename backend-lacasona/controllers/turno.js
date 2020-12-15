@@ -28,8 +28,11 @@ exports.addTurno = async (req, res) =>{
 exports.update = async (req, res)=>{
     let datos = req.body;
     let id_turno = datos.id_turno;
+	console.log(datos);
+	console.log(id_turno);
     await pool.query ('UPDATE turno SET ? WHERE id_turno = ?', [datos, id_turno],function(err,sql){
         if(err){
+			console.log(err);
             res.status(400).json({
                 error:"error al asignar turno"
             });
@@ -57,8 +60,12 @@ exports.getTurnosDisponiblesTipo = async (req, res) =>{
 }
 //LISTA DE TURNOS ORDENADO POR FECHA DESCENDIENTE
 exports.getTurnos = async (req, res) =>{
-     
-	let turnos = await pool.query ('SELECT * FROM turno ORDER BY fecha DESC');
+    let turnos = await pool.query ('SELECT fecha, id_turno, observacion, turno_tratamiento,hora, estado, id_tipo_turno, costo_base ' +
+									'FROM turno ' + 
+									'WHERE estado = 1 and and ' + 
+									'(fecha > CURDATE() OR  (fecha = CURDATE() and hora >= DATE_FORMAT(NOW( ), "%H:%i:%S"))) ' +
+									'ORDER BY fecha DESC'); 
+	/*let turnos = await pool.query ('SELECT DATE_FORMAT(fecha,"%y-%m-%d") as fecha, id_turno, observacion, turno_tratamiento,hora, estado, id_tipo_turno, costo_base FROM turno ORDER BY fecha DESC');*/
 	if(turnos != null){
         res.status(200).send(turnos);      
     }
