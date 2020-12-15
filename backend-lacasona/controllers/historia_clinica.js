@@ -95,6 +95,26 @@ exports.addHCTratamiento= async(req,res)=>{
 
 exports.updateHCTra=async(req,res)=>{
     let datos = req.body;
+    let now= new Date();
+    //DOY DE BAJA EL PACIENTE
+    if(datos.fecha_alta){
+        const response = await axios({
+            url: 'http://localhost:3000/hc/getHC/'+datos.id_hc,
+            method: 'get'
+          });
+        paciente={
+            id_paciente:response.data[0].id_persona_paciente,
+            fecha_baja: now,
+            motivo:"fin de tratamiento"
+        }
+        
+         sql= await pool.query('INSERT INTO paciente_baja set ?', [paciente]);
+         const response2 = await axios({
+            url: 'http://localhost:3000/users/deleteUser/'+paciente.id_paciente,
+            method: 'delete'
+          });
+        
+     }   
     if(datos.id_hc_tratamiento!=null){
         await pool.query('UPDATE hc_tratamiento SET ? WHERE id_hc_tratamiento = ?', [datos, datos.id_hc_tratamiento ], function(err, sql){
             if(err){
@@ -197,4 +217,20 @@ exports.getHCTratamientoSinFechaAlta= async (req, res) =>{
         }); 
     }
 }
+
+exports.getHC= async (req, res) =>{
+    let valor = req.params.idHC;
+	/*console.log(valor);*/
+	let body = await pool.query ('SELECT * FROM historia_clinica WHERE id_historia_clinica = ?', [valor]);
+	
+    if(body != null){
+        res.status(200).send(body);      
+    }
+    else{
+        return res.status(400).json({
+            ok:false           
+        }); 
+    }
+}
+
 

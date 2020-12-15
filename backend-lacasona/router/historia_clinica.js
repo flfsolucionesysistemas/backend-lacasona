@@ -9,5 +9,6 @@ router.put('/updateHCTratamiento',ctrlHC.updateHCTra);
 router.get('/getHCPorPersona/:idPersona',ctrlHC.getHCPorPersona);
 router.post('/addEvolucion',ctrlHC.addEvolucion);
 router.get('/getHCTratamientoSinFechaAlta',ctrlHC.getHCTratamientoSinFechaAlta);
+router.get('/getHC/:idHC',ctrlHC.getHC);
 
 module.exports = router;

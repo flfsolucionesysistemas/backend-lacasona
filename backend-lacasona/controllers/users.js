@@ -7,7 +7,7 @@ exports.loginUser= async(req, res)=>{
 	var nombreUser = params.usuario;
     var pass = params.clave;
 		
-    let row = await pool.query ('SELECT * FROM persona as p INNER JOIN tipo_persona as tp ON p.id_tipo_persona = tp.id_tipo_persona WHERE p.nombre_usuario = ?', [nombreUser]);
+    let row = await pool.query ('SELECT * FROM persona as p INNER JOIN tipo_persona as tp ON p.id_tipo_persona = tp.id_tipo_persona WHERE p.activo=1 AND p.nombre_usuario = ?', [nombreUser]);
 		if (row){
             let usuario = row[0];
             console.log(usuario);

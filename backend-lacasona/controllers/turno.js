@@ -140,7 +140,6 @@ exports.getTurnosFechas = async (req, res) =>{
             });
         }
         else{
-            //let query= sql.affectedRows;
              res.status(200).send(sql);
         }
     });
