@@ -58,6 +58,26 @@ exports.getTurnosDisponiblesTipo = async (req, res) =>{
         }); 
     }
 }
+
+//LISTA DE TURNOS ORDENADO POR FECHA DESCENDIENTE y PROFESIONAL NULL, para la vista de turnos profesionales	
+exports.getTurnosParaProfesionales = async (req, res) =>{
+    let turnos = await pool.query ('SELECT fecha, id_turno, observacion, turno_tratamiento,hora, estado, id_tipo_turno, costo_base ' +
+									'FROM turno ' + 
+									'WHERE estado = 1 and id_profesional is null' + 
+									'(fecha > CURDATE() OR  (fecha = CURDATE() and hora >= DATE_FORMAT(NOW( ), "%H:%i:%S"))) ' +
+									'ORDER BY fecha DESC'); 
+	/*let turnos = await pool.query ('SELECT DATE_FORMAT(fecha,"%y-%m-%d") as fecha, id_turno, observacion, turno_tratamiento,hora, estado, id_tipo_turno, costo_base FROM turno ORDER BY fecha DESC');*/
+	if(turnos != null){
+        res.status(200).send(turnos);      
+    }
+    else{
+        return res.status(400).json({
+            ok:false           
+        }); 
+    }
+}
+
+
 //LISTA DE TURNOS ORDENADO POR FECHA DESCENDIENTE
 exports.getTurnos = async (req, res) =>{
     let turnos = await pool.query ('SELECT fecha, id_turno, observacion, turno_tratamiento,hora, estado, id_tipo_turno, costo_base ' +
