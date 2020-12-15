@@ -114,7 +114,7 @@ exports.updateHCTra=async(req,res)=>{
             method: 'delete'
           });
         
-     }   
+     }    
     if(datos.id_hc_tratamiento!=null){
         await pool.query('UPDATE hc_tratamiento SET ? WHERE id_hc_tratamiento = ?', [datos, datos.id_hc_tratamiento ], function(err, sql){
             if(err){
