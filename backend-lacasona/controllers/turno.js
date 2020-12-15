@@ -28,8 +28,11 @@ exports.addTurno = async (req, res) =>{
 exports.update = async (req, res)=>{
     let datos = req.body;
     let id_turno = datos.id_turno;
+	console.log(datos);
+	console.log(id_turno);
     await pool.query ('UPDATE turno SET ? WHERE id_turno = ?', [datos, id_turno],function(err,sql){
         if(err){
+			console.log(err);
             res.status(400).json({
                 error:"error al asignar turno"
             });
