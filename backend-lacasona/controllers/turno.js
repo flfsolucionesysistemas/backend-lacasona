@@ -3,7 +3,7 @@ const pool = require('../config/database');
 exports.addTurno = async (req, res) =>{
     let data = req.body;
     console.log(data);
-	
+
     if(data!= null){
          await pool.query('INSERT INTO turno set ?', [data], function(err, sql, fields){
             if(err){
