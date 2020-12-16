@@ -63,7 +63,7 @@ exports.getTurnosDisponiblesTipo = async (req, res) =>{
 exports.getTurnosParaProfesionales = async (req, res) =>{
     let turnos = await pool.query ('SELECT fecha, id_turno, observacion, turno_tratamiento,hora, estado, id_tipo_turno, costo_base ' +
 									'FROM turno ' + 
-									'WHERE estado = 1 and id_profesional is null and' + 
+									'WHERE estado = 1 and id_profesional is null and turno_tratamiento = 1 and ' + 
 									'(fecha > CURDATE() OR  (fecha = CURDATE() and hora >= DATE_FORMAT(NOW( ), "%H:%i:%S"))) ' +
 									'ORDER BY fecha DESC'); 
 	/*let turnos = await pool.query ('SELECT DATE_FORMAT(fecha,"%y-%m-%d") as fecha, id_turno, observacion, turno_tratamiento,hora, estado, id_tipo_turno, costo_base FROM turno ORDER BY fecha DESC');*/
