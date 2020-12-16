@@ -169,10 +169,7 @@ exports.addEvolucion=async(req,res)=>{
 exports.getHCPorPersona= async (req, res) =>{
     let valor = req.params.idPersona;
 	console.log(valor);
-    let body = await pool.query ('SELECT * FROM historia_clinica as hc '+
-                                'INNER JOIN hc_tratamiento as hct ON hc.id_historia_clinica=hct.id_hc'+
-                                'INNER JOIN evolucion as e ON hct.id_hc_tratamiento=e.id_hc_tratamiento'+
-                                'WHERE id_persona_paciente = ?', [valor]);
+	let body = await pool.query ('SELECT * FROM historia_clinica WHERE id_persona_paciente = ?', [valor]);
 	
     if(body != null){
         res.status(200).send({body});      

@@ -9,5 +9,6 @@ router.get('/listarActivos/:valor',ctrlTratamiento.listaTratamientosActivos);
 router.get('/tratamientoIdPaciente/:idPaciente',ctrlTratamiento.getTratamientoIdPaciente);
 router.get('/tratamientoIdPacienteConInfoTratamiento/:idPaciente',ctrlTratamiento.getTratamientoIdPacienteConInfoTratamiento);
 router.get('/getTimeline/:idPaciente',ctrlTratamiento.getEvolucionFase);
+router.get('/getFaseActual/:idPaciente',ctrlTratamiento.getEvolucionFaseActual);
 
 module.exports = router;
