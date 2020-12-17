@@ -141,7 +141,7 @@ exports.updateHCTra=async(req,res)=>{
 
 exports.addEvolucion=async(req,res)=>{
     let datos = req.body;
-	if(datos.es_evolucion == 0){
+	/*if(datos.es_evolucion == 0){*/
       result= await pool.query('SELECT e.fase,e.id_evolucion FROM evolucion as e where e.es_evolucion=0 and e.id_hc_tratamiento='+datos.id_hc_tratamiento+' order by e.id_evolucion desc limit 1')
       console.log(result[0]);
       if (datos.fase==result[0].fase){        
@@ -159,7 +159,7 @@ exports.addEvolucion=async(req,res)=>{
 			}
 		}
 		*/
-	}
+	/*}*/
     
     await pool.query('INSERT INTO evolucion set ?', [datos], function(err, sql){
         if(err){
