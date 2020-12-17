@@ -147,7 +147,10 @@ exports.addEvolucion=async(req,res)=>{
       if (datos.fase==result[0].fase){        
 			resultUpdate= await pool.query('UPDATE evolucion SET avanzo=1 WHERE id_evolucion = '+result[0].id_evolucion); 
 			console.log(resultUpdate+"update");
-		}else{
+		}
+		
+		/*
+		else{
 			if (datos.fase < result[0].fase) {
 				resultDelete = await pool.query('DELETE evolucion FROM evolucion AS e WHERE fase > ' + datos.fase + 
 													' and e.id_hc_tratamiento='+datos.id_hc_tratamiento+ 
@@ -155,7 +158,7 @@ exports.addEvolucion=async(req,res)=>{
 				console.log(resultDelete + " delete");
 			}
 		}
-		
+		*/
 	}
     
     await pool.query('INSERT INTO evolucion set ?', [datos], function(err, sql){
