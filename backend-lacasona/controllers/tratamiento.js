@@ -187,7 +187,7 @@ exports.getEvolucionFaseActual = async(req,res)=>{
 					'inner join evolucion as e on e.id_hc_tratamiento=hct.id_hc_tratamiento '+
 					'inner join historia_clinica as hc on hct.id_hc=hc.id_historia_clinica '+
 					'inner join persona as p on hc.id_persona_paciente=p.id_persona '+
-					'where e.es_evolucion=0 and e.avanzo = 0 and p.id_persona ='+idPaciente+
+					'where e.es_evolucion=0 and e.avanzo = 1 and p.id_persona ='+idPaciente+
 					' order by e.id_evolucion desc limit 1' , function(err, sql){
         if (err) {
             res.json({
