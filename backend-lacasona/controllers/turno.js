@@ -81,7 +81,7 @@ exports.getTurnosDisponiblesTipoTodos = async (req, res) =>{
 		let body = await pool.query ('SELECT t.fecha,t.hora, t.estado, t.costo_base, t.observacion, t.turno_tratamiento, t.id_profesional, p.nombre, p.apellido ' +
 				' FROM turno as t ' +
 				' inner join persona as p on p.id_persona = t.id_profesional ' +
-				' WHERE t.turno_tratamiento = 1 and (t.fecha > CURDATE() OR  (t.fcha = CURDATE() and t.hora >= DATE_FORMAT(NOW( ), "%H:%i:%S"))) ' +
+				' WHERE t.turno_tratamiento = 1 and (t.fecha > CURDATE() OR  (t.fecha = CURDATE() and t.hora >= DATE_FORMAT(NOW( ), "%H:%i:%S"))) ' +
 				' ORDER BY t.id_profesional asc, t.fecha asc, t.hora asc');
 
 		/*let body = await pool.query ('SELECT * FROM turno WHERE turno_tratamiento = '+tipo+
