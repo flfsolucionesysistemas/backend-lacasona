@@ -63,7 +63,7 @@ exports.getTurnosDisponiblesTipo = async (req, res) =>{
 //TURNOS FILTRADO POR TURNO_TRATAMIENTO (OSEA CONSULTA O TRATAMIEITNP)
 exports.getTurnosDisponiblesTipoTodos = async (req, res) =>{
     let tipo = req.params.tipo;
-  
+	console.log(tipo);
 	if(tipo==0){
 		let body = await pool.query ('SELECT * FROM turno WHERE turno_tratamiento = '+tipo+
 								' and (fecha > CURDATE() OR  (fecha = CURDATE() and hora >= DATE_FORMAT(NOW( ), "%H:%i:%S")))' +
