@@ -68,20 +68,32 @@ exports.getTurnosDisponiblesTipoTodos = async (req, res) =>{
 		let body = await pool.query ('SELECT * FROM turno WHERE turno_tratamiento = '+tipo+
 								' and (fecha > CURDATE() OR  (fecha = CURDATE() and hora >= DATE_FORMAT(NOW( ), "%H:%i:%S")))' +
 								'ORDER BY fecha asc, hora asc');
+	
+		if(body != null){
+			res.status(200).send({body});      
+		}
+		else{
+			return res.status(400).json({
+				ok:false           
+			}); 
+		}
 	}else{
 		let body = await pool.query ('SELECT * FROM turno WHERE turno_tratamiento = '+tipo+
 								' and (fecha > CURDATE() OR  (fecha = CURDATE() and hora >= DATE_FORMAT(NOW( ), "%H:%i:%S")))' +
 								' ORDER BY id_profesional asc, fecha asc, hora asc');
+		if(body != null){
+			res.status(200).send({body});      
+		}
+		else{
+			return res.status(400).json({
+				ok:false           
+			}); 
+		}
 	}
+	
 	//let body = await pool.query ('SELECT * FROM turno WHERE turno_tratamiento = '+tipo+' and estado = 1 and fecha >= CURDATE() and hora <= DATE_FORMAT(NOW( ), "%H:%i:%S")');
-	if(body != null){
-        res.status(200).send({body});      
-    }
-    else{
-        return res.status(400).json({
-            ok:false           
-        }); 
-    }
+	
+	
 }
 
 //LISTA DE TURNOS ORDENADO POR FECHA DESCENDIENTE y PROFESIONAL NULL, para la vista de turnos profesionales	
