@@ -172,6 +172,24 @@ exports.getTurnosFechas = async (req, res) =>{
     });
 }
 
+exports.getTurnoConsultaPrecio = async (req, res) =>{      
+	
+	await pool.query ('SELECT id_turno, costo_base, fecha FROM turno ' +
+					  'WHERE turno_tratamiento = 0 and estado = 1 and costo_base > 0 order by id_turno desc limit 1 ' 
+					  ,function(err,sql){
+        if(err){
+            console.log(err);
+            res.status(400).json({
+                error:"error consulta turno"
+            });
+        }
+        else{
+            //let query= sql.affectedRows;
+             res.status(200).send(sql);
+        }
+    });
+}
+
 exports.getTurnosFechaTipo = async (req, res) =>{
      
 	await pool.query ('SELECT * FROM turno where fecha ="'+req.params.fecha+'" and id_tipo_turno="'+req.params.tipo+'" ' ,function(err,sql){
