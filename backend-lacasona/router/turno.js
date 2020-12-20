@@ -16,4 +16,7 @@ router.get('/getTurnoFechaTipo/:fecha/:tipo',ctrlTurno.getTurnosFechaTipo);
 router.get('/getFechas/:fecha1/:fecha2',ctrlTurno.getTurnosFechas);
 router.get('/getTurnoConsultaPrecio',ctrlTurno.getTurnoConsultaPrecio);
 
+router.get('/getTurnosDisponiblesTipoTodos',ctrlTurno.getTurnosDisponiblesTipoTodos);
+
+
 module.exports = router;
