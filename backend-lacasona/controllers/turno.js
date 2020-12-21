@@ -236,7 +236,9 @@ exports.getTurnoConsultaPrecio = async (req, res) =>{
 
 exports.getTurnosFechaTipo = async (req, res) =>{
      
-	await pool.query ('SELECT * FROM turno where fecha ="'+req.params.fecha+'" and turno_tratamiento="'+req.params.tipo+'" ' ,function(err,sql){
+	await pool.query ('SELECT t.costo_base, t.estado, t.fecha, t.hora,t.id_profesional, t.id_paciente, t.id_tipo_turno, t.observacion, t.profesional_disponible, t.turno_tratamiento, p.nombre, p.apellido, p.id_persona '+ 
+				' FROM turno INNER JOIN persona on p p.id_persona = t.id_profesional ' +
+				' WHERE fecha ="'+req.params.fecha+'" AND turno_tratamiento="'+req.params.tipo+'" ' ,function(err,sql){
         if(err){
             console.log(err);
             res.status(400).json({
