@@ -7,5 +7,5 @@ router.get('/getLocalidadesPorProvincia/:idProvincia',ctrlGlobal.getLocalidadesP
 router.get('/getProvincias',ctrlGlobal.getProvincias);
 router.get('/getIdProvincias/:idLocalidad',ctrlGlobal.getIdProvincia);
 router.put('/updateProvincia', ctrlGlobal.updateProvincia);
-
+router.get('/solicitaHC/:idPersona',ctrlGlobal.getLecturaHC);
 module.exports = router;
