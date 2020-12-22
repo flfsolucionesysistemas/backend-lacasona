@@ -235,19 +235,37 @@ exports.getTurnoConsultaPrecio = async (req, res) =>{
 }
 
 exports.getTurnosFechaTipo = async (req, res) =>{
-     
-	await pool.query ('SELECT t.costo_base, t.estado, t.fecha, t.hora,t.id_profesional, t.id_paciente, t.id_tipo_turno, t.observacion, t.profesional_disponible, t.turno_tratamiento, p.nombre, p.apellido, p.id_persona '+ 
-				' FROM turno INNER JOIN persona on p p.id_persona = t.id_profesional ' +
-				' WHERE t.fecha ="'+req.params.fecha+'" AND t.turno_tratamiento="'+req.params.tipo+'" ' ,function(err,sql){
-        if(err){
-            console.log(err);
-            res.status(400).json({
-                error:"error al asignar turno"
-            });
-        }
-        else{
-            //let query= sql.affectedRows;
-             res.status(200).send(sql);
-        }
-    });
+    if(req.params.tipo == 0){
+		await pool.query ('SELECT t.costo_base, t.estado, t.fecha, t.hora,t.id_profesional, t.id_paciente, t.id_tipo_turno, t.observacion, t.profesional_disponible, t.turno_tratamiento'+ 
+					' FROM turno as t' +
+					' WHERE t.fecha ="'+req.params.fecha+'" AND t.turno_tratamiento="'+req.params.tipo+'" ' ,function(err,sql){
+			if(err){
+				console.log(err);
+				res.status(400).json({
+					error:"error al asignar turno"
+				});
+			}
+			else{
+				//let query= sql.affectedRows;
+				 res.status(200).send(sql);
+			}
+		});	
+	}else{
+		if(req.params.tipo==1) {
+			await pool.query ('SELECT t.costo_base, t.estado, t.fecha, t.hora,t.id_profesional, t.id_paciente, t.id_tipo_turno, t.observacion, t.profesional_disponible, t.turno_tratamiento, p.nombre, p.apellido, p.id_persona '+ 
+						' FROM turno as t INNER JOIN persona as p on p.id_persona = t.id_profesional ' +
+						' WHERE t.fecha ="'+req.params.fecha+'" AND t.turno_tratamiento="'+req.params.tipo+'" ' ,function(err,sql){
+				if(err){
+					console.log(err);
+					res.status(400).json({
+						error:"error al asignar turno"
+					});
+				}
+				else{
+					//let query= sql.affectedRows;
+					 res.status(200).send(sql);
+				}
+			});
+		}
+	}
 }
