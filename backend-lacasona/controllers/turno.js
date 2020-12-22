@@ -65,7 +65,8 @@ exports.getTurnosDisponiblesTipoTodos = async (req, res) =>{
     let tipo = req.params.tipo;
 	console.log(tipo);
 	if(tipo==0){
-		let body = await pool.query ('SELECT * FROM turno WHERE turno_tratamiento = 0'+
+		let body = await pool.query ('SELECT id_turno, fecha, observacion, turno_tratamiento,hora, estado, id_tipo_turno, costo_base,id_paciente, id_profesional, profesional_disponible '+
+								' FROM turno WHERE turno_tratamiento = 0'+
 								' and (fecha > CURDATE() OR  (fecha = CURDATE() and hora >= DATE_FORMAT(NOW( ), "%H:%i:%S")))' +
 								'ORDER BY fecha asc, hora asc');
 	
