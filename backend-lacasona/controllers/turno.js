@@ -65,7 +65,7 @@ exports.getTurnosDisponiblesTipoTodos = async (req, res) =>{
     let tipo = req.params.tipo;
 	console.log(tipo);
 	if(tipo==0){
-		let body = await pool.query ('SELECT id_turno, fecha, observacion, turno_tratamiento,hora, estado, id_tipo_turno, costo_base,id_paciente, id_profesional, profesional_disponible '+
+		let body = await pool.query ('SELECT * '+
 								' FROM turno WHERE turno_tratamiento = 0'+
 								' and (fecha > CURDATE() OR  (fecha = CURDATE() and hora >= DATE_FORMAT(NOW( ), "%H:%i:%S")))' +
 								'ORDER BY fecha asc, hora asc');
@@ -79,7 +79,7 @@ exports.getTurnosDisponiblesTipoTodos = async (req, res) =>{
 			}); 
 		}
 	}else{
-		let body = await pool.query ('SELECT t.fecha,t.hora, t.estado, t.costo_base, t.observacion, t.turno_tratamiento, t.id_profesional, t.profesional_disponible , p.nombre, p.apellido ' +
+		let body = await pool.query ('SELECT t.profesional_disponible, t.id_tipo_turno, id_paciente, t.id_turno, t.fecha,t.hora, t.estado, t.costo_base, t.observacion, t.turno_tratamiento, t.id_profesional , p.nombre, p.apellido ' +
 				' FROM turno as t ' +
 				' inner join persona as p on p.id_persona = t.id_profesional ' +
 				' WHERE t.turno_tratamiento = 1 and (t.fecha > CURDATE() OR  (t.fecha = CURDATE() and t.hora >= DATE_FORMAT(NOW( ), "%H:%i:%S"))) ' +
