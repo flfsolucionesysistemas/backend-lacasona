@@ -236,7 +236,7 @@ exports.getTurnoConsultaPrecio = async (req, res) =>{
 
 exports.getTurnosFechaTipo = async (req, res) =>{
     if(req.params.tipo == 0){
-		await pool.query ('SELECT t.costo_base, t.estado, t.fecha, t.hora,t.id_profesional, t.id_paciente, t.id_tipo_turno, t.observacion, t.profesional_disponible, t.turno_tratamiento'+ 
+		await pool.query ('SELECT t.id_turno, t.id_tipo_turno, t.costo_base, t.estado, t.fecha, t.hora,t.id_profesional, t.id_paciente, t.id_tipo_turno, t.observacion, t.profesional_disponible, t.turno_tratamiento'+ 
 					' FROM turno as t' +
 					' WHERE t.fecha ="'+req.params.fecha+'" AND t.turno_tratamiento="'+req.params.tipo+'" ' ,function(err,sql){
 			if(err){
@@ -252,7 +252,7 @@ exports.getTurnosFechaTipo = async (req, res) =>{
 		});	
 	}else{
 		if(req.params.tipo==1) {
-			await pool.query ('SELECT t.costo_base, t.estado, t.fecha, t.hora,t.id_profesional, t.id_paciente, t.id_tipo_turno, t.observacion, t.profesional_disponible, t.turno_tratamiento, p.nombre, p.apellido, p.id_persona '+ 
+			await pool.query ('SELECT t.id_turno, t.id_tipo_turno, t.costo_base, t.estado, t.fecha, t.hora,t.id_profesional, t.id_paciente, t.id_tipo_turno, t.observacion, t.profesional_disponible, t.turno_tratamiento, p.nombre, p.apellido, p.id_persona '+ 
 						' FROM turno as t INNER JOIN persona as p on p.id_persona = t.id_profesional ' +
 						' WHERE t.fecha ="'+req.params.fecha+'" AND t.turno_tratamiento="'+req.params.tipo+'" ' ,function(err,sql){
 				if(err){
