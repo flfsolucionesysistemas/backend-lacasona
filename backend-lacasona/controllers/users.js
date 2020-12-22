@@ -164,7 +164,7 @@ exports.getUserActivo= async (req, res) =>{
 exports.getUserId= async (req, res) =>{
     let valor = req.params.idUser;
    
-    let body = await pool.query ('SELECT * FROM persona WHERE id_persona = '+valor);
+    let body = await pool.query ('SELECT * FROM persona inner join tipo_persona on persona.id_tipo_persona=tipo_persona.id_tipo_persona WHERE id_persona = '+valor);
 	//let body = await pool.query ('SELECT * FROM persona join localidad on localidad.id_localidad=persona.id_localidad WHERE id_persona = '+valor);
     if(body != null){
         res.status(200).send(body);
