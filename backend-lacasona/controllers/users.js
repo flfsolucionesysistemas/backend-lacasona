@@ -29,12 +29,12 @@ exports.loginUser= async(req, res)=>{
             
 						}
 					}else{
-						res.status(404).send({message : 'El usuario no ha podido loguearse, revisar contraseña.'});	
+						res.status(200).send({message : 'El usuario no ha podido loguearse, revisar contraseña.'});	
 					}
 				
 			}			
 		else{			
-				res.status(404).send({message :'El usuario no esta registrado.'});				
+				res.status(200).send({message :'El usuario no esta registrado.'});				
 			}
 		
 	}	
