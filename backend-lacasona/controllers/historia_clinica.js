@@ -78,7 +78,25 @@ exports.addHCTratamiento= async(req,res)=>{
                 });
             }
             else{
-                console.log(sql);
+                console.log(sql.insertId);
+                /*evaluacion={
+                    id_hc_tratamiento:sql[0].insertId,
+                    fase:0,
+                    avanzo:0,
+                    id_persona_creacion:3,
+                    es_evolucion:0
+                }*/
+                axios({
+                    method:'post',
+                    url:'http://localhost:3000/hc/addEvolucion',
+                    data:{
+                        id_hc_tratamiento:sql.insertId,
+                        fase:0,
+                        avanzo:0,
+                        id_persona_creacion:3,
+                        es_evolucion:0
+                    }
+                });
                 res.status(200).json({
                 mensaje: 'Relacion HC y Tratamiento ok.'
                 }); 
