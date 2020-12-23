@@ -8,7 +8,7 @@ exports.loginUser= async(req, res)=>{
     var pass = params.clave;
 		
     let row = await pool.query ('SELECT * FROM persona as p INNER JOIN tipo_persona as tp ON p.id_tipo_persona = tp.id_tipo_persona WHERE p.activo=1 AND p.nombre_usuario = ?', [nombreUser]);
-		if (row){
+		if (row[0]){
             let usuario = row[0];
             console.log(usuario);
             //COMPROBAR LA PASS
@@ -29,12 +29,12 @@ exports.loginUser= async(req, res)=>{
             
 						}
 					}else{
-						res.status(200).send({message : 'El usuario no ha podido loguearse, revisar contraseña.'});	
+						res.status(400).send({message : 'El usuario no ha podido loguearse, revisar contraseña.'});	
 					}
 				
 			}			
 		else{			
-				res.status(200).send({message :'El usuario no esta registrado.'});				
+				res.status(400).send({message :'El usuario no esta registrado.'});				
 			}
 		
 	}	
