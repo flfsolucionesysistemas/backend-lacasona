@@ -143,11 +143,13 @@ exports.addEvolucion=async(req,res)=>{
     let datos = req.body;
 	if(datos.es_evolucion == 0){
       result= await pool.query('SELECT e.fase,e.id_evolucion FROM evolucion as e where e.es_evolucion=0 and e.id_hc_tratamiento='+datos.id_hc_tratamiento+' order by e.id_evolucion desc limit 1')
-      console.log(result[0]);
-      if (datos.fase==result[0].fase){        
+      if(result[0]){
+        if (datos.fase==result[0].fase){        
 			resultUpdate= await pool.query('UPDATE evolucion SET avanzo=1 WHERE id_evolucion = '+result[0].id_evolucion); 
 			console.log(resultUpdate+"update");
-		}		
+		}
+      }
+      		
 	}
     
     await pool.query('INSERT INTO evolucion set ?', [datos], function(err, sql){
@@ -160,7 +162,7 @@ exports.addEvolucion=async(req,res)=>{
         else{
             console.log(sql);
             res.status(200).json({
-            mensaje: 'Seguardo correctamente',
+            mensaje: 'Se guardo correctamente',
             sql:sql
             }); 
         }
