@@ -155,9 +155,11 @@ exports.getTurnosAsignados = async (req, res) =>{
 
 exports.getTurnosAsignadosAPacientes = async (req, res) =>{
     let id_paciente = req.params.id_paciente; 
-	let turnos = await pool.query ('SELECT * FROM turno ' +
-					' WHERE estado = 0 and id_paciente = ' + id_paciente +
-					' and (fecha > CURDATE() OR (fecha = CURDATE() and hora >= DATE_FORMAT(NOW( ), "%H:%i:%S"))) order by hora asc');
+	let turnos = await pool.query ('SELECT p.nombre, p.apellido, t.id_turno, t.fecha, t.hora, t.observacion, t.turno_tratamiento, t.estado, t.id_tipo_turno, t.costo_base, t.id_paciente, t.profesional_disponible ' +
+					' FROM turno as t ' +
+					' INNER JOIN persona as p on p.id_persona = t.id_profesional ' +
+					' WHERE t.estado = 0 and t.id_paciente = ' + id_paciente +
+					' and (t.fecha > CURDATE() OR (t.fecha = CURDATE() and t.hora >= DATE_FORMAT(NOW( ), "%H:%i:%S"))) order by t.hora asc');
 	if(turnos != null){
         res.status(200).send(turnos);      
     }
