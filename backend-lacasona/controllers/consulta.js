@@ -5,8 +5,12 @@ const fs = require('fs');
 const PDFDocument = require('pdfkit');
 let administradores=[];
 let emailProfesional;
-let options = {  day: 'numeric', month: 'numeric', year: 'numeric' };
-
+var meses = [
+	"Enero", "Febrero", "Marzo",
+	"Abril", "Mayo", "Junio", "Julio",
+	"Agosto", "Septiembre", "Octubre",
+	"Noviembre", "Diciembre"
+  ]
 
 exports.addConsulta= async (req, res) =>{
 	axios.get('http://localhost:3000/users/getUserTipo/1').then(resul=>
@@ -62,7 +66,8 @@ exports.addConsulta= async (req, res) =>{
 							url: 'http://localhost:3000/turno/getTurnoId/'+variable.id_turno,
 							method: 'get'
 						});
-						let fecha= (new Date (turnoasignado.data[0].fecha)).toLocaleDateString("es-ES", options);
+						let mes =(new Date (turnoasignado.data[0].fecha)).getMonth();
+						let fecha=(new Date (turnoasignado.data[0].fecha)).getDay()+'-'+meses[mes] +'-'+(new Date (turnoasignado.data[0].fecha)).getFullYear();
 						console.log(fecha);
 					 
 						var transporter = nodemailer.createTransport({
@@ -74,7 +79,7 @@ exports.addConsulta= async (req, res) =>{
 						});
 						var emailCliente="Bienvenido a PSICOINTERACCION."+
 										" Nos comunicamos con Ud. por que ha solicitado su primer entrevista. "+
-										 "Fecha: "+turnoasignado.data[0].fecha+".  Hora: "+turnoasignado.data[0].hora;
+										 "Fecha: "+fecha+".  Hora: "+turnoasignado.data[0].hora;
 						var emailAdmin="Se acada de registrar una nueva solicitud de consulta via web"
 						
 						var mailOptionsCliente = {
