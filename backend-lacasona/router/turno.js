@@ -17,7 +17,7 @@ router.get('/getFechas/:fecha1/:fecha2',ctrlTurno.getTurnosFechas);
 router.get('/getTurnoConsultaPrecio',ctrlTurno.getTurnoConsultaPrecio);
 
 router.get('/getFechasTurnosSegunProfesional/:id_profesional',ctrlTurno.getFechasTurnosSegunProfesional);
-
+router.get('/getTurnosPorFechaYProfesional/:fecha/:id_profesional',ctrlTurno.getTurnosPorFechaYProfesional);
 router.get('/getTurnosDisponiblesTipoTodos/:tipo',ctrlTurno.getTurnosDisponiblesTipoTodos);
 
 
