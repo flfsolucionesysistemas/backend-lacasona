@@ -235,13 +235,13 @@ exports.getTurnoConsultaPrecio = async (req, res) =>{
     });
 }
 
-exports.getTurnosSegunProfesional = async (req, res) =>{      
+exports.getFechasTurnosSegunProfesional = async (req, res) =>{      
 	let profesional=req.params.id_profesional;
 	
-	await pool.query ('SELECT * FROM turno ' +
+	await pool.query ('SELECT distinct fecha FROM turno ' +
 					  'WHERE turno_tratamiento = 1 and estado = 1 and costo_base = 0 and id_profesional = '+ profesional +
 					  ' and (fecha > CURDATE() OR  (fecha = CURDATE() and hora >= DATE_FORMAT(NOW( ), "%H:%i:%S"))) ' +
-					  ' order by fecha, hora' ,function(err,sql){
+					  ' order by fecha' ,function(err,sql){
         if(err){
             console.log(err);
             res.status(400).json({
