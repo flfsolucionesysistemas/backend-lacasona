@@ -159,7 +159,7 @@ exports.getTurnosAsignadosAPacientes = async (req, res) =>{
 					' FROM turno as t ' +
 					' INNER JOIN persona as p on p.id_persona = t.id_profesional ' +
 					' WHERE t.estado = 0 and t.id_paciente = ' + id_paciente +
-					' and (t.fecha > CURDATE() OR (t.fecha = CURDATE() and t.hora >= DATE_FORMAT(NOW( ), "%H:%i:%S"))) order by t.hora asc');
+					' and (t.fecha > CURDATE() OR (t.fecha = CURDATE() and t.hora >= DATE_FORMAT(NOW( ), "%H:%i:%S"))) order by t.fecha, t.hora asc');
 	if(turnos != null){
         res.status(200).send(turnos);      
     }
