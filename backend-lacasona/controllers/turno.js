@@ -170,6 +170,23 @@ exports.getTurnosAsignadosAPacientes = async (req, res) =>{
     }
 }
 
+exports.getProximoTurnoPaciente = async (req, res) =>{
+    let id_paciente = req.params.id_paciente; 
+	let turnos = await pool.query ('SELECT  p.nombre, p.apellido, t.id_turno, t.fecha, t.hora, t.observacion, t.turno_tratamiento, t.estado, t.id_tipo_turno, t.costo_base, t.id_paciente, t.profesional_disponible, t.id_profesional ' +
+					' FROM turno as t ' +
+					' INNER JOIN persona as p on p.id_persona = t.id_profesional ' +
+					' WHERE t.estado = 0 and t.id_paciente = ' + id_paciente +
+					' and (t.fecha > CURDATE() OR (t.fecha = CURDATE() and t.hora >= DATE_FORMAT(NOW( ), "%H:%i:%S"))) order by t.fecha asc limit 1');
+	if(turnos != null){
+        res.status(200).send(turnos);      
+    }
+    else{
+        return res.status(400).json({
+            ok:false           
+        }); 
+    }
+}
+
 exports.getTurnosLimit = async (req, res) =>{
      console.log(req.params.limit);
 	let turnos = await pool.query ('SELECT * FROM turno ORDER BY fecha DESC limit '+req.params.limit);
