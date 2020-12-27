@@ -235,6 +235,25 @@ exports.getTurnoConsultaPrecio = async (req, res) =>{
     });
 }
 
+exports.getTurnosSegunProfesional = async (req, res) =>{      
+	let profesional=req.params.id_profesional;
+	
+	await pool.query ('SELECT * FROM turno ' +
+					  'WHERE turno_tratamiento = 1 and estado = 1 and costo_base = 0 and id_profesional = '+ profesional +
+					  'order by fecha, hora' ,function(err,sql){
+        if(err){
+            console.log(err);
+            res.status(400).json({
+                error:"error consulta turno"
+            });
+        }
+        else{            
+             res.status(200).send(sql);
+        }
+    });
+}
+
+
 exports.getTurnosFechaTipo = async (req, res) =>{
     if(req.params.tipo == 0){
 		await pool.query ('SELECT t.id_turno, t.id_tipo_turno, t.costo_base, t.estado, t.fecha, t.hora,t.id_profesional, t.id_paciente, t.id_tipo_turno, t.observacion, t.profesional_disponible, t.turno_tratamiento'+ 
