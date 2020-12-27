@@ -155,7 +155,7 @@ exports.getTurnosAsignados = async (req, res) =>{
 
 exports.getTurnosAsignadosAPacientes = async (req, res) =>{
     let id_paciente = req.params.id_paciente; 
-	let turnos = await pool.query ('SELECT p.nombre, p.apellido, t.id_turno, t.fecha, t.hora, t.observacion, t.turno_tratamiento, t.estado, t.id_tipo_turno, t.costo_base, t.id_paciente, t.profesional_disponible ' +
+	let turnos = await pool.query ('SELECT  p.nombre, p.apellido, t.id_turno, t.fecha, t.hora, t.observacion, t.turno_tratamiento, t.estado, t.id_tipo_turno, t.costo_base, t.id_paciente, t.profesional_disponible, t.id_profesional ' +
 					' FROM turno as t ' +
 					' INNER JOIN persona as p on p.id_persona = t.id_profesional ' +
 					' WHERE t.estado = 0 and t.id_paciente = ' + id_paciente +
