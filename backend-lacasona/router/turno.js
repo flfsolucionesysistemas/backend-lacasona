@@ -21,5 +21,7 @@ router.get('/getFechasTurnosSegunProfesional/:id_profesional',ctrlTurno.getFecha
 router.get('/getTurnosPorFechaYProfesional/:fecha/:id_profesional',ctrlTurno.getTurnosPorFechaYProfesional);
 router.get('/getTurnosDisponiblesTipoTodos/:tipo',ctrlTurno.getTurnosDisponiblesTipoTodos);
 
+router.get('/getTurnosAsignadosAPacientes/:id_paciente',ctrlTurno.getTurnosAsignadosAPacientes);
+
 
 module.exports = router;
