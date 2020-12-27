@@ -84,6 +84,7 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
 app.listen(app.get('port'), () => { console.log('Listening to port: ' + app.get('port')) })
 
 
