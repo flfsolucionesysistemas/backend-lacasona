@@ -153,6 +153,21 @@ exports.getTurnosAsignados = async (req, res) =>{
     }
 }
 
+exports.getTurnosAsignadosAPacientes = async (req, res) =>{
+    let id_paciente = req.params.id_paciente; 
+	let turnos = await pool.query ('SELECT * FROM turno ' +
+					' WHERE estado = 0 and id_paciente = ' + id_paciente +
+					' and (fecha > CURDATE() OR (fecha = CURDATE() and hora >= DATE_FORMAT(NOW( ), "%H:%i:%S"))) order by hora asc');
+	if(turnos != null){
+        res.status(200).send(turnos);      
+    }
+    else{
+        return res.status(400).json({
+            ok:false           
+        }); 
+    }
+}
+
 exports.getTurnosLimit = async (req, res) =>{
      console.log(req.params.limit);
 	let turnos = await pool.query ('SELECT * FROM turno ORDER BY fecha DESC limit '+req.params.limit);
