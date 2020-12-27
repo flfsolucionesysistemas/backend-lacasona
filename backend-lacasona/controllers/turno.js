@@ -240,6 +240,7 @@ exports.getTurnosSegunProfesional = async (req, res) =>{
 	
 	await pool.query ('SELECT * FROM turno ' +
 					  'WHERE turno_tratamiento = 1 and estado = 1 and costo_base = 0 and id_profesional = '+ profesional +
+					  ' and (fecha > CURDATE() OR  (fecha = CURDATE() and hora >= DATE_FORMAT(NOW( ), "%H:%i:%S"))) ' +
 					  ' order by fecha, hora' ,function(err,sql){
         if(err){
             console.log(err);
