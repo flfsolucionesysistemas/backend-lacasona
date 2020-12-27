@@ -79,13 +79,7 @@ exports.addHCTratamiento= async(req,res)=>{
             }
             else{
                 console.log(sql.insertId);
-                /*evaluacion={
-                    id_hc_tratamiento:sql[0].insertId,
-                    fase:0,
-                    avanzo:0,
-                    id_persona_creacion:3,
-                    es_evolucion:0
-                }*/
+               
                 axios({
                     method:'post',
                     url:'http://localhost:3000/hc/addEvolucion',

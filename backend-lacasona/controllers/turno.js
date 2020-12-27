@@ -311,3 +311,25 @@ exports.getTurnosFechaTipo = async (req, res) =>{
 		}
 	}
 }
+
+exports.getTurnoId = async (req, res) =>{
+     
+	await pool.query ('SELECT * FROM turno where id_turno ="'+req.params.id+'"' ,function(err,sql){
+        if(err){
+            console.log(err);
+            res.status(400).json({
+                error:"ocurrio un error"
+            });
+        }
+        else{
+            if(sql[0]){
+                res.status(200).send(sql);
+            }
+            else{
+                res.status(400).json({
+                    mensaje: "no existen datos"
+                });
+            }
+        }
+    });
+}

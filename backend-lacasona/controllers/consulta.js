@@ -1,11 +1,12 @@
 const pool = require('../config/database');
 var nodemailer = require('nodemailer');
 const axios = require('axios');
-//const pdf = require('html-pdf');
 const fs = require('fs');
 const PDFDocument = require('pdfkit');
 let administradores=[];
 let emailProfesional;
+let options = {  day: 'numeric', month: 'numeric', year: 'numeric' };
+
 
 exports.addConsulta= async (req, res) =>{
 	axios.get('http://localhost:3000/users/getUserTipo/1').then(resul=>
@@ -15,6 +16,7 @@ exports.addConsulta= async (req, res) =>{
 	let costo_en = variable.costo_entrevista;
 	let idPersona;
 	//EJECUTO EL ALTA DE PERSONA CLIENTE
+	
 	let newUser={
 			id_tipo_persona: 3,				
 			nombre: variable.nombre,
@@ -56,7 +58,12 @@ exports.addConsulta= async (req, res) =>{
 						result = await pool.query('UPDATE turno SET ? WHERE id_turno = ?', [updateTurno, variable.id_turno]);
 						console.log(result);
 					//SE ENVIAN LOS CORREOS ELECTRONICOS	
-					
+						const turnoasignado = await axios({
+							url: 'http://localhost:3000/turno/getTurnoId/'+variable.id_turno,
+							method: 'get'
+						});
+						let fecha= (new Date (turnoasignado.data[0].fecha)).toLocaleDateString("es-ES", options);
+						console.log(fecha);
 					 
 						var transporter = nodemailer.createTransport({
 							service: 'Gmail',
@@ -65,8 +72,10 @@ exports.addConsulta= async (req, res) =>{
 							pass: 'everLAST2020'
 							}
 						});
-						var emailCliente="Bienvenido a PSICOINTERACCION. Nos comunicamos con Ud. por que ha solicitado su primer entrevista";
-						var emailAdmin="Se registro una nueva entrevista"
+						var emailCliente="Bienvenido a PSICOINTERACCION."+
+										" Nos comunicamos con Ud. por que ha solicitado su primer entrevista. "+
+										 "Fecha: "+turnoasignado.data[0].fecha+".  Hora: "+turnoasignado.data[0].hora;
+						var emailAdmin="Se acada de registrar una nueva solicitud de consulta via web"
 						
 						var mailOptionsCliente = {
 							from: 'LaCasonaWeb',
