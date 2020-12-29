@@ -18,7 +18,7 @@ let preference = {
       quantity: 1,
     }
   ],
-  notification_url: 'http://ec2-52-14-22-254.us-east-2.compute.amazonaws.com:3000/mercadopago/notificacion/'+usuario
+  notification_url: 'http://ec2-52-14-22-254.us-east-2.compute.amazonaws.com:3000/mercadopago/notificacion/'+usuario.nombre+usuario.apellido+usuario.email+usuario.telefono+usuario.localidadSleccionada+usuario.turnoSeleccionado+usuario.costo_entrevista
 };
 console.log(preference);
 const response = await mercadopago.preferences.create(preference) 
@@ -51,9 +51,9 @@ else{
     */
     if (reqBody.topic == 'merchant_order') return true
   
-    const usuario = reqParams.usuario   //el que colocamos en la notification_url del objeto preference
+    const nombreusuario = reqParams.nombre   //el que colocamos en la notification_url del objeto preference
     //const idDelProducto = reqParams.idDelProducto //IDEM
-    console.log('usuario   ',usuario);
+    console.log('usuario   ',nombreusuario);
     const paymentId = reqBody.data.id //identifación del pago
   
     try {
