@@ -16,7 +16,7 @@ let preference = {
       quantity: 1,
     }
   ],
-  notification_url: 'http://ec2-52-14-22-254.us-east-2.compute.amazonaws.com:3000/mercadopago/notificacion/${idDelUsuario}'
+  notification_url: 'http://ec2-52-14-22-254.us-east-2.compute.amazonaws.com:3000/mercadopago/notificacion/'+idDelUsuario
 };
 console.log(preference);
 const response = await mercadopago.preferences.create(preference) 
