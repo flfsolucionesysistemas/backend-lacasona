@@ -8,17 +8,17 @@ mercadopago.configure({
   
   
 exports.obtenerUrlDePago= async (req, res) =>{
-    let idDelUsuario = req.body.email;
+    let usuario = req.body;
     // Crea un objeto de preferencia
 let preference = {
   items: [
     {
       title: 'Solicitud consulta',
-      unit_price: req.body.precio,
+      unit_price: usuario.costo_entrevista,
       quantity: 1,
     }
   ],
-  notification_url: 'http://ec2-52-14-22-254.us-east-2.compute.amazonaws.com:3000/mercadopago/notificacion/'+idDelUsuario
+  notification_url: 'http://ec2-52-14-22-254.us-east-2.compute.amazonaws.com:3000/mercadopago/notificacion/'+usuario
 };
 console.log(preference);
 const response = await mercadopago.preferences.create(preference) 
@@ -51,9 +51,9 @@ else{
     */
     if (reqBody.topic == 'merchant_order') return true
   
-    const idDelUsuario = reqParams.idDelUsuario   //el que colocamos en la notification_url del objeto preference
+    const usuario = reqParams.usuario   //el que colocamos en la notification_url del objeto preference
     //const idDelProducto = reqParams.idDelProducto //IDEM
-  
+    console.log('usuario   ',usuario);
     const paymentId = reqBody.data.id //identifación del pago
   
     try {
@@ -62,7 +62,7 @@ else{
       if (!paymentInfo) return true   //si no hay información del pago, salimos
   
       const paymentStatus = paymentInfo.status
-      console.log(paymentInfo);
+      console.log('Id del pago: ',paymentInfo.id);
       console.log('Estado del Pago:', paymentStatus)
   
       if (paymentStatus !== 'approved') return true   //si el pago no está aprobado salimos
