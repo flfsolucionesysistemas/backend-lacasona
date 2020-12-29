@@ -1,9 +1,17 @@
 const pool = require('../config/database');
-const jwt = require('../config/jwt');
-const helpers = require('../config/helpers');
+//const jwt = require('../config/jwt');
+//const helpers = require('../config/helpers');
 var nodemailer = require('nodemailer');
 const axios = require('axios');
 let administradores=[];
+// SDK de Mercado Pago
+const mercadopago = require ('mercadopago');
+
+// Agrega credenciales
+mercadopago.configure({
+  access_token: '4695914672902143'
+});
+
 
 exports.getLocalidadesPorProvincia= async (req, res) =>{
     let valor = req.params.idProvincia;
@@ -120,4 +128,33 @@ exports.getLecturaHC =  async(req, res)=>{
 
     
 
+}
+
+exports.obtenerURL = async(req,res)=>{
+    const item = {
+        title: 'nombre del producto',
+        description: 'descripción del producto',
+        unit_price: 1000,   //precio unitario en la moneda deseada
+        currency_id: "ARS", //en este caso la moneda es pesos argentinos
+        quantity: 1         //cantidad (el precio se multiplica por la cantidad)
+      }
+    
+      let preference = {
+        items: [item],  //se puede incluir múltiples ítems, separados por coma
+        back_urls: {
+          success: 'www.google.com.ar',
+          failure: 'www.google.com.ar',
+          pending: 'www.google.com.ar'
+        },
+        notification_url: 'www.google.com.ar',
+    };
+    await mercadopago.preferences.create(preference)
+        .then(function(response){
+            res.status(200).json({
+                response
+            });
+        }).catch(function(error){
+          console.log(error);
+        });
+         
 }
