@@ -33,7 +33,7 @@ else{
 
 
   exports.confirmarPago = (req, res, next) => {
-    await confirmarPago(req.body, req.params)
+    confirmarPago(req.body, req.params)
       .then(retorno => {
         res.status(200).json(retorno)
       })
