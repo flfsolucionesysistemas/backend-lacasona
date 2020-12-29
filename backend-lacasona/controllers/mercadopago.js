@@ -1,4 +1,6 @@
 const mercadopago = require('mercadopago');
+const axios = require('axios');
+
 mercadopago.configure({
     access_token: 'TEST-4695914672902143-122819-5bd0160aa06e09dee9becd0a8de6aa83-169256828'
   });
@@ -87,7 +89,7 @@ else{
   async function obtenerInfoDePago(paymentId) {
     try {
   
-      const response = await axios.get(`https://api.mercadopago.com/v1/payments/${paymentId}`, {
+      const response = await axios.get('https://api.mercadopago.com/v1/payments/'+paymentId, {
         params: {
           access_token: 'TEST-4695914672902143-122819-5bd0160aa06e09dee9becd0a8de6aa83-169256828',
           status: 'approved',
