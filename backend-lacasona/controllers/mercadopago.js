@@ -18,6 +18,11 @@ let preference = {
       quantity: 1,
     }
   ],
+  back_urls: {
+    success: 'http://lacasonaweb-front.dyndnss.net/',
+    failure: 'http://lacasonaweb-front.dyndnss.net/',
+    pending: 'http://lacasonaweb-front.dyndnss.net/'
+  },
   notification_url: 'http://ec2-52-14-22-254.us-east-2.compute.amazonaws.com:3000/mercadopago/notificacion/'+usuario.nombre+'/'+usuario.apellido+'/'+usuario.email+'/'+usuario.telefono+'/'+usuario.id_localidad+'/'+usuario.id_turno+'/'+usuario.costo_entrevista
 };
 console.log(preference);
