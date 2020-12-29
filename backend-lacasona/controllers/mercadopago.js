@@ -62,11 +62,11 @@ else{
       if (!paymentInfo) return true   //si no hay información del pago, salimos
   
       const paymentStatus = paymentInfo.status
-      
+      console.log(paymentInfo);
       console.log('Estado del Pago:', paymentStatus)
   
       if (paymentStatus !== 'approved') return true   //si el pago no está aprobado salimos
-  
+      //addConsulta
       /*
       en este momento sabemos que el pago fue aprobado
       que el usuario con el id indicado es el que originó la compra
