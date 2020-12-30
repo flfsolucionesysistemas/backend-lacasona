@@ -191,3 +191,21 @@ exports.getUserTipo= async (req, res) =>{
         }); 
     }
 }
+
+
+exports.getExisteUser= async (req, res) =>{
+    let email = req.params.email;
+    
+    let body = await pool.query ('SELECT * FROM persona WHERE activo = 1 and email = ?', [email]);
+	
+    if(body != null){
+        res.status(200).send(body);
+       
+    }
+    else{
+        return res.status(400).json({
+            ok:false
+            
+        }); 
+    }
+}
