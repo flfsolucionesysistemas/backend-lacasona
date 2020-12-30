@@ -73,6 +73,39 @@ else{
   
       if (paymentStatus !== 'approved') return true   //si el pago no está aprobado salimos
       //addConsulta
+      let pago = {
+        fecha: paymentInfo.date_created,
+        total: 200,
+        estado: "aprobado",
+        pago_tratamiento: 0,
+        id_mercadopago: paymentInfo.id,
+        estado_mercadopago: paymentStatus
+      }
+      const addPago = await axios({
+        url: 'http://localhost:3000/global/add/',
+        method: 'post',
+        data: pago
+      });
+      console.log(addPago.data[0]);
+
+      let consulta ={
+        nombre:usuario.nombre,
+        apellido:usuario.apellido,
+        email:usuario.email,
+        telefono:usuario.telefono,
+        id_localidad:usuario.id_localidad,
+        id_turno:usuario.id_turno,
+        costo_entrevista:usuario.costo_entrevista,
+        id_pago:addPago.data[0].insertId
+      }
+      
+      const addConsulta = await axios({
+        url: 'http://localhost:3000/consulta/add/',
+        method: 'post',
+        data: consulta
+      });
+      
+      console.log(addConsulta.data[0]);
       /*
       en este momento sabemos que el pago fue aprobado
       que el usuario con el id indicado es el que originó la compra
@@ -111,5 +144,7 @@ else{
       console.log('error al obtener información de pago:', error)
       return true
     }
-  }   
+  }  
+  
+
  

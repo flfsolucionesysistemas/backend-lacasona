@@ -4,14 +4,6 @@ const pool = require('../config/database');
 var nodemailer = require('nodemailer');
 const axios = require('axios');
 let administradores=[];
-// SDK de Mercado Pago
-const mercadopago = require ('mercadopago');
-
-// Agrega credenciales
-mercadopago.configure({
-  access_token: '4695914672902143'
-});
-
 
 exports.getLocalidadesPorProvincia= async (req, res) =>{
     let valor = req.params.idProvincia;
@@ -130,31 +122,28 @@ exports.getLecturaHC =  async(req, res)=>{
 
 }
 
-exports.obtenerURL = async(req,res)=>{
-    const item = {
-        title: 'nombre del producto',
-        description: 'descripción del producto',
-        unit_price: 1000,   //precio unitario en la moneda deseada
-        currency_id: "ARS", //en este caso la moneda es pesos argentinos
-        quantity: 1         //cantidad (el precio se multiplica por la cantidad)
-      }
-    
-      let preference = {
-        items: [item],  //se puede incluir múltiples ítems, separados por coma
-        back_urls: {
-          success: 'www.google.com.ar',
-          failure: 'www.google.com.ar',
-          pending: 'www.google.com.ar'
-        },
-        notification_url: 'www.google.com.ar',
-    };
-    await mercadopago.preferences.create(preference)
-        .then(function(response){
-            res.status(200).json({
-                response
-            });
-        }).catch(function(error){
-          console.log(error);
+exports.addPago =  async(req, res)=>{
+    let data = req.body;
+   
+    if(data!=null){
+        await pool.query('INSERT INTO pago set ?', [data], function(err, sql){
+            if(err){
+                console.log(err);
+                res.status(400).json({
+                    mensaje: 'Ocurrio un problema al intentar guardar'
+                });
+            }
+            else{
+                console.log(sql);
+                res.status(200).json({
+                mensaje: 'Nuevo pago registrado'
+                }); 
+            }
         });
-         
+    }
+    else{
+        res.status(400).json({
+            mensaje: 'No se obtuvieron correctamente los datos'
+        });  
+    }
 }
