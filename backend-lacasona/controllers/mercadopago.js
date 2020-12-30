@@ -80,13 +80,13 @@ else{
         pago_tratamiento: 0,
         id_mercadopago: paymentInfo.id,
         estado_mercadopago: paymentStatus,
-        nombre:usuario.nombre,
-        apellido:usuario.apellido,
-        email:usuario.email,
-        telefono:usuario.telefono,
-        id_localidad:usuario.id_localidad,
-        id_turno:usuario.id_turno,
-        costo_entrevista:usuario.costo_entrevista,
+        nombre:reqParams.nombre,
+        apellido:reqParams.apellido,
+        email:reqParams.email,
+        telefono:reqParams.telefono,
+        id_localidad:reqParams.id_localidad,
+        id_turno:reqParams.id_turno,
+        costo_entrevista:reqParams.costo_entrevista,
         id_pago:res.insertId
       }
       const addPago = await axios({
