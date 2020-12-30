@@ -72,6 +72,7 @@ else{
       console.log('Estado del Pago:', paymentStatus)
   console.log(paymentInfo);
       if (paymentStatus !== 'approved') return true   //si el pago no está aprobado salimos
+      console.log("entra");
       //addConsulta
       let pago = {
         fecha: paymentInfo.date_created,
