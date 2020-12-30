@@ -89,12 +89,14 @@ else{
         costo_entrevista:reqParams.costo_entrevista,
         id_pago:res.insertId
       }
+      console.log(pago);
+
       const addPago = await axios({
         url: 'http://localhost:3000/global/add/',
         method: 'post',
         data: pago
       }).then(res=>{
-         console.log(res.insertId);
+         console.log("id de pago"+res.insertId);
             
           })
           .catch(error => {
