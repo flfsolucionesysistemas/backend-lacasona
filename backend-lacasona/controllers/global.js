@@ -126,20 +126,35 @@ exports.addPago =  async(req, res)=>{
     let data = req.body;
    
     if(data!=null){
-        await pool.query('INSERT INTO pago set ?', [data], function(err, sql){
-            if(err){
+        let res = await pool.query('INSERT INTO pago set ?', [data]);
+            if(res != null){
+                console.log(res);
+                let consulta ={
+                    nombre:usuario.nombre,
+                    apellido:usuario.apellido,
+                    email:usuario.email,
+                    telefono:usuario.telefono,
+                    id_localidad:usuario.id_localidad,
+                    id_turno:usuario.id_turno,
+                    costo_entrevista:usuario.costo_entrevista,
+                    id_pago:res.insertId
+                    }
+                const addConsulta = await axios({
+                    url: 'http://localhost:3000/consulta/add/',
+                    method: 'post',
+                    data: consulta
+                  });
+                res.status(200).json({
+                mensaje: 'Nuevo pago registrado'
+                }); 
+            }
+            else{
                 console.log(err);
                 res.status(400).json({
                     mensaje: 'Ocurrio un problema al intentar guardar'
                 });
             }
-            else{
-                console.log(sql);
-                res.status(200).json({
-                mensaje: 'Nuevo pago registrado'
-                }); 
-            }
-        });
+           
     }
     else{
         res.status(400).json({

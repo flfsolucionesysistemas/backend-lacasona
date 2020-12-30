@@ -1,6 +1,5 @@
 const mercadopago = require('mercadopago');
 const axios = require('axios');
-let consulta=[];
 
 mercadopago.configure({
     //access_token:'APP_USR-4695914672902143-123020-6e36dda61188fc87b3d661d04aeb724e-169256828'
@@ -74,7 +73,7 @@ else{
   
       if (paymentStatus !== 'approved') return true   //si el pago no está aprobado salimos
       //addConsulta
-      /*let pago = {
+      let pago = {
         fecha: paymentInfo.date_created,
         total: 200,
         estado: "aprobado",
@@ -87,16 +86,7 @@ else{
         method: 'post',
         data: pago
       }).then(res=>{
-        consulta ={
-            nombre:usuario.nombre,
-            apellido:usuario.apellido,
-            email:usuario.email,
-            telefono:usuario.telefono,
-            id_localidad:usuario.id_localidad,
-            id_turno:usuario.id_turno,
-            costo_entrevista:usuario.costo_entrevista,
-            id_pago:res[0].insertId
-            }
+         console.log(res.insertId);
             
           })
           .catch(error => {
@@ -104,12 +94,12 @@ else{
           })
       
       console.log(addPago);
-      const addConsulta = await axios({
+      /*const addConsulta = await axios({
         url: 'http://localhost:3000/consulta/add/',
         method: 'post',
         data: consulta
       });
-      console.log(addConsulta);*/
+      console.log(addConsulta);
       /*
       en este momento sabemos que el pago fue aprobado
       que el usuario con el id indicado es el que originó la compra
