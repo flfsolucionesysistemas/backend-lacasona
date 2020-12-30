@@ -3,7 +3,7 @@ const axios = require('axios');
 
 mercadopago.configure({
     //access_token:'APP_USR-4695914672902143-123020-6e36dda61188fc87b3d661d04aeb724e-169256828'
-    access_token: 'TEST-4695914672902143-123020-174dd3b3585a52434c35f92fdf58ab3e-169256828'
+    access_token: 'TEST-4270581017673819-123020-8674ab1ab7b0e591e0605c04da95e07a-155012162'
   });
   
   
@@ -98,7 +98,7 @@ else{
       const response = await axios.get('https://api.mercadopago.com/v1/payments/'+paymentId, {
         params: {
            // access_token:'APP_USR-4695914672902143-123020-6e36dda61188fc87b3d661d04aeb724e-169256828',
-          access_token: 'TEST-4695914672902143-123020-174dd3b3585a52434c35f92fdf58ab3e-169256828',
+          access_token: 'TEST-4270581017673819-123020-8674ab1ab7b0e591e0605c04da95e07a-155012162',
           status: 'approved',
           offset: 0,
           limit: 10,
