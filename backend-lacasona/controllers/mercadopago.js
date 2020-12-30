@@ -74,7 +74,7 @@ else{
   
       if (paymentStatus !== 'approved') return true   //si el pago no está aprobado salimos
       //addConsulta
-      let pago = {
+      /*let pago = {
         fecha: paymentInfo.date_created,
         total: 200,
         estado: "aprobado",
@@ -109,7 +109,7 @@ else{
         method: 'post',
         data: consulta
       });
-      console.log(addConsulta);
+      console.log(addConsulta);*/
       /*
       en este momento sabemos que el pago fue aprobado
       que el usuario con el id indicado es el que originó la compra
