@@ -79,7 +79,15 @@ else{
         estado: "aprobado",
         pago_tratamiento: 0,
         id_mercadopago: paymentInfo.id,
-        estado_mercadopago: paymentStatus
+        estado_mercadopago: paymentStatus,
+        nombre:usuario.nombre,
+        apellido:usuario.apellido,
+        email:usuario.email,
+        telefono:usuario.telefono,
+        id_localidad:usuario.id_localidad,
+        id_turno:usuario.id_turno,
+        costo_entrevista:usuario.costo_entrevista,
+        id_pago:res.insertId
       }
       const addPago = await axios({
         url: 'http://localhost:3000/global/add/',

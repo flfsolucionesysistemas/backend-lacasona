@@ -124,19 +124,26 @@ exports.getLecturaHC =  async(req, res)=>{
 
 exports.addPago =  async(req, res)=>{
     let data = req.body;
-   
+    let pago = {
+        fecha: data.date_created,
+        total: data.total,
+        estado: data.estado,
+        pago_tratamiento: data.pago_tratamiento,
+        id_mercadopago: data.id_mercadopago,
+        estado_mercadopago: data.estado_mercadopago,
+    }  
     if(data!=null){
-        let res = await pool.query('INSERT INTO pago set ?', [data]);
+        let res = await pool.query('INSERT INTO pago set ?', [pago]);
             if(res != null){
                 console.log(res);
                 let consulta ={
-                    nombre:usuario.nombre,
-                    apellido:usuario.apellido,
-                    email:usuario.email,
-                    telefono:usuario.telefono,
-                    id_localidad:usuario.id_localidad,
-                    id_turno:usuario.id_turno,
-                    costo_entrevista:usuario.costo_entrevista,
+                    nombre:data.nombre,
+                    apellido:data.apellido,
+                    email:data.email,
+                    telefono:data.telefono,
+                    id_localidad:data.id_localidad,
+                    id_turno:data.id_turno,
+                    costo_entrevista:data.costo_entrevista,
                     id_pago:res.insertId
                     }
                 const addConsulta = await axios({
