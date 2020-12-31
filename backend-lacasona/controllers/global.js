@@ -150,15 +150,16 @@ exports.addPago =  async(req, res)=>{
                     method: 'post',
                     data: consulta
                   });
-            res.status(200).json({
-            mensaje: 'Nuevo pago registrado'
-            });     
+                
             }
             else{
                 res.status(400).json({
                     mensaje: 'Ocurrio un problema al intentar guardar'
                 });
             }
+            res.status(200).json({
+            mensaje: 'Nuevo pago registrado'
+               }); 
            
     }
     else{
