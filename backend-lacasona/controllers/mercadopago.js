@@ -91,7 +91,7 @@ else{
       }
       console.log("lala"+pago);
 
-      /*const addPago = await axios({
+      const addPago = await axios({
         url: 'http://localhost:3000/global/add/',
         method: 'post',
         data: pago
