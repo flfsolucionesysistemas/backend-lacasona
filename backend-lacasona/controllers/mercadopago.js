@@ -76,7 +76,7 @@ else{
       //addConsulta
       let pago = {
         fecha: paymentInfo.date_created,
-        total: 200,
+        total: paymentInfo.transaction_details.net_received_amount,
         estado: "aprobado",
         pago_tratamiento: 0,
         id_mercadopago: paymentInfo.id,
@@ -94,16 +94,8 @@ else{
         url: 'http://localhost:3000/global/add/',
         method: 'post',
         data: pago
-      }).then(res=>{
-         console.log("se registro pago"+res);
-            
-          })
-          .catch(error => {
-            throw new Error('Error crear pago')
-          })
-      
-      console.log(addPago);
-      /*const addConsulta = await axios({
+      });
+       /*const addConsulta = await axios({
         url: 'http://localhost:3000/consulta/add/',
         method: 'post',
         data: consulta
