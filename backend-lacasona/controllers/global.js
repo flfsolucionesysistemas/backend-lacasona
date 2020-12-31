@@ -8,7 +8,7 @@ let administradores=[];
 exports.getLocalidadesPorProvincia= async (req, res) =>{
     let valor = req.params.idProvincia;
 	console.log(valor);
-	let body = await pool.query ('SELECT * FROM localidad WHERE id_provincia = ?', [valor]);
+	let body = await pool.query ('SELECT * FROM localidad WHERE id_provincia = ?', [valor] + ' ORDER BY nombre');
 	
     if(body != null){
         res.status(200).send({body});      
@@ -22,7 +22,7 @@ exports.getLocalidadesPorProvincia= async (req, res) =>{
 
 exports.getProvincias= async (req, res) =>{
     
-	let body = await pool.query ('SELECT * FROM provincia WHERE activo = 1');
+	let body = await pool.query ('SELECT * FROM provincia WHERE activo = 1 ORDER BY nombre');
 	
     if(body != null){
         res.status(200).send({body});      
