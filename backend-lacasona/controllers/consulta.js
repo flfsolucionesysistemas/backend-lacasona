@@ -68,7 +68,7 @@ exports.addConsulta= async (req, res) =>{
 							method: 'get'
 						});
 						let mes =(new Date (turnoasignado.data[0].fecha)).getMonth();
-						let fecha=(new Date (turnoasignado.data[0].fecha)).getDay()+'-'+meses[mes] +'-'+(new Date (turnoasignado.data[0].fecha)).getFullYear();
+						let fecha=(new Date (turnoasignado.data[0].fecha)).getDate()+'-'+meses[mes] +'-'+(new Date (turnoasignado.data[0].fecha)).getFullYear();
 						console.log(fecha);
 					 
 						var transporter = nodemailer.createTransport({
