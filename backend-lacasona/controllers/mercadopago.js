@@ -87,8 +87,7 @@ else{
         telefono:reqParams.telefono,
         id_localidad:reqParams.id_localidad,
         id_turno:reqParams.id_turno,
-        costo_entrevista:reqParams.costo_entrevista,
-        id_pago:res.insertId
+        costo_entrevista:reqParams.costo_entrevista
       }
       console.log("lala"+pago);
 
