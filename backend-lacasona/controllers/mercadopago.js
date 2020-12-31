@@ -70,7 +70,7 @@ else{
       const paymentStatus = paymentInfo.status
       console.log('Id del pago: ',paymentInfo.id);
       console.log('Estado del Pago:', paymentStatus)
-  console.log(paymentInfo);
+  
       if (paymentStatus !== 'approved') return true   //si el pago no está aprobado salimos
       console.log("entra");
       //addConsulta
@@ -89,14 +89,13 @@ else{
         id_turno:reqParams.id_turno,
         costo_entrevista:reqParams.costo_entrevista
       }
-      console.log("lala"+pago);
-
+      
       const addPago = await axios({
         url: 'http://localhost:3000/global/add/',
         method: 'post',
         data: pago
       }).then(res=>{
-         console.log("id de pago"+res.insertId);
+         console.log("se registro pago"+res);
             
           })
           .catch(error => {

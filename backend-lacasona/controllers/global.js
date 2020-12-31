@@ -133,10 +133,9 @@ exports.addPago =  async(req, res)=>{
         estado_mercadopago: data.estado_mercadopago,
     }  
     if(data!=null){
-        let res = await pool.query('INSERT INTO pago set ?', [pago]);
-            if(res != null){
-                console.log(res);
-                let consulta ={
+        let rest = await pool.query('INSERT INTO pago set ?', [pago]);
+            if(rest != null){
+                 let consulta ={
                     nombre:data.nombre,
                     apellido:data.apellido,
                     email:data.email,
@@ -144,19 +143,18 @@ exports.addPago =  async(req, res)=>{
                     id_localidad:data.id_localidad,
                     id_turno:data.id_turno,
                     costo_entrevista:data.costo_entrevista,
-                    id_pago:res.insertId
+                    id_pago:rest.insertId
                     }
                 const addConsulta = await axios({
                     url: 'http://localhost:3000/consulta/add/',
                     method: 'post',
                     data: consulta
                   });
-                res.status(200).json({
-                mensaje: 'Nuevo pago registrado'
-                }); 
+            res.status(200).json({
+            mensaje: 'Nuevo pago registrado'
+            });     
             }
             else{
-                console.log(err);
                 res.status(400).json({
                     mensaje: 'Ocurrio un problema al intentar guardar'
                 });
