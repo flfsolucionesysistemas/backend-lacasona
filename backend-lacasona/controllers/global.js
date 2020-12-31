@@ -125,7 +125,7 @@ exports.getLecturaHC =  async(req, res)=>{
 exports.addPago =  async(req, res)=>{
     let data = req.body;
     let pago = {
-        fecha: data.date_created,
+        fecha: data.fecha,
         total: data.total,
         estado: data.estado,
         pago_tratamiento: data.pago_tratamiento,
