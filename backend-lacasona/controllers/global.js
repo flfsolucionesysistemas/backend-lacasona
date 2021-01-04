@@ -184,9 +184,18 @@ exports.addCupon = async(req, res)=>{
     });
 }
 
-exports.getCuponid_hc_tratamiento = async(req, res)=>{
-    
-    await pool.query('SELECT * from cupon WHERE id_hc_tratamiento ='+req.params.id_hc_tratamiento,  function(err, sql){
+exports.getCuponid_hc = async(req, res)=>{
+    /*const hc = await axios({
+        url: 'http://localhost:3000/hc/getHCPorPersona/'+req.params.id_persona,
+        method: 'get'
+      });
+    console.log(hc.body[0].id_persona_paciente +   "lala");*/
+    const hc_tratamiento = await axios({
+        url: 'http://localhost:3000/hc/getHCTratamientoPorHC/'+req.params.id_hc,
+        method: 'get'
+      });
+     console.log(hc_tratamiento.data.body[0]); 
+    await pool.query('SELECT * from cupon WHERE id_hc_tratamiento ='+hc_tratamiento.data.body[0].id_hc_tratamiento,  function(err, sql){
         if(err){
             res.status(400).json({
                 err,
