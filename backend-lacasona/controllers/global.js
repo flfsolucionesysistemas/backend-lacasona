@@ -168,3 +168,34 @@ exports.addPago =  async(req, res)=>{
         });  
     }
 }
+exports.addCupon = async(req, res)=>{
+    let body=req.body;
+    await pool.query('INSERT INTO cupon set ?',[body],  function(err, sql){
+        if(err){
+            res.status(400).json({
+                err,
+                error: 'No se ha podido generar el cupon de pago'
+            });
+        }
+        else{
+            /*res.status(200).send({sql});*/
+			res.status(200).json({sql, mensaje: 'Se genero el cupon de pago'}); 
+        }
+    });
+}
+
+exports.getCuponid_hc_tratamiento = async(req, res)=>{
+    
+    await pool.query('SELECT * from cupon WHERE id_hc_tratamiento ='+req.params.id_hc_tratamiento,  function(err, sql){
+        if(err){
+            res.status(400).json({
+                err,
+                error: 'No existen cupones de pago'
+            });
+        }
+        else{
+            /*res.status(200).send({sql});*/
+			res.status(200).json(sql); 
+        }
+    });
+}

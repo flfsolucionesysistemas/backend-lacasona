@@ -220,3 +220,20 @@ exports.getEvolucionFaseActual = async(req,res)=>{
       
       });
 }
+
+exports.getTratamientoId = async(req,res)=>{
+    await pool.query('SELECT * FROM tratamiento WHERE id_tratamiento ='+req.params.id_tratamiento, function(err,tratamiento){
+        if(err){
+            console.log(err);
+            res.status(400).json({
+                mensaje: 'No se pudo listar el tratamiento'
+            });
+        }
+        else{
+            console.log(tratamiento);
+            res.status(200).send(tratamiento)
+            
+        }
+       
+    });
+}
