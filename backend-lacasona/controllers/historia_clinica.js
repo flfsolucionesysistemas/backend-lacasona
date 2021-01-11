@@ -68,10 +68,6 @@ exports.addHC = async (req, res)=>{
 
 exports.addHCTratamiento= async(req,res)=>{
     let data = req.body;
-    /*const tratamiento = await axios({
-        url:'http://localhost:3000/tratamiento/getTratamientoId/'+data.id_tratamiento,
-        method:'get'
-    });*/
    
     if(data!=null){
         await pool.query('INSERT INTO hc_tratamiento set ?', [data], function(err, sql){
@@ -82,16 +78,7 @@ exports.addHCTratamiento= async(req,res)=>{
                 });
             }
             else{
-               /* axios({
-                    method:'post',
-                    url:'http://localhost:3000/global/addCupon',
-                    data:{
-                        pagado:0,
-                        total:tratamiento.data[0].costo_mensual,
-                        id_hc_tratamiento:sql.insertId,
-                        fecha_vencimiento:"2021-01-10"
-                    }
-                });*/
+               
                 axios({
                     method:'post',
                     url:'http://localhost:3000/hc/addEvolucion',
@@ -165,7 +152,7 @@ exports.updateHCTra=async(req,res)=>{
 
 exports.addEvolucion=async(req,res)=>{
     let datos = req.body;
-    
+    fechaHoy = new Date();
 	if(datos.es_evolucion == 0){
         //obtengo datos para el cupon de pago
         const response = await axios({
@@ -185,7 +172,7 @@ exports.addEvolucion=async(req,res)=>{
                 pagado:0,
                 total:tratamiento.data[0].costo_mensual,
                 id_hc_tratamiento:datos.id_hc_tratamiento,
-                fecha_vencimiento:"2021-01-10"
+                fecha_vencimiento:fechaHoy.getFullYear()+"-"+(fechaHoy.getMonth()+ 1)+"-"+"15"
             }
         });
       result= await pool.query('SELECT e.fase,e.id_evolucion FROM evolucion as e where e.es_evolucion=0 and e.id_hc_tratamiento='+datos.id_hc_tratamiento+' order by e.id_evolucion desc limit 1')

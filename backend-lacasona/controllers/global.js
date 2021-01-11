@@ -124,50 +124,99 @@ exports.getLecturaHC =  async(req, res)=>{
 
 exports.addPago =  async(req, res)=>{
     let data = req.body;
-    let pago = {
-        fecha: data.fecha,
-        total: data.total,
-        estado: data.estado,
-        pago_tratamiento: data.pago_tratamiento,
-        id_mercadopago: data.id_mercadopago,
-        estado_mercadopago: data.estado_mercadopago,
-    }  
-    if(data!=null){
-        let rest = await pool.query('INSERT INTO pago set ?', [pago]);
-            if(rest != null){
-                 let consulta ={
-                    nombre:data.nombre,
-                    apellido:data.apellido,
-                    email:data.email,
-                    telefono:data.telefono,
-                    id_localidad:data.id_localidad,
-                    id_turno:data.id_turno,
-                    costo_entrevista:data.costo_entrevista,
-                    id_pago:rest.insertId
-                    }
-                const addConsulta = await axios({
-                    url: 'http://localhost:3000/consulta/add/',
-                    method: 'post',
-                    data: consulta
-                  });
-                
-            }
-            else{
-                res.status(400).json({
-                    mensaje: 'Ocurrio un problema al intentar guardar'
-                });
-            }
-            res.status(200).json({
-            mensaje: 'Nuevo pago registrado'
-               }); 
-           
+    if(data.pago_tratamiento==0){
+        let pago = {
+            fecha: data.fecha,
+            total: data.total,
+            estado: data.estado,
+            pago_tratamiento: data.pago_tratamiento,
+            id_mercadopago: data.id_mercadopago,
+            estado_mercadopago: data.estado_mercadopago,
+        }  
+        if(data!=null){
+            let rest = await pool.query('INSERT INTO pago set ?', [pago]);
+                if(rest != null){
+                     let consulta ={
+                        nombre:data.nombre,
+                        apellido:data.apellido,
+                        email:data.email,
+                        telefono:data.telefono,
+                        id_localidad:data.id_localidad,
+                        id_turno:data.id_turno,
+                        costo_entrevista:data.costo_entrevista,
+                        id_pago:rest.insertId
+                        }
+                    const addConsulta = await axios({
+                        url: 'http://localhost:3000/consulta/add/',
+                        method: 'post',
+                        data: consulta
+                      });
+                    
+                }
+                else{
+                    res.status(400).json({
+                        mensaje: 'Ocurrio un problema al intentar guardar'
+                    });
+                }
+                res.status(200).json({
+                mensaje: 'Nuevo pago registrado'
+                   }); 
+               
+        }
+        else{
+            res.status(400).json({
+                mensaje: 'No se obtuvieron correctamente los datos'
+            });  
+        }
     }
     else{
-        res.status(400).json({
-            mensaje: 'No se obtuvieron correctamente los datos'
-        });  
+        let pago = {
+            fecha: data.fecha,
+            total: data.total,
+            estado: data.estado,
+            pago_tratamiento: data.pago_tratamiento,
+            id_mercadopago: data.id_mercadopago,
+            estado_mercadopago: data.estado_mercadopago,
+        }  
+        if(data!=null){
+            let rest = await pool.query('INSERT INTO pago set ?', [pago]);
+                if(rest != null){
+                    //updatear el cupon
+                    let cupon={
+                        id_cupon:data.id_cupon,
+                        pagado: 1
+                    }
+                   
+                    const updateCupon = await axios({
+                        url: 'http://localhost:3000/global/updateCupon/',
+                        method: 'put',
+                        data: cupon
+                      });
+                    
+                }
+                else{
+                    res.status(400).json({
+                        mensaje: 'Ocurrio un problema al intentar guardar'
+                    });
+                }
+                res.status(200).json({
+                mensaje: 'Nuevo pago registrado'
+                   }); 
+               
+        }
+        else{
+            res.status(400).json({
+                mensaje: 'No se obtuvieron correctamente los datos'
+            });  
+        }
     }
+    
 }
+
+/*exports.addPagoTratamiento =  async(req, res)=>{
+    let data = req.body;
+    
+}*/
 exports.addCupon = async(req, res)=>{
     let body=req.body;
     await pool.query('INSERT INTO cupon set ?',[body],  function(err, sql){
@@ -184,6 +233,24 @@ exports.addCupon = async(req, res)=>{
     });
 }
 
+
+exports.updateCupon = async(req, res)=>{
+    datos=req.body;
+    await pool.query('UPDATE cupon SET ? WHERE id_cupon = ?', [datos, datos.id_cupon ], function(err, sql){
+        if(err){
+            console.log(err);
+            res.status(400).json({
+                mensaje: 'Ocurrio un problema al modificar '
+            });
+        }
+        else{
+            console.log(sql);
+            res.status(200).json({
+            mensaje: 'Se modifico ok.'
+            }); 
+        }
+    });
+}
 exports.getCuponid_hc = async(req, res)=>{
     /*const hc = await axios({
         url: 'http://localhost:3000/hc/getHCPorPersona/'+req.params.id_persona,
@@ -204,6 +271,26 @@ exports.getCuponid_hc = async(req, res)=>{
         }
         else{
             /*res.status(200).send({sql});*/
+			res.status(200).json(sql); 
+        }
+    });
+}
+
+exports.getCuponid_hclimit = async(req, res)=>{
+    const hc_tratamiento = await axios({
+        url: 'http://localhost:3000/hc/getHCTratamientoPorHC/'+req.params.id_hc,
+        method: 'get'
+      });
+     console.log(hc_tratamiento.data.body[0]); 
+    await pool.query('SELECT * from cupon WHERE id_hc_tratamiento ='+hc_tratamiento.data.body[0].id_hc_tratamiento+' order by id_cupon desc limit 1',  function(err, sql){
+        if(err){
+            res.status(400).json({
+                err,
+                error: 'No existen cupones de pago'
+            });
+        }
+        else{
+           
 			res.status(200).json(sql); 
         }
     });

@@ -15,6 +15,8 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
+
+
 --
 -- Table structure for table `entrevista`
 --
@@ -28,10 +30,11 @@ CREATE TABLE `entrevista` (
   `fecha_creacion` datetime NOT NULL,
   `resultado` varchar(100) DEFAULT NULL,
   `costo` int NOT NULL,
+  `id_pago` int DEFAULT NULL,
   PRIMARY KEY (`id_entrevista`),
   KEY `id_persona` (`id_persona`),
   CONSTRAINT `entrevista_ibfk_1` FOREIGN KEY (`id_persona`) REFERENCES `persona` (`id_persona`)
-) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=109 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,7 +43,7 @@ CREATE TABLE `entrevista` (
 
 LOCK TABLES `entrevista` WRITE;
 /*!40000 ALTER TABLE `entrevista` DISABLE KEYS */;
-INSERT INTO `entrevista` VALUES (64,129,'2020-12-04 16:39:48',NULL,2500),(65,130,'2020-12-04 16:52:30',NULL,2500),(66,131,'2020-12-04 16:55:57',NULL,2500),(67,132,'2020-12-05 18:48:58',NULL,2500),(68,133,'2020-12-06 18:45:05',NULL,2500);
+INSERT INTO `entrevista` VALUES (105,214,'2021-01-06 03:25:54',NULL,2750,38),(106,218,'2021-01-06 06:50:47',NULL,6250,42),(107,219,'2021-01-06 07:00:55',NULL,2500,43),(108,220,'2021-01-06 07:10:48',NULL,2500,44);
 /*!40000 ALTER TABLE `entrevista` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -54,7 +57,6 @@ DROP TABLE IF EXISTS `evolucion`;
 CREATE TABLE `evolucion` (
   `id_evolucion` int NOT NULL AUTO_INCREMENT,
   `id_persona_creacion` int NOT NULL,
-  `id_tratamiento` int NOT NULL,
   `hora_inicio` time DEFAULT NULL,
   `hora_cierre` time DEFAULT NULL,
   `intervenciones_realizadas` varchar(500) DEFAULT NULL,
@@ -65,12 +67,13 @@ CREATE TABLE `evolucion` (
   `consideraciones_evaluacion` varchar(500) DEFAULT NULL,
   `es_evolucion` tinyint(1) DEFAULT NULL,
   `fecha_creacion` date DEFAULT NULL,
+  `id_hc_tratamiento` int DEFAULT NULL,
+  `fase` int DEFAULT NULL,
+  `avanzo` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id_evolucion`),
   KEY `id_persona_creacion` (`id_persona_creacion`),
-  KEY `id_tratamiento` (`id_tratamiento`),
-  CONSTRAINT `evolucion_ibfk_1` FOREIGN KEY (`id_persona_creacion`) REFERENCES `persona` (`id_persona`),
-  CONSTRAINT `evolucion_ibfk_2` FOREIGN KEY (`id_tratamiento`) REFERENCES `tratamiento` (`id_tratamiento`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+  CONSTRAINT `evolucion_ibfk_1` FOREIGN KEY (`id_persona_creacion`) REFERENCES `persona` (`id_persona`)
+) ENGINE=InnoDB AUTO_INCREMENT=102 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -79,38 +82,9 @@ CREATE TABLE `evolucion` (
 
 LOCK TABLES `evolucion` WRITE;
 /*!40000 ALTER TABLE `evolucion` DISABLE KEYS */;
-INSERT INTO `evolucion` VALUES (3,3,31,'20:45:00','21:45:00','inter','respue','','','','',1,NULL),(4,3,31,'08:22:00','09:22:00','intervencion','respuesta','nada','','','',1,'2020-12-07'),(5,3,31,'08:24:00','09:24:00','nueva intervencion','otro','otro','','','',1,'2020-12-07'),(6,3,31,'08:27:00','09:28:00','primera intervencion','nada ','nada','','','',1,'2020-12-07'),(7,3,31,'08:44:00','00:00:00','intervenciones','','','','','',1,'2020-12-07'),(8,3,31,'08:48:00','00:00:00','test','','','','','',1,'2020-12-07');
 /*!40000 ALTER TABLE `evolucion` ENABLE KEYS */;
 UNLOCK TABLES;
 
---
--- Table structure for table `hc_tratamiento`
---
-
-DROP TABLE IF EXISTS `hc_tratamiento`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `hc_tratamiento` (
-  `id_hc_tratamiento` int unsigned NOT NULL AUTO_INCREMENT,
-  `id_hc` int NOT NULL,
-  `id_tratamiento` int NOT NULL,
-  `fecha_inicio` date DEFAULT NULL,
-  `fecha_alta` date DEFAULT NULL,
-  `consideraciones_alta` varchar(255) DEFAULT NULL,
-  `motivo_alta` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id_hc_tratamiento`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `hc_tratamiento`
---
-
-LOCK TABLES `hc_tratamiento` WRITE;
-/*!40000 ALTER TABLE `hc_tratamiento` DISABLE KEYS */;
-INSERT INTO `hc_tratamiento` VALUES (11,94,31,NULL,NULL,'probando update',NULL),(12,95,31,NULL,NULL,NULL,NULL),(13,96,31,NULL,NULL,NULL,NULL),(14,98,31,'2020-12-06',NULL,NULL,NULL);
-/*!40000 ALTER TABLE `hc_tratamiento` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `historia_clinica`
@@ -130,7 +104,7 @@ CREATE TABLE `historia_clinica` (
   KEY `id_persona_creacion` (`id_persona_creacion`),
   CONSTRAINT `historia_clinica_ibfk_1` FOREIGN KEY (`id_persona_paciente`) REFERENCES `persona` (`id_persona`),
   CONSTRAINT `historia_clinica_ibfk_2` FOREIGN KEY (`id_persona_creacion`) REFERENCES `persona` (`id_persona`)
-) ENGINE=InnoDB AUTO_INCREMENT=99 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=108 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -139,7 +113,6 @@ CREATE TABLE `historia_clinica` (
 
 LOCK TABLES `historia_clinica` WRITE;
 /*!40000 ALTER TABLE `historia_clinica` DISABLE KEYS */;
-INSERT INTO `historia_clinica` VALUES (94,129,3,'8-3112-678-129','2020-12-04 16:41:11'),(95,130,3,'18-5084-567-130','2020-12-04 16:53:46'),(96,131,3,'5-6756-678-131','2020-12-04 16:57:41'),(97,131,3,'5-6756-123-131','2020-12-04 17:18:47'),(98,133,3,'15-8964-234-133','2020-12-06 18:46:47');
 /*!40000 ALTER TABLE `historia_clinica` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -197,6 +170,8 @@ INSERT INTO `localidad_old` VALUES (1,1,'Corrientes'),(2,2,'Federacion'),(3,2,'C
 /*!40000 ALTER TABLE `localidad_old` ENABLE KEYS */;
 UNLOCK TABLES;
 
+UNLOCK TABLES;
+
 --
 -- Table structure for table `pago`
 --
@@ -206,13 +181,15 @@ DROP TABLE IF EXISTS `pago`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `pago` (
   `id_pago` int NOT NULL AUTO_INCREMENT,
-  `id_tipo_pago` int NOT NULL,
-  `tipo_pago` varchar(100) DEFAULT NULL,
   `fecha` datetime NOT NULL,
-  `total` int NOT NULL,
   `estado` varchar(100) DEFAULT NULL,
+  `pago_tratamiento` tinyint(1) DEFAULT NULL,
+  `id_mercadopago` int DEFAULT NULL,
+  `estado_mercadopago` varchar(255) DEFAULT NULL,
+  `total` decimal(9,2) DEFAULT NULL,
+  `cupon` int DEFAULT NULL,
   PRIMARY KEY (`id_pago`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -221,6 +198,7 @@ CREATE TABLE `pago` (
 
 LOCK TABLES `pago` WRITE;
 /*!40000 ALTER TABLE `pago` DISABLE KEYS */;
+INSERT INTO `pago` VALUES (38,'2020-12-30 23:17:52','aprobado',0,1232450716,'approved',2633.95,NULL),(39,'2020-12-30 23:24:07','aprobado',0,1232452412,'approved',2394.50,NULL),(40,'2020-12-30 23:28:39','aprobado',0,1232452445,'approved',2394.50,NULL),(41,'2020-12-30 23:33:54','aprobado',0,1232450780,'approved',2394.50,NULL),(42,'2020-12-31 02:43:13','aprobado',0,1232456956,'approved',5986.25,NULL),(43,'2020-12-31 02:50:21','aprobado',0,1232454300,'approved',2394.50,NULL),(44,'2020-12-31 03:02:36','aprobado',0,1232454325,'approved',2394.50,NULL);
 /*!40000 ALTER TABLE `pago` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -311,7 +289,7 @@ CREATE TABLE `persona` (
   KEY `id_localidad` (`id_localidad`),
   CONSTRAINT `localidad_ibfk_2` FOREIGN KEY (`id_localidad`) REFERENCES `localidad` (`id_localidad`),
   CONSTRAINT `persona_ibfk_1` FOREIGN KEY (`id_tipo_persona`) REFERENCES `tipo_persona` (`id_tipo_persona`)
-) ENGINE=InnoDB AUTO_INCREMENT=134 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=221 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -320,7 +298,7 @@ CREATE TABLE `persona` (
 
 LOCK TABLES `persona` WRITE;
 /*!40000 ALTER TABLE `persona` DISABLE KEYS */;
-INSERT INTO `persona` VALUES (2,1,6372,'31000000','luis','luque','luiluq','$2a$10$Ni0Px.tkqy1jmlrxHCQ3ierS14/D9RNqySa.zr7DUi6W1eHBA8ALi','luque.hectorluis@gmail.com','123',NULL,1,NULL,NULL,NULL,NULL,NULL),(3,2,5402,'31685932','Cristian','Faure','crifau','$2a$10$Ni0Px.tkqy1jmlrxHCQ3ierS14/D9RNqySa.zr7DUi6W1eHBA8ALi','licagua@gmail.com','345154013027',NULL,1,NULL,NULL,NULL,NULL,'12pp'),(5,1,5084,'30.000.000','analia','faure','anafau','$2a$10$Ni0Px.tkqy1jmlrxHCQ3ierS14/D9RNqySa.zr7DUi6W1eHBA8ALi','analia.f93@gmail.com','3704320046',NULL,1,NULL,NULL,NULL,NULL,NULL),(129,4,3112,'12345678','Esteban','Lopez','12345678','$2a$10$1oXwwUKk3pdS9StgZyDCMuPdXRIH.y8qZXYOozTknq/NDikzK4bb2','estlop@correo.com','345 156 013028','admintido',1,'osde','321321','1980-05-20',NULL,NULL),(130,4,5084,'1234567','Claudia','Juarez','1234567','$2a$10$A62ooBtoh8i88GanGcKzVOAlN8cjIWXhcDeiVDUSmXoqKbG4enMJC','clajua@correo.com','03774 153156189','admintido',1,'no','','1985-07-26',NULL,NULL),(131,3,6756,'123','Cesar','lala','','','cesbor@correo.com','345 156018090','no admitido',0,'ose','123','1985-06-25',NULL,''),(132,3,8520,NULL,'jordi','alba',NULL,NULL,'joralb@correo.com','0123',NULL,1,NULL,NULL,NULL,NULL,NULL),(133,4,8964,'1234','eden','hazard','1234','$2a$10$WYCa5rh3u4eCqIrOliUDMe5cBy42L3ziQweHF.TELwkz5gCSft7Qy','edehaz@correo.com','4275957','admitido',1,'no','','1992-03-26',NULL,NULL);
+INSERT INTO `persona` VALUES (3,2,5402,'31685932','Cristian','Faure','crifau','$2a$10$Ni0Px.tkqy1jmlrxHCQ3ierS14/D9RNqySa.zr7DUi6W1eHBA8ALi','licagua@gmail.com','345154013027',NULL,1,NULL,NULL,NULL,NULL,'111'),(5,1,5084,'30.000.000','analia','faure','anafau','$2a$10$Ni0Px.tkqy1jmlrxHCQ3ierS14/D9RNqySa.zr7DUi6W1eHBA8ALi','analia.gmail.com','3704320046',NULL,1,NULL,NULL,NULL,NULL,NULL),(212,1,8027,'1234','Diego Martín','Gonzalez','dmgonzalez1','$2a$10$teyFneU2knP7..TTwsVO.uvywO9x0ZDcGP2W9P/iZIjpfvG9EkQQe','dmgonzalez@correo.com','123456789',NULL,1,NULL,NULL,NULL,NULL,NULL),(214,3,5084,NULL,'ney','reina',NULL,NULL,'neyrei@gmail.com','987987',NULL,0,NULL,NULL,NULL,NULL,NULL),(218,3,11806,NULL,'James','Rodriguez',NULL,NULL,'jamrod@gmail.com','987654',NULL,0,NULL,NULL,NULL,NULL,NULL),(219,3,10349,NULL,'jack','grealish',NULL,NULL,'jacgre@gmail.com','999',NULL,0,NULL,NULL,NULL,NULL,NULL),(220,3,3609,NULL,'bruno','fernandez',NULL,NULL,'brufer@gmail.com','654654',NULL,0,NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `persona` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -348,7 +326,7 @@ CREATE TABLE `provincia` (
 
 LOCK TABLES `provincia` WRITE;
 /*!40000 ALTER TABLE `provincia` DISABLE KEYS */;
-INSERT INTO `provincia` VALUES (1,'Ciudad Autónoma de Buenos Aires (CABA)','AR-C',1,1.60),(2,'Buenos Aires','AR-B',1,1.60),(3,'Catamarca','AR-K',1,1.10),(4,'Córdoba','AR-X',1,1.50),(5,'Corrientes','AR-W',1,1.20),(6,'Entre Ríos','AR-E',1,1.00),(7,'Jujuy','AR-Y',1,1.30),(8,'Mendoza','AR-M',1,2.00),(9,'La Rioja','AR-F',1,1.00),(10,'Salta','AR-A',1,1.30),(11,'San Juan','AR-J',1,2.00),(12,'San Luis','AR-D',1,1.00),(13,'Santa Fe','AR-S',1,1.50),(14,'Santiago del Estero','AR-G',1,1.00),(15,'Tucumán','AR-T',1,1.00),(16,'Chaco','AR-H',1,1.00),(17,'Chubut','AR-U',1,1.00),(18,'Formosa','AR-P',1,1.00),(19,'Misiones','AR-N',1,1.00),(20,'Neuquén','AR-Q',1,1.00),(21,'La Pampa','AR-L',1,1.00),(22,'Río Negro','AR-R',1,1.00),(23,'Santa Cruz','AR-Z',1,1.00),(24,'Tierra del Fuego','AR-V',1,1.00);
+INSERT INTO `provincia` VALUES (1,'Ciudad Autónoma de Buenos Aires (CABA)','AR-C',1,1.60),(2,'Buenos Aires','AR-B',1,1.60),(3,'Catamarca','AR-K',1,1.20),(4,'Córdoba','AR-X',1,1.30),(5,'Corrientes','AR-W',1,1.10),(6,'Entre Ríos','AR-E',1,2.00),(7,'Jujuy','AR-Y',1,1.30),(8,'Mendoza','AR-M',1,2.00),(9,'La Rioja','AR-F',1,1.00),(10,'Salta','AR-A',1,1.30),(11,'San Juan','AR-J',1,2.50),(12,'San Luis','AR-D',1,1.00),(13,'Santa Fe','AR-S',1,1.50),(14,'Santiago del Estero','AR-G',1,1.00),(15,'Tucumán','AR-T',1,1.00),(16,'Chaco','AR-H',1,1.10),(17,'Chubut','AR-U',1,1.00),(18,'Formosa','AR-P',1,1.10),(19,'Misiones','AR-N',1,1.10),(20,'Neuquén','AR-Q',1,1.00),(21,'La Pampa','AR-L',1,1.00),(22,'Río Negro','AR-R',1,1.00),(23,'Santa Cruz','AR-Z',1,1.00),(24,'Tierra del Fuego','AR-V',1,1.00);
 /*!40000 ALTER TABLE `provincia` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -377,29 +355,7 @@ INSERT INTO `provincia_old` VALUES (1,'Corrientes',1),(2,'Entre Rio',1),(3,'Form
 /*!40000 ALTER TABLE `provincia_old` ENABLE KEYS */;
 UNLOCK TABLES;
 
---
--- Table structure for table `sessions`
---
 
-DROP TABLE IF EXISTS `sessions`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `sessions` (
-  `session_id` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
-  `expires` int unsigned NOT NULL,
-  `data` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin,
-  PRIMARY KEY (`session_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `sessions`
---
-
-LOCK TABLES `sessions` WRITE;
-/*!40000 ALTER TABLE `sessions` DISABLE KEYS */;
-/*!40000 ALTER TABLE `sessions` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `tipo_persona`
@@ -410,7 +366,7 @@ DROP TABLE IF EXISTS `tipo_persona`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `tipo_persona` (
   `id_tipo_persona` int NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(100) NOT NULL,
+  `nombre_tipo_persona` varchar(100) DEFAULT NULL,
   `descripcion` varchar(200) DEFAULT NULL,
   `activo` tinyint(1) NOT NULL,
   `gestionable` tinyint DEFAULT NULL,
@@ -448,8 +404,9 @@ CREATE TABLE `tratamiento` (
   `programa_tratamiento` varchar(50) DEFAULT NULL,
   `activo` tinyint(1) DEFAULT '1',
   `costo_mensual` decimal(9,2) DEFAULT NULL,
+  `fases` int DEFAULT NULL,
   PRIMARY KEY (`id_tratamiento`)
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -458,7 +415,6 @@ CREATE TABLE `tratamiento` (
 
 LOCK TABLES `tratamiento` WRITE;
 /*!40000 ALTER TABLE `tratamiento` DISABLE KEYS */;
-INSERT INTO `tratamiento` VALUES (17,'si',0,8,0,'semanal','individual','psicodiagnostico','6 meses','tratamiento ',1,5000.00),(18,'NO',10,24,0,'quincenal','individual','otros','12 meses','Tratamiento Cuatros',1,90000.00),(20,'no',10,5,5,'semanal','nada','no','10 meses','Tratamiento nuevo',1,2500.00),(26,'',0,0,0,'','','','12 meses','test',1,3000.00),(31,'',4,4,4,'MENSUAL','MULTIPLE','','6 meses','DI 1 ALGO',1,NULL);
 /*!40000 ALTER TABLE `tratamiento` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -478,8 +434,11 @@ CREATE TABLE `turno` (
   `estado` tinyint DEFAULT NULL,
   `id_tipo_turno` int DEFAULT NULL,
   `costo_base` decimal(10,2) DEFAULT NULL,
+  `id_paciente` int DEFAULT NULL,
+  `id_profesional` int DEFAULT NULL,
+  `profesional_disponible` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id_turno`)
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=541 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -488,8 +447,106 @@ CREATE TABLE `turno` (
 
 LOCK TABLES `turno` WRITE;
 /*!40000 ALTER TABLE `turno` DISABLE KEYS */;
-INSERT INTO `turno` VALUES (1,'2020-12-11','',0,'10:00:00',1,0,2500.00),(4,'2020-12-10','',1,'11:00:00',1,0,0.00),(7,'2020-12-10','',0,'09:00:00',1,0,2500.00),(8,'2020-12-10','',0,'10:00:00',1,0,2500.00),(14,'2020-12-10','',0,'16:00:00',1,0,2500.00),(19,'2020-12-17','',1,'12:00:00',1,0,0.00),(21,'2020-12-21','',0,'12:00:00',1,0,2500.00),(22,'2020-12-21','asignado',0,'11:00:00',0,67,2500.00),(23,'2020-12-21','asignado',0,'10:00:00',0,68,2500.00),(24,'2020-12-21','asignado',0,'09:00:00',0,65,2500.00),(25,'2020-12-20','',0,'09:00:00',1,0,2500.00),(26,'2020-12-20','asignado',0,'10:00:00',0,64,2500.00),(27,'2020-12-20','',0,'11:00:00',1,0,2500.00),(28,'2020-12-15','asignado',0,'12:00:00',0,66,2500.00),(29,'2020-12-16','',0,'12:00:00',1,0,2500.00),(30,'2020-12-30','',0,'11:00:00',1,0,2500.00),(31,'2020-12-30','',0,'10:00:00',1,0,2500.00),(32,'2020-12-30','',0,'09:00:00',1,0,2500.00);
+INSERT INTO `turno` VALUES (536,'2021-01-11','',0,'08:00:00',1,0,2500.00,0,0,0),(537,'2021-01-11','',0,'10:30:00',1,0,2500.00,0,0,0),(538,'2021-01-11','',0,'09:15:00',1,0,2500.00,0,0,0),(539,'2021-01-11','',0,'11:45:00',1,0,2500.00,0,0,0),(540,'2021-01-11','',0,'13:00:00',1,0,2500.00,0,0,0);
 /*!40000 ALTER TABLE `turno` ENABLE KEYS */;
+UNLOCK TABLES;
+--
+-- Table structure for table `hc_tratamiento`
+--
+
+DROP TABLE IF EXISTS `hc_tratamiento`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `hc_tratamiento` (
+  `id_hc_tratamiento` int unsigned NOT NULL AUTO_INCREMENT,
+  `id_hc` int NOT NULL,
+  `id_tratamiento` int NOT NULL,
+  `fecha_inicio` date DEFAULT NULL,
+  `fecha_alta` date DEFAULT NULL,
+  `consideraciones_alta` varchar(255) DEFAULT NULL,
+  `motivo_alta` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id_hc_tratamiento`)
+) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `hc_tratamiento`
+--
+
+LOCK TABLES `hc_tratamiento` WRITE;
+/*!40000 ALTER TABLE `hc_tratamiento` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hc_tratamiento` ENABLE KEYS */;
+UNLOCK TABLES;
+--
+-- Table structure for table `cupon`
+--
+
+DROP TABLE IF EXISTS `cupon`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `cupon` (
+  `id_cupon` int NOT NULL AUTO_INCREMENT,
+  `pagado` tinyint(1) DEFAULT NULL,
+  `total` decimal(9,2) DEFAULT NULL,
+  `id_hc_tratamiento` int DEFAULT NULL,
+  `fecha_vencimiento` date DEFAULT NULL,
+  PRIMARY KEY (`id_cupon`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cupon`
+--
+
+LOCK TABLES `cupon` WRITE;
+/*!40000 ALTER TABLE `cupon` DISABLE KEYS */;
+/*!40000 ALTER TABLE `cupon` ENABLE KEYS */;
+UNLOCK TABLES;
+--
+-- Table structure for table `sessions`
+--
+
+DROP TABLE IF EXISTS `sessions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `sessions` (
+  `session_id` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `expires` int unsigned NOT NULL,
+  `data` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin,
+  PRIMARY KEY (`session_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `sessions`
+--
+
+LOCK TABLES `sessions` WRITE;
+/*!40000 ALTER TABLE `sessions` DISABLE KEYS */;
+/*!40000 ALTER TABLE `sessions` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `paciente_baja`
+--
+
+DROP TABLE IF EXISTS `paciente_baja`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `paciente_baja` (
+  `id_paciente` int DEFAULT NULL,
+  `fecha_baja` date DEFAULT NULL,
+  `motivo` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `paciente_baja`
+--
+
+LOCK TABLES `paciente_baja` WRITE;
+/*!40000 ALTER TABLE `paciente_baja` DISABLE KEYS */;
+/*!40000 ALTER TABLE `paciente_baja` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -501,4 +558,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-12-07  9:04:25
+-- Dump completed on 2021-01-08 12:11:03

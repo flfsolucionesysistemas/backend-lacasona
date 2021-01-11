@@ -11,5 +11,7 @@ router.get('/solicitaHC/:idPersona',ctrlGlobal.getLecturaHC);
 router.post('/add',ctrlGlobal.addPago);
 router.post('/addCupon',ctrlGlobal.addCupon);
 router.get('/getCupones/:id_hc', ctrlGlobal.getCuponid_hc);
+router.get('/getCuponeslimit/:id_hc', ctrlGlobal.getCuponid_hclimit);
+router.put('/updateCupon',ctrlGlobal.updateCupon);
 
 module.exports = router;
