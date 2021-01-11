@@ -155,9 +155,9 @@ let preference = {
     }
   ],
   back_urls: {
-    success: 'http://lacasonaweb-front.dyndnss.net/',
-    failure: 'http://lacasonaweb-front.dyndnss.net/',
-    pending: 'http://lacasonaweb-front.dyndnss.net/'
+    success: 'http://lacasonaweb-front.dyndnss.net/#/pago',
+    failure: 'http://lacasonaweb-front.dyndnss.net/#/pago',
+    pending: 'http://lacasonaweb-front.dyndnss.net/#pago'
   },
   notification_url: 'http://ec2-52-14-22-254.us-east-2.compute.amazonaws.com:3000/mercadopago/notificacionTratamiento/'+data.id_hc+'/'+data.id_cupon
 };
