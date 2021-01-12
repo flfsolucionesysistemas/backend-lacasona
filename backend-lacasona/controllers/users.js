@@ -213,7 +213,7 @@ exports.getExisteUser= async (req, res) =>{
 exports.setFechaContrato = async (req, res) =>{
     let datos = req.body.idPersona;
 	console.log(datos);
-    let sql = await pool.query('UPDATE persona SET fecha_contrato = now() WHERE id_persona = ?', [datos]);
+    await pool.query('UPDATE persona SET fecha_contrato = now() WHERE id_persona = '+ datos, function(err,sql) {
         if(err){
             console.log(err);
             res.status(400).json({
@@ -224,5 +224,7 @@ exports.setFechaContrato = async (req, res) =>{
         else{
             res.status(200).send(sql);
         }
-    
+
+    });
+
 }
