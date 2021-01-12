@@ -209,3 +209,20 @@ exports.getExisteUser= async (req, res) =>{
         }); 
     }
 }
+
+exports.setFechaContrato = async (req, res) =>{
+    let datos = req.body.idPersona;
+   
+    await pool.query('UPDATE persona SET fecha_contrato = now() WHERE id_persona = ' + datos,  function(err, sql, fields){
+        if(err){
+            console.log(err);
+            res.status(400).json({
+
+                error: 'No se ha modificar el usuario'
+            });
+        }
+        else{
+            res.status(200).send({sql});
+        }
+    });
+}

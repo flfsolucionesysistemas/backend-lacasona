@@ -10,10 +10,12 @@ router.get('/', function(req, res, next) {
 router.post('/add',ctrlUsuario.useradd);
 router.post('/login', ctrlUsuario.loginUser);
 router.put('/updateUser', ctrlUsuario.updateUser);
+router.put('/setFechaContrato', ctrlUsuario.setFechaContrato);
 router.delete('/deleteUser/:idUser', ctrlUsuario.deleteUser);
 router.get('/getUser/:activos',ctrlUsuario.getUserActivo);
 router.get('/getUserTipo/:tipo',ctrlUsuario.getUserTipo);
 router.get('/getUserId/:idUser',ctrlUsuario.getUserId);
 router.get('/getExisteUser/:email',ctrlUsuario.getExisteUser);
+
 
 module.exports = router;
