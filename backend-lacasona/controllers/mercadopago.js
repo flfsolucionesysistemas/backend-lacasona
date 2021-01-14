@@ -1,5 +1,6 @@
 const mercadopago = require('mercadopago');
 const axios = require('axios');
+const pool = require('../config/database');
 
 mercadopago.configure({
     //access_token:'APP_USR-4695914672902143-123020-6e36dda61188fc87b3d661d04aeb724e-169256828'
@@ -263,5 +264,23 @@ async function obtenerInfoDePagoTratamiento(paymentId) {
     console.log('error al obtener información de pago:', error)
     return true
   }
+}
+
+
+//Seccion cobranzas
+exports.getCuponesPacientes = async (req, res)=>{
+  let id_paciente = req.params.id_paciente;
+  let body = await pool.query ('SELECT * FROM cupon as c '+
+      'INNER JOIN hc_tratamiento as hct on c.id_hc_tratamiento=hct.id_hc_tratamiento '+
+      'INNER JOIN historia_clinica as hc on hct.id_hc= hc.id_historia_clinica WHERE hc.id_persona_paciente='+id_paciente);
+		
+    if(body != null){
+        res.status(200).send(body);      
+    }
+    else{
+        return res.status(400).json({
+            ok:false           
+        }); 
+    }
 }
  
