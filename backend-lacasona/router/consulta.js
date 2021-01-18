@@ -9,5 +9,5 @@ router.get('/', function(req, res, next) {
 
 router.post('/add',ctrlConsulta.addConsulta);
 router.post('/registroEntrevista',ctrlConsulta.registroEntrevista);
-
+router.get('/getEntrevista/:id',ctrlConsulta.getEntrevista);
 module.exports = router;

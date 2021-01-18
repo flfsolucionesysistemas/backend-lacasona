@@ -131,79 +131,6 @@ exports.addConsulta= async (req, res) =>{
 	
 		}
 
-/*exports.registroEntrevista = async (req, res) =>{
-	let datos = req.body;
-	let ramdon= Math.random();
-	
-
-	axios.get('http://localhost:3000/users/getUserId/'+datos.id_profesional).then(resul=>
-	emailProfesional=resul.data[0].email);
-	
-	axios.put('http://localhost:3000/users/updateUser',{
-		"id_persona": datos.id_cliente,
-		"obra_social": datos.obra_social,
-		"numero_afiliado": datos.numero_afiliado,
-		"fecha_nacimiento": datos.fecha_nacimiento		
-	})
-	.then(function(res) {
-	  if(res.status==200 ) {
-		console.log("OK");
-	  }
-	})
-	.catch(function(err) {
-	  console.log(err);
-	});
-	let contenido ='<h1>Esto es un test de html-pdf</h1><p>Estoy generando PDF a partir de este código HTML sencillo</p>';
-    const doc = new PDFDocument;
-    doc.pipe(fs.createWriteStream('./registro_entrevista/registro_entrevista_'+datos.id_cliente+random+'.pdf'));
-    const content = contenido;
-    doc.text(content, 100, 100);
-    doc.end();
-	//pdf.create(contenido).toFile('./registro_entrevista/registro_entrevista_'+datos.id_cliente+'.pdf', function(err, res) {
-		if (err){
-			console.log(err);
-		} else {
-			console.log(res);
-			fs.readFile('./registro_entrevista/registro_entrevista_'+datos.id_cliente+'.pdf',function(err,data){
-				if(err)throw err;
-				console.log(data);
-				var transporter = nodemailer.createTransport({
-					service: 'Gmail',
-					auth: {
-					user: 'flf.solucionesysistemas@gmail.com',
-					pass: 'everLAST2020'
-					}
-				});
-				
-				var mailOptions = {
-					from: 'LaCasonaWeb',
-					to: emailProfesional,
-					subject: 'Registro-primer-entrevista la casona web',
-					text: contenido,
-					attachments: [
-						{
-							filename: './registro_entrevista/registro_entrevista_' + datos.id_cliente + '.pdf',                                         
-							contentType: 'application/pdf'
-						}]
-				};
-				
-				transporter.sendMail(mailOptions, function(error, info){
-					if (error) {
-					console.log(error);
-					res.status(400).json({
-						mensaje:"No se envio el correo"
-					})
-					} else {
-					console.log('Email enviado: ' + info.response);
-					res.status(200).json({
-						mensaje:"Se genero y envio correctamente el registro de entrevista"
-					})
-					}
-				});			
-			})
-		}
-	});
-}*/
 
 exports.registroEntrevista = async (req, res) =>{
 	let datos = req.body;
@@ -299,26 +226,19 @@ exports.registroEntrevista = async (req, res) =>{
 		})
 	});
 	
-	
-	
+}
 
-	/*var pdf = new PDFDocument({
-		size: 'LEGAL', // See other page sizes here: https://github.com/devongovett/pdfkit/blob/d95b826475dd325fb29ef007a9c1bf7a527e9808/lib/page.coffee#L69
-		info: {
-		  Title: 'Tile of File Here',
-		  Author: 'Some Author',
-		}
-	  });
-	  pdf.text(emailProfesional);
-	  pdf.pipe(
-		fs.createWriteStream('./registro_entrevista/registro_entrevista_'+datos.id_cliente+ramdon+'.pdf')
-	  )
-	  .on('finish', function () {
-		console.log('PDF closed');
-	  });
-	  pdf.end();*/
+exports.getEntrevista = async (req, res) =>{
+	let id = req.params.id;
+	let sql = await pool.query('SELECT * FROM entrevista as e INNER JOIN persona as p ON e.id_persona=p.id_persona WHERE id_entrevista= ?',[id]);
+	if(sql != null){
+		console.log(sql);
+		res.status(200).json(sql);
+	}
+	else{
+		res.status(400).json({mensaje:"Error al traer datos"});
+	}
 
-	
 }
 
 
