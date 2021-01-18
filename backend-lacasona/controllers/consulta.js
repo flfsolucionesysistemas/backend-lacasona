@@ -78,11 +78,13 @@ exports.addConsulta= async (req, res) =>{
 							pass: 'everLAST2020'
 							}
 						});
+						var meet="https://meet.jit.si/lacasonameet"+variable.email;
 						var emailCliente="Bienvenido a PSICOINTERACCION."+
 										" Nos comunicamos con Ud. por que ha solicitado su primer entrevista. "+
-										 "Fecha: "+fecha+".  Hora: "+turnoasignado.data[0].hora;
-						var emailAdmin="Se acada de registrar una nueva solicitud de consulta via web"
-						
+										 "Fecha: "+fecha+".  Hora: "+turnoasignado.data[0].hora+
+										 "El link para acceder a la consulta es el siguiente:  "+ meet;
+						var emailAdmin="Se acaba de registrar una nueva solicitud de consulta via web"
+						//sumar el meet de la reunion
 						var mailOptionsCliente = {
 							from: 'LaCasonaWeb',
 							to: variable.email,

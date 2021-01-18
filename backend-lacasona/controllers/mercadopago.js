@@ -268,6 +268,7 @@ async function obtenerInfoDePagoTratamiento(paymentId) {
 
 
 //Seccion cobranzas
+// DESDE ESTE METODO SE OBTIENEN CUPONES PAGOS O NO PAGOS
 exports.getCuponesPacientes = async (req, res)=>{
   let id_paciente = req.params.id_paciente;
   let body = await pool.query ('SELECT * FROM cupon as c '+
