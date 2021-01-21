@@ -80,7 +80,7 @@ exports.listaTratamientosActivos=async(req,res)=>{
 }
 
 exports.getTratamientoIdPaciente = async(req,res)=>{
-    await pool.query('SELECT hct.id_tratamiento,hct.fecha_alta from hc_tratamiento as hct inner join historia_clinica as hc on hct.id_hc=hc.id_historia_clinica inner join persona as p on hc.id_persona_paciente=p.id_persona where p.id_persona='+req.params.idPaciente+' and hct.fecha_alta is null ', function(err, lista_tratamientos){
+    await pool.query('SELECT hct.id_hc_tratamiento,hct.id_tratamiento,hct.fecha_alta from hc_tratamiento as hct inner join historia_clinica as hc on hct.id_hc=hc.id_historia_clinica inner join persona as p on hc.id_persona_paciente=p.id_persona where p.id_persona='+req.params.idPaciente+' and hct.fecha_alta is null ', function(err, lista_tratamientos){
         if (err) {
             res.json({
                 resultado: false,

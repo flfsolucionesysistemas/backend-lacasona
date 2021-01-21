@@ -213,10 +213,6 @@ exports.addPago =  async(req, res)=>{
     
 }
 
-/*exports.addPagoTratamiento =  async(req, res)=>{
-    let data = req.body;
-    
-}*/
 exports.addCupon = async(req, res)=>{
     let body=req.body;
     await pool.query('INSERT INTO cupon set ?',[body],  function(err, sql){
@@ -252,11 +248,6 @@ exports.updateCupon = async(req, res)=>{
     });
 }
 exports.getCuponid_hc = async(req, res)=>{
-    /*const hc = await axios({
-        url: 'http://localhost:3000/hc/getHCPorPersona/'+req.params.id_persona,
-        method: 'get'
-      });
-    console.log(hc.body[0].id_persona_paciente +   "lala");*/
     const hc_tratamiento = await axios({
         url: 'http://localhost:3000/hc/getHCTratamientoPorHC/'+req.params.id_hc,
         method: 'get'
@@ -294,4 +285,32 @@ exports.getCuponid_hclimit = async(req, res)=>{
 			res.status(200).json(sql); 
         }
     });
+}
+
+exports.controlPagos = async(req, res)=>{
+    let fechaHoy= new Date();
+    let body = await pool.query ('SELECT * FROM cupon as c '+
+      'INNER JOIN hc_tratamiento as hct on c.id_hc_tratamiento=hct.id_hc_tratamiento '+
+      'INNER JOIN historia_clinica as hc on hct.id_hc= hc.id_historia_clinica WHERE c.fecha_vencimiento >= ?',[fechaHoy] );
+    if(body!=null){
+        for(var i=0; i<body.length; i++){
+            if(body[i].pagado==0){
+                const user = await axios({
+                    url: 'http://localhost:3000/users/deleteUser/'+body[i].id_persona_paciente,
+                    method: 'delete'
+                  }); 
+                
+            }
+            i=body.length;   
+        }
+        
+        res.status(200).json(body);
+    }
+    else{
+        res.status(400).json({
+            err,
+            error: 'No existen cupones de pago'
+        });
+    }
+	
 }

@@ -7,26 +7,7 @@ exports.addHC = async (req, res)=>{
     let id_persona_paciente = datos.id_persona;
     let id_persona_creacion = datos.id_persona_creacion;
     
-    /*let clave_usuario= await helpers.encryptPassword(datos.dni);
-    
-    updateUser = {
-        id_tipo_persona: 4,
-        dni: datos.dni,
-        nombre_usuario: datos.dni,
-        clave_usuario: clave_usuario,
-        estado: datos.estado,
-        activo:1
-        };
-            
-    await pool.query('UPDATE persona SET ? WHERE id_persona = ?', [updateUser, id_persona_paciente], function(err, result){
-        if(err){
-           console.log('No se ha podido guardar el paciente');
-           console.log(err);
-        }
-        else{
-            console.log('Se guardo el paciente');
-        }
-    });*/
+  
     //utilizo metodo ya creado  
         axios.post('http://localhost:3000/users/add',{
             "id_persona": id_persona_paciente,
@@ -163,18 +144,38 @@ exports.addEvolucion=async(req,res)=>{
         const tratamiento = await axios({
             url:'http://localhost:3000/tratamiento/getTratamientoId/'+response.data[0].id_tratamiento,
             method:'get'
+        }); 
+        const historia_clinica = await axios({
+            url:'http://localhost:3000/hc/getHC/'+response.data[0].id_hc,
+            method:'get'
         });  
+        
+        const persona = await axios({
+            url:'http://localhost:3000/users/getUserId/'+historia_clinica.data[0].id_persona_paciente,
+            method:'get'
+        }); 
+        let numeroDia = new Date(persona.data[0].fecha_contrato).getDate();
+        if(numeroDia<=23){
+            numeroDia=numeroDia+5;
+        }
+        else{
+            numeroDia=5;
+        }
         //genero el cupon de pago
-        axios({
-            method:'post',
-            url:'http://localhost:3000/global/addCupon',
-            data:{
-                pagado:0,
-                total:tratamiento.data[0].costo_mensual,
-                id_hc_tratamiento:datos.id_hc_tratamiento,
-                fecha_vencimiento:fechaHoy.getFullYear()+"-"+(fechaHoy.getMonth()+ 1)+"-"+"15"
-            }
-        });
+        if(datos.fase!=0){
+            axios({
+                method:'post',
+                url:'http://localhost:3000/global/addCupon',
+                data:{
+                    pagado:0,
+                    total:tratamiento.data[0].costo_mensual,
+                    id_hc_tratamiento:datos.id_hc_tratamiento,
+                    //modificar el dia por el dia q firma contrato mas 5 dias
+                    fecha_vencimiento:fechaHoy.getFullYear()+"-"+(fechaHoy.getMonth()+ 2)+"-"+numeroDia
+                }
+            });
+        }
+        
       result= await pool.query('SELECT e.fase,e.id_evolucion FROM evolucion as e where e.es_evolucion=0 and e.id_hc_tratamiento='+datos.id_hc_tratamiento+' order by e.id_evolucion desc limit 1')
       if(result[0]){
         if (datos.fase==result[0].fase){        

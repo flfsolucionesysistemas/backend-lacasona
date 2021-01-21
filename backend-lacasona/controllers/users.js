@@ -1,6 +1,7 @@
 const pool = require('../config/database');
 const jwt = require('../config/jwt');
 const helpers = require('../config/helpers');
+const axios = require('axios');
 
 exports.loginUser= async(req, res)=>{
 	var params = req.body	
@@ -211,20 +212,56 @@ exports.getExisteUser= async (req, res) =>{
 }
 
 exports.setFechaContrato = async (req, res) =>{
+    fechaHoy = new Date();
     let datos = req.body.idPersona;
-	console.log(datos);
-    await pool.query('UPDATE persona SET fecha_contrato = now() WHERE id_persona = '+ datos, function(err,sql) {
-        if(err){
+     update = {
+        fecha_contrato : fechaHoy
+        };
+    
+    sql = await pool.query('UPDATE persona SET ? WHERE id_persona = ? ',[update,datos]);
+        if(sql!=null){
+            //generar primer cupon con fecha actual mas 5 dias
+            const persona = await axios({
+                url:'http://localhost:3000/users/getUserId/'+datos,
+                method:'get'
+            });
+            
+            let numeroDia = new Date(persona.data[0].fecha_contrato).getDate();
+                if(numeroDia<=23){
+                    numeroDia=numeroDia+5;
+                }
+                else{
+                    numeroDia=5;
+                }
+                //obtengo el hc_tratamiento vigente del paciente
+                const hc_tratamiento = await axios({
+                    url:'http://localhost:3000/tratamiento/tratamientoIdPaciente/'+datos,
+                    method:'get'
+                }); 
+                //obtengo el costo mensual del tratamiento
+                const tratamiento =  await axios({
+                    url:'http://localhost:3000/tratamiento/getTratamientoId/'+hc_tratamiento.data.sql[0].id_tratamiento,
+                    method:'get'
+                }); 
+            //genero primer cupon de pago luego de haber haceptado los terminos y condiciones    
+            axios({
+                method:'post',
+                url:'http://localhost:3000/global/addCupon',
+                data:{
+                    pagado:0,
+                    total:tratamiento.data[0].costo_mensual,
+                    id_hc_tratamiento:hc_tratamiento.data.sql[0].id_hc_tratamiento,
+                    fecha_vencimiento:fechaHoy.getFullYear()+"-"+(fechaHoy.getMonth()+ 2)+"-"+numeroDia
+                }
+            });
+            res.status(200).send(sql);
+        }  
+        else{
             console.log(err);
             res.status(400).json({
 
                 error: 'No se ha modificar el usuario'
             });
         }
-        else{
-            res.status(200).send(sql);
-        }
-
-    });
 
 }
