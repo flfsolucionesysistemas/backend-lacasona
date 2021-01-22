@@ -312,7 +312,7 @@ exports.getFechasTurnosSegunProfesional = async (req, res) =>{
 
 exports.getTurnosFechaTipo = async (req, res) =>{
     if(req.params.tipo == 0){
-		await pool.query ('SELECT p.id_persona, p.nombre, p.apellido, p.email, p.telefono, t.id_turno, t.id_tipo_turno, t.costo_base, t.estado, t.fecha, t.hora,t.id_profesional, t.id_paciente, t.id_tipo_turno, t.observacion, t.profesional_disponible, t.turno_tratamiento'+ 
+		await pool.query ('SELECT p.id_persona, p.estado, p.nombre, p.apellido, p.email, p.telefono, t.id_turno, t.id_tipo_turno, t.costo_base, t.estado, t.fecha, t.hora,t.id_profesional, t.id_paciente, t.id_tipo_turno, t.observacion, t.profesional_disponible, t.turno_tratamiento'+ 
 					' FROM turno as t' +
 					' INNER JOIN entrevista AS e ON e.id_entrevista = t.id_tipo_turno ' + 
 					' INNER JOIN persona AS p ON p.id_persona = e.id_persona ' + 
