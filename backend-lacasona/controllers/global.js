@@ -314,3 +314,6 @@ exports.controlPagos = async(req, res)=>{
     }
 	
 }
+
+
+

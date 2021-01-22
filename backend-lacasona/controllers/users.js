@@ -225,14 +225,11 @@ exports.setFechaContrato = async (req, res) =>{
                 url:'http://localhost:3000/users/getUserId/'+datos,
                 method:'get'
             });
-            
-            let numeroDia = new Date(persona.data[0].fecha_contrato).getDate();
-                if(numeroDia<=23){
-                    numeroDia=numeroDia+5;
-                }
-                else{
-                    numeroDia=5;
-                }
+            //setero fecha de vencimiento de cupon
+            let numeroDia=new Date(persona.data[0].fecha_contrato);
+            numeroDia.setDate(numeroDia.getDate()+5);
+            numeroDia=numeroDia.getFullYear()+"-"+(numeroDia.getMonth()+1)+"-"+numeroDia.getDate();
+                console.log("dia "+numeroDia);
                 //obtengo el hc_tratamiento vigente del paciente
                 const hc_tratamiento = await axios({
                     url:'http://localhost:3000/tratamiento/tratamientoIdPaciente/'+datos,
@@ -251,7 +248,7 @@ exports.setFechaContrato = async (req, res) =>{
                     pagado:0,
                     total:tratamiento.data[0].costo_mensual,
                     id_hc_tratamiento:hc_tratamiento.data.sql[0].id_hc_tratamiento,
-                    fecha_vencimiento:fechaHoy.getFullYear()+"-"+(fechaHoy.getMonth()+ 2)+"-"+numeroDia
+                    fecha_vencimiento:numeroDia
                 }
             });
             res.status(200).send(sql);

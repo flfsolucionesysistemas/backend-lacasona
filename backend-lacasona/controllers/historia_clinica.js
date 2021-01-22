@@ -154,13 +154,9 @@ exports.addEvolucion=async(req,res)=>{
             url:'http://localhost:3000/users/getUserId/'+historia_clinica.data[0].id_persona_paciente,
             method:'get'
         }); 
-        let numeroDia = new Date(persona.data[0].fecha_contrato).getDate();
-        if(numeroDia<=23){
-            numeroDia=numeroDia+5;
-        }
-        else{
-            numeroDia=5;
-        }
+        let numeroDia=new Date(persona.data[0].fecha_contrato);
+            numeroDia.setDate(numeroDia.getDate()+5);
+            numeroDia=numeroDia.getFullYear()+"-"+(numeroDia.getMonth()+1)+"-"+numeroDia.getDate();
         //genero el cupon de pago
         if(datos.fase!=0){
             axios({
@@ -171,7 +167,7 @@ exports.addEvolucion=async(req,res)=>{
                     total:tratamiento.data[0].costo_mensual,
                     id_hc_tratamiento:datos.id_hc_tratamiento,
                     //modificar el dia por el dia q firma contrato mas 5 dias
-                    fecha_vencimiento:fechaHoy.getFullYear()+"-"+(fechaHoy.getMonth()+ 2)+"-"+numeroDia
+                    fecha_vencimiento:numeroDia
                 }
             });
         }

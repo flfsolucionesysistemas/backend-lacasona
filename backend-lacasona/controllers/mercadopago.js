@@ -284,4 +284,38 @@ exports.getCuponesPacientes = async (req, res)=>{
         }); 
     }
 }
+//METODO PARA OBTENER TODOS LOS PAGOS QUE SE EFECTUARON DEPENDIENDO DEL TIPO
+exports.getCuponTipo = async(req, res)=>{
+  let tipo = req.params.tipo;
+  if(tipo==0){
+    let body = await pool.query ('SELECT * FROM pago as p '+
+      'INNER JOIN entrevista as e on e.id_pago=p.id_pago '+
+      'INNER JOIN turno as t on t.id_tipo_turno=e.id_entrevista WHERE p.pago_tratamiento='+tipo);
+		
+    if(body != null){
+        res.status(200).send(body);      
+    }
+    else{
+        return res.status(400).json({
+            ok:false           
+        }); 
+    }
+  }
+  else{
+    
+    let body = await pool.query ('SELECT * FROM cupon as c '+
+      'INNER JOIN hc_tratamiento as hct on c.id_hc_tratamiento=hct.id_hc_tratamiento '+
+      'INNER JOIN historia_clinica as hc on hct.id_hc= hc.id_historia_clinica order by c.id_cupon');
+		
+    if(body != null){
+        res.status(200).send(body);      
+    }
+    else{
+        return res.status(400).json({
+            ok:false           
+        }); 
+    }
+  }    
+  
+}
  
