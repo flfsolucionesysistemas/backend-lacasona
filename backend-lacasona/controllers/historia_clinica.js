@@ -148,15 +148,18 @@ exports.addEvolucion=async(req,res)=>{
         const historia_clinica = await axios({
             url:'http://localhost:3000/hc/getHC/'+response.data[0].id_hc,
             method:'get'
+        });
+        const cupon = await axios({
+            url:'http://localhost:3000/global/getCuponeslimit/'+historia_clinica.data[0].id_historia_clinica,
+            method:'get'
         });  
         
-        const persona = await axios({
-            url:'http://localhost:3000/users/getUserId/'+historia_clinica.data[0].id_persona_paciente,
-            method:'get'
-        }); 
-        let numeroDia=new Date(persona.data[0].fecha_contrato);
-            numeroDia.setDate(numeroDia.getDate()+5);
-            numeroDia=numeroDia.getFullYear()+"-"+(numeroDia.getMonth()+1)+"-"+numeroDia.getDate();
+        let numeroDia=new Date(cupon.data[0].fecha_vencimiento);
+        console.log(numeroDia);
+            //numeroDia.setMonth(numeroDia.getMonth()+1);
+            numeroDia.setDate(numeroDia.getDate()+30);
+            numeroDia=numeroDia.toLocaleDateString ("fr-CA");
+            console.log(numeroDia);
         //genero el cupon de pago
         if(datos.fase!=0){
             axios({
