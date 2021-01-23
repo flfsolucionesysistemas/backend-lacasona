@@ -156,7 +156,7 @@ exports.addEvolucion=async(req,res)=>{
         
         let numeroDia=new Date(cupon.data[0].fecha_vencimiento);
             numeroDia.setDate(numeroDia.getDate()+30);
-            numeroDia=numeroDia.toLocaleDateString ("fr-CA");
+            numeroDia=numeroDia.toLocaleDateString ("zh-Hans-CN");
             console.log(numeroDia);
         //genero el cupon de pago
         if(datos.fase!=0){
