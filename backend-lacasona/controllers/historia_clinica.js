@@ -156,8 +156,9 @@ exports.addEvolucion=async(req,res)=>{
         
         let numeroDia=new Date(cupon.data[0].fecha_vencimiento);
             numeroDia.setDate(numeroDia.getDate()+30);
-            numeroDia=numeroDia.toLocaleDateString ({ year: "numeric", month: "numeric", day: "numeric" });
-            console.log(numeroDia);
+            let f=numeroDia.getFullYear()+"-"+(numeroDia.getMonth()+1)+"-"+numeroDia.getDate();
+            console.log(f);
+   
         //genero el cupon de pago
         if(datos.fase!=0){
             axios({
@@ -168,7 +169,7 @@ exports.addEvolucion=async(req,res)=>{
                     total:tratamiento.data[0].costo_mensual,
                     id_hc_tratamiento:datos.id_hc_tratamiento,
                     //modificar el dia por el dia q firma contrato mas 5 dias
-                    fecha_vencimiento:numeroDia
+                    fecha_vencimiento:f
                 }
             });
         }
