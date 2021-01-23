@@ -24,5 +24,7 @@ router.get('/getTurnosDisponiblesTipoTodos/:tipo',ctrlTurno.getTurnosDisponibles
 router.get('/getTurnosAsignadosAPacientes/:id_paciente',ctrlTurno.getTurnosAsignadosAPacientes);
 router.get('/getProximoTurnoPaciente/:id_paciente',ctrlTurno.getProximoTurnoPaciente);
 
+router.get('/getTurnosEntrevistaAdmisionPorFecha',ctrlTurno.getTurnosEntrevistaAdmisionPorFecha);
+router.get('/getTurnosEntrevistaAdmision',ctrlTurno.getTurnosEntrevistaAdmision);
 
 module.exports = router;

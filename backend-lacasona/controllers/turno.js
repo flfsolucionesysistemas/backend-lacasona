@@ -270,6 +270,48 @@ exports.getTurnoConsultaPrecio = async (req, res) =>{
 }
 
 
+
+exports.getTurnosEntrevistaAdmisionPorFecha = async (req, res) =>{      
+	let fecha=req.params.fecha;
+	
+	await pool.query ('SELECT t.fecha, t.hora, p.nombre,p.apellido, p.telefono, p.email, p.id_persona FROM turno  AS t ' +
+					  'INNER JOIN entrevista AS e ON e.id_entrevista = t.id_tipo_turno ' +
+					  'INNER JOIN persona AS p ON p.id_persona = e.id_persona ' +
+					  'WHERE t.fecha = "' + fecha + '" and t.turno_tratamiento=0 and p.estado is null; '
+					  ,function(err,sql){
+        if(err){
+            console.log(err);
+            res.status(400).json({
+                error:"error entrevista de admision"
+            });
+        }
+        else{           
+             res.status(200).send(sql);
+        }
+    });
+}
+
+
+exports.getTurnosEntrevistaAdmision = async (req, res) =>{      
+	let fecha=req.params.fecha;
+	
+	await pool.query ('SELECT t.fecha, t.hora, p.nombre,p.apellido, p.telefono, p.email, p.id_persona FROM turno  AS t ' +
+					  'INNER JOIN entrevista AS e ON e.id_entrevista = t.id_tipo_turno ' +
+					  'INNER JOIN persona AS p ON p.id_persona = e.id_persona ' +
+					  'WHERE t.fecha > CURDATE() and t.turno_tratamiento=0 and p.estado is null; '
+					  ,function(err,sql){
+        if(err){
+            console.log(err);
+            res.status(400).json({
+                error:"error entrevista de admision"
+            });
+        }
+        else{           
+             res.status(200).send(sql);
+        }
+    });
+}
+
 exports.getTurnosPorFechaYProfesional = async (req, res) =>{      
 	let profesional=req.params.id_profesional;
 	let fecha=req.params.fecha;
