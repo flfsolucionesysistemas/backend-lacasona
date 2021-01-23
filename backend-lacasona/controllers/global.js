@@ -291,21 +291,20 @@ exports.controlPagos = async(req, res)=>{
     let fechaHoy= new Date();
     let body = await pool.query ('SELECT * FROM cupon as c '+
       'INNER JOIN hc_tratamiento as hct on c.id_hc_tratamiento=hct.id_hc_tratamiento '+
-      'INNER JOIN historia_clinica as hc on hct.id_hc= hc.id_historia_clinica WHERE c.fecha_vencimiento >= ?',[fechaHoy] );
+      'INNER JOIN historia_clinica as hc on hct.id_hc= hc.id_historia_clinica WHERE c.pagado=0 AND c.fecha_vencimiento < ?',[fechaHoy] );
     if(body!=null){
         for(var i=0; i<body.length; i++){
-            if(body[i].pagado==0){
+            
                 const user = await axios({
                     url: 'http://localhost:3000/users/deleteUser/'+body[i].id_persona_paciente,
                     method: 'delete'
                   }); 
-                
-            }
-            i=body.length;   
+               //agregar email para avisar al admin
         }
         
         res.status(200).json(body);
     }
+    
     else{
         res.status(400).json({
             err,

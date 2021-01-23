@@ -8,6 +8,7 @@ var mySQLstorage = require('express-mysql-session');
 var config = require('./config/init');
 var flash = require('connect-flash');
 var bodyParser = require('body-parser');
+var axios = require('axios');
 
 
 var indexRouter = require('./router/index');
@@ -86,6 +87,14 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
+//(60seg*60min*24hs)*1000=86.400.000(un dia despues)
+setInterval(()=>{
+  console.log("control pago ->"+ new Date());
+  axios({
+    url: 'http://localhost:3000/global/controlPagos',
+    method: 'get'
+  }); 
+},86400000);
 app.listen(app.get('port'), () => { console.log('Listening to port: ' + app.get('port')) })
 
 
