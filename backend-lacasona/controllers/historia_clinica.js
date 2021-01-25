@@ -134,7 +134,7 @@ exports.updateHCTra=async(req,res)=>{
 exports.addEvolucion=async(req,res)=>{
     let datos = req.body;
     fechaHoy = new Date();
-	if(datos.es_evolucion == 0){
+	if(datos.es_evolucion == 0 && datos.fase!=0){
         //obtengo datos para el cupon de pago
         const response = await axios({
             url: 'http://localhost:3000/hc/getHCTratamiento/'+datos.id_hc_tratamiento,
@@ -160,7 +160,7 @@ exports.addEvolucion=async(req,res)=>{
             console.log(f);
    
         //genero el cupon de pago
-        if(datos.fase!=0){
+       // if(datos.fase!=0){
             axios({
                 method:'post',
                 url:'http://localhost:3000/global/addCupon',
@@ -172,7 +172,7 @@ exports.addEvolucion=async(req,res)=>{
                     fecha_vencimiento:f
                 }
             });
-        }
+        //}
         
       result= await pool.query('SELECT e.fase,e.id_evolucion FROM evolucion as e where e.es_evolucion=0 and e.id_hc_tratamiento='+datos.id_hc_tratamiento+' order by e.id_evolucion desc limit 1')
       if(result[0]){
