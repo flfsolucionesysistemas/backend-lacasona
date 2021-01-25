@@ -3,8 +3,8 @@ const axios = require('axios');
 const pool = require('../config/database');
 
 mercadopago.configure({
-    //access_token:'APP_USR-4695914672902143-123020-6e36dda61188fc87b3d661d04aeb724e-169256828'
-    access_token: 'TEST-4270581017673819-123020-8674ab1ab7b0e591e0605c04da95e07a-155012162'
+    access_token:'APP_USR-4270581017673819-123020-3e1ebfa9966447defc6fb2ce89684d47-155012162'
+    //access_token: 'TEST-4270581017673819-123020-8674ab1ab7b0e591e0605c04da95e07a-155012162'
   });
   
   
@@ -126,8 +126,8 @@ else{
   
       const response = await axios.get('https://api.mercadopago.com/v1/payments/'+paymentId, {
         params: {
-           // access_token:'APP_USR-4695914672902143-123020-6e36dda61188fc87b3d661d04aeb724e-169256828',
-          access_token: 'TEST-4270581017673819-123020-8674ab1ab7b0e591e0605c04da95e07a-155012162',
+          access_token:'APP_USR-4270581017673819-123020-3e1ebfa9966447defc6fb2ce89684d47-155012162',
+           //access_token: 'TEST-4270581017673819-123020-8674ab1ab7b0e591e0605c04da95e07a-155012162',
           status: 'approved',
           offset: 0,
           limit: 10,
@@ -250,8 +250,9 @@ async function obtenerInfoDePagoTratamiento(paymentId) {
 
     const response = await axios.get('https://api.mercadopago.com/v1/payments/'+paymentId, {
       params: {
-         // access_token:'APP_USR-4695914672902143-123020-6e36dda61188fc87b3d661d04aeb724e-169256828',
-        access_token: 'TEST-4270581017673819-123020-8674ab1ab7b0e591e0605c04da95e07a-155012162',
+        access_token:'APP_USR-4270581017673819-123020-3e1ebfa9966447defc6fb2ce89684d47-155012162',
+         
+        //access_token: 'TEST-4270581017673819-123020-8674ab1ab7b0e591e0605c04da95e07a-155012162',
         status: 'approved',
         offset: 0,
         limit: 10,
