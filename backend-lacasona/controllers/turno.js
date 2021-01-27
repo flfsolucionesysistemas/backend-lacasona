@@ -317,9 +317,10 @@ exports.getTurnosPorFechaYProfesional = async (req, res) =>{
 	let fecha=req.params.fecha;
 	
 	await pool.query ('SELECT * FROM turno ' +
-					  'WHERE turno_tratamiento = 1 and estado = 1 and costo_base = 0 and id_profesional = '+ profesional +
-					  ' and fecha = "' + fecha + '" and profesional_disponible = 1 ' +
-					  ' order by fecha' ,function(err,sql){
+					  ' WHERE turno_tratamiento = 1 and estado = 1 and costo_base = 0 and id_profesional = '+ profesional +
+					  ' and profesional_disponible = 1 and (fecha = "' + fecha + 
+					  ' and hora >= DATE_FORMAT(NOW( ), "%H:%i:%S")) ' +
+					  ' order by fecha' ,function(err,sql){					  					  
         if(err){
             console.log(err);
             res.status(400).json({
