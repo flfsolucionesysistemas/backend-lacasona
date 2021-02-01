@@ -80,16 +80,16 @@ exports.addConsulta= async (req, res) =>{
 						});
 						
 						var meet="https://meet.jit.si/lacasonameet"+variable.email;
-						var emailCliente="<h1>Bienvenido a PSICOINTERACCION.</h1>"+
-										"<p>Nos comunicamos con Ud. por que ha solicitado su primer entrevista. </p> "+
-										 "<p><em>Fecha:</em> "+fecha+".  <em>Hora:</em> "+turnoasignado.data[0].hora+" </p>"+
-										 "<p><h4>El link para acceder a la consulta es el siguiente:  "+ meet+" </h4></p>";
+						var emailCliente="<h1>BIENVENIDOS A LA CASONA WEB. </h1>"+
+										 "<p>El turno que ud. ha solicitado está confirmado para Fecha:<em> "+fecha+". </em> Hora: <em>"+turnoasignado.data[0].hora+" </em></p>"+
+										 "<p>Rogamos puntualidad en la comunicación, muchas gracias."+
+										 "<p><h4>El enlace para acceder a la videollamada en la fecha señalada es el siguiente:   "+ meet+" </h4></p>";
 						var emailAdmin="Se acaba de registrar una nueva solicitud de consulta via web"
 						//sumar el meet de la reunion
 						var mailOptionsCliente = {
 							from: 'LaCasonaWeb',
 							to: variable.email,
-							subject: 'Consulta la casona web',
+							subject: ' TURNO CONFIRMADO',
 							html: emailCliente
 						};
 						
