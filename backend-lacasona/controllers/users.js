@@ -141,16 +141,19 @@ exports.deleteUser = async (req, res) =>{
 }
 exports.getUserActivo= async (req, res) =>{
     let valor = req.params.activos;
-    let setValor;
+    let body
     console.log(req.params.activos);
     if(valor==='activos'){
-        setValor=1;
+        body = await pool.query ('SELECT * FROM persona WHERE activo = ?', [1]);
     }
     else if(valor==='inactivos'){
-        setValor=0;
+        body = await pool.query ('SELECT * FROM persona WHERE activo = ?', [0]);
     }
-    let body = await pool.query ('SELECT * FROM persona WHERE activo = ?', [setValor]);
+    else{
+        body = await pool.query ('SELECT * FROM persona');
 	
+    }
+    
     if(body != null){
         res.status(200).send({body});
        
