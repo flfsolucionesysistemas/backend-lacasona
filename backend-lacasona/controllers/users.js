@@ -146,7 +146,7 @@ exports.getUserActivo= async (req, res) =>{
     if(valor==='activos'){
         setValor=1;
     }
-    else{
+    else if(valor==='inactivos'){
         setValor=0;
     }
     let body = await pool.query ('SELECT * FROM persona WHERE activo = ?', [setValor]);
