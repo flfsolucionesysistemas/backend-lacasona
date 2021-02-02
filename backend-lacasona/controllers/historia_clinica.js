@@ -242,7 +242,7 @@ exports.getHCTratamientoSinFechaAlta= async (req, res) =>{
 			'INNER JOIN historia_clinica AS hc ON hc.id_persona_paciente = p.id_persona ' + 
 			'INNER JOIN hc_tratamiento AS hct ON hct.id_hc = hc.id_historia_clinica ' +
 			'INNER JOIN tratamiento AS t ON t.id_tratamiento = hct.id_tratamiento ' + 
-			'WHERE p.fecha_contrato IS NOT null  AND hct.fecha_alta is null');
+			'WHERE p.fecha_contrato IS NOT null  AND hct.fecha_alta is null AND p.activo = 1');
 		
     if(body != null){
         res.status(200).send({body});      
