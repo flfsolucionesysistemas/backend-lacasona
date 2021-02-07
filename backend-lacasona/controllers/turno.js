@@ -25,6 +25,7 @@ exports.addTurno = async (req, res) =>{
         });
     }
 }
+
 exports.update = async (req, res)=>{
     let datos = req.body;
     let id_turno = datos.id_turno;
@@ -43,6 +44,25 @@ exports.update = async (req, res)=>{
         }
     });
 }
+
+exports.delete = async (req, res)=>{
+    let datos = req.body;
+    let id_turno = datos.id_turno;
+
+    await pool.query ('DELETE turno WHERE id_turno = ?', [datos, id_turno],function(err,sql){
+        if(err){
+			console.log(err);
+            res.status(400).json({
+                error:"error al borrar turno"
+            });
+        }
+        else{
+            let query= sql.affectedRows;
+             res.status(200).send({sql});
+        }
+    });
+}
+
 
 exports.getTurnosDisponiblesTipo = async (req, res) =>{
     let tipo = req.params.id_tipo;
