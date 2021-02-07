@@ -284,7 +284,7 @@ exports.getCuponesPacientes = async (req, res)=>{
             ok:false           
         }); 
     }
-}DFSDF
+}
 //METODO PARA OBTENER TODOS LOS PAGOS QUE SE EFECTUARON DEPENDIENDO DEL TIPO (es tratamiento o no)
 exports.getCuponTipo = async(req, res)=>{
   let tipo = req.params.tipo;
