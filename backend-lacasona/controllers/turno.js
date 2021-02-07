@@ -49,7 +49,7 @@ exports.delete = async (req, res)=>{
     let datos = req.body;
     let id_turno = datos.id_turno;
 
-    await pool.query ('DELETE turno WHERE id_turno = ?', [datos, id_turno],function(err,sql){
+    await pool.query ('DELETE turno WHERE id_turno = ' + id_turno, function(err,sql){
         if(err){
 			console.log(err);
             res.status(400).json({
