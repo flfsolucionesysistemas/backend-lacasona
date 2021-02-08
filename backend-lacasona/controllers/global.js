@@ -329,5 +329,20 @@ exports.getTipoSesionIndividual= async(req, res)=>{
         }
     });
 }
+exports.getTipoSesionGrupal= async(req, res)=>{
+    
+    await pool.query('SELECT * FROM tipo_sesion WHERE individual= 0 AND activo = 1 ',  function(err, sql){
+        if(err){
+            res.status(400).json({
+                err,
+                error: 'No existen tipo de sesiones'
+            });
+        }
+        else{
+           
+			res.status(200).json(sql); 
+        }
+    });
+}
 
 
