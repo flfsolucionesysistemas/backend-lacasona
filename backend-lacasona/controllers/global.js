@@ -314,5 +314,20 @@ exports.controlPagos = async(req, res)=>{
 	
 }
 
+exports.getTipoSesion= async(req, res)=>{
+    
+    await pool.query('SELECT * FROM tipo_sesion WHERE activo = 1 ',  function(err, sql){
+        if(err){
+            res.status(400).json({
+                err,
+                error: 'No existen tipo de sesiones'
+            });
+        }
+        else{
+           
+			res.status(200).json(sql); 
+        }
+    });
+}
 
 
