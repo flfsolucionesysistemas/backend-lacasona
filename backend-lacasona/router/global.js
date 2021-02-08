@@ -14,7 +14,7 @@ router.get('/getCupones/:id_hc', ctrlGlobal.getCuponid_hc);
 router.get('/getCuponeslimit/:id_hc', ctrlGlobal.getCuponid_hclimit);
 router.put('/updateCupon',ctrlGlobal.updateCupon);
 router.get('/controlPagos',ctrlGlobal.controlPagos);
-router.get('/getTipoSesion',ctrlGlobal.getTipoSesion);
+router.get('/getTipoSesionIndividual',ctrlGlobal.getTipoSesionIndividual);
 
 
 module.exports = router;
