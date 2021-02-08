@@ -25,6 +25,7 @@ exports.addTurno = async (req, res) =>{
         });
     }
 }
+
 exports.update = async (req, res)=>{
     let datos = req.body;
     let id_turno = datos.id_turno;
@@ -43,6 +44,25 @@ exports.update = async (req, res)=>{
         }
     });
 }
+
+exports.delete = async (req, res)=>{
+    let datos = req.body;
+    let id_turno = datos.id_turno;
+
+    await pool.query ('DELETE FROM turno WHERE id_turno = ' + id_turno , function(err,sql){
+        if(err){
+			console.log(err);
+            res.status(400).json({
+                error:"error al borrar turno"
+            });
+        }
+        else{
+            let query= sql.affectedRows;
+             res.status(200).send({sql});
+        }
+    });
+}
+
 
 exports.getTurnosDisponiblesTipo = async (req, res) =>{
     let tipo = req.params.id_tipo;
@@ -357,7 +377,7 @@ exports.getTurnosFechaTipo = async (req, res) =>{
     if(req.params.tipo == 0){
 		await pool.query ('SELECT t.id_turno, t.id_tipo_turno, t.costo_base, t.estado, t.fecha, t.hora,t.id_profesional, t.id_paciente, t.id_tipo_turno, t.observacion, t.profesional_disponible, t.turno_tratamiento'+ 
 					' FROM turno as t' +
-					' WHERE t.fecha ="'+req.params.fecha+'" AND t.turno_tratamiento="'+req.params.tipo+'" ' ,function(err,sql){
+					' WHERE t.fecha ="'+req.params.fecha+'" AND t.turno_tratamiento="'+req.params.tipo+'" order by hora' ,function(err,sql){
 			if(err){
 				console.log(err);
 				res.status(400).json({

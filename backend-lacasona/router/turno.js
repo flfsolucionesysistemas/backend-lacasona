@@ -7,6 +7,7 @@ router.get('/getTurnosDisponiblesTipo/:id_tipo',ctrlTurno.getTurnosDisponiblesTi
 router.post('/add',ctrlTurno.addTurno);
 router.put('/asignarTurno',ctrlTurno.asiganarTurno);
 router.put('/update',ctrlTurno.update);
+router.put('/delete',ctrlTurno.delete);
 router.get('/getTurnos',ctrlTurno.getTurnos);
 router.get('/getTurnosProfesionales',ctrlTurno.getTurnosParaProfesionales);
 router.get('/getTurnosLimit/:limit',ctrlTurno.getTurnosLimit);
