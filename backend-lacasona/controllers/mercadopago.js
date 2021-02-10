@@ -327,3 +327,23 @@ exports.getCuponTipo = async(req, res)=>{
   
 }
  
+  
+exports.update = async (req, res)=>{
+    let datos = req.body;
+    let id_cupon = datos.id_cupon;
+	
+	
+    await pool.query ('UPDATE cupon SET ? WHERE id_cupon = ?', [datos, id_cupon],function(err,sql){
+        if(err){
+			console.log(err);
+            res.status(400).json({
+                error:"error al modificar un cupon"
+            });
+        }
+        else{
+            let query= sql.affectedRows;
+             res.status(200).send({sql});
+        }
+    });
+}
+ 
