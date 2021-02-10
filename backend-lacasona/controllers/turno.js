@@ -1,4 +1,5 @@
 const pool = require('../config/database');
+const axios = require('axios');
 
 exports.addTurno = async (req, res) =>{
     let data = req.body;
@@ -430,5 +431,36 @@ exports.getTurnoId = async (req, res) =>{
         }
     });
 
+}
+
+exports.turnosGrupales = async (req, res) =>{      
+	let datos=req.body;
+	axios.put('http://localhost:3000/turno/update',{
+		"id_turno": datos.id_turno,
+		"observacion": "asignado"		
+	})
+	.then(function(res) {
+	  if(res.status==200 ) {
+		console.log("OK");
+	  }
+	})
+	.catch(function(err) {
+	  console.log(err);
+    });
+    let data = {
+        "id_paciente":datos.id_paciente,
+        "id_turno":datos.id_turno
+    }
+	await pool.query ('INSERT INTO paciente_turno set ?', [data] ,function(err,sql){
+        if(err){
+            console.log(err);
+            res.status(400).json({
+                error:"error"
+            });
+        }
+        else{           
+             res.status(200).send(sql);
+        }
+    });
 }
 
