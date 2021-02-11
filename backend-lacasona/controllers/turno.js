@@ -485,7 +485,7 @@ exports.getTurnosTipoIndividual = async (req, res) =>{
 
 exports.getTurnosTipoGrupal = async (req, res) =>{      
     await pool.query ('SELECT * FROM paciente_turno as tp INNER JOIN turno as t on '+
-                     't.id_turno=tp.id_turno inner join tipo_sesion as ts on t.id_tipo_sesion=ts.id_tipo_sesion'+
+                     't.id_turno=tp.id_turno inner join tipo_sesion as ts on t.id_tipo_sesion=ts.id_tipo_sesion '+
                      'WHERE tp.id_paciente='+req.params.id,function(err,sql){
         if(err){
             console.log(err);
