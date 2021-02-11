@@ -438,7 +438,7 @@ exports.turnosGrupales = async (req, res) =>{
 	axios.put('http://localhost:3000/turno/update',{
 		"id_turno": datos.id_turno,
         "observacion": "asignado GRUPAL",
-        "id_sesion_tipo":datos.id_sesion_tipo,
+        "id_tipo_sesion":datos.id_tipo_sesion,
         "estado":0		
 	})
 	.then(function(res) {
