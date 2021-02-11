@@ -466,3 +466,36 @@ exports.turnosGrupales = async (req, res) =>{
     });
 }
 
+exports.getTurnosTipoIndividual = async (req, res) =>{      
+	
+    await pool.query ('SELECT * FROM turno as t INNER JOIN tipo_sesion as ts ON '+
+                     't.id_tipo_sesion=ts.id_tipo_sesion '+
+                     'WHERE t.id_paciente='+req.params.id,function(err,sql){
+        if(err){
+            console.log(err);
+            res.status(400).json({
+                error:"error"
+            });
+        }
+        else{           
+             res.status(200).send(sql);
+        }
+    });
+}
+
+exports.getTurnosTipoGrupal = async (req, res) =>{      
+	
+    await pool.query ('SELECT * FROM paciente_turno as tp INNER JOIN turno as t on '+
+                     't.id_turno=tp.id_turno WHERE tp.id_paciente='+req.params.id,function(err,sql){
+        if(err){
+            console.log(err);
+            res.status(400).json({
+                error:"error"
+            });
+        }
+        else{           
+             res.status(200).send(sql);
+        }
+    });
+}
+
