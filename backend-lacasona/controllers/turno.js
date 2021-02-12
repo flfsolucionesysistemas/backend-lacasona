@@ -533,4 +533,21 @@ exports.getTurnosGrupales = async (req, res) =>{
         }
     });
 }
+exports.getProximoTurnoGrupal = async (req, res) =>{      
+    await pool.query ('SELECT * FROM paciente_turno as pt inner join turno as t on t.id_turno=pt.id_turno '+
+                     'inner join persona as p on p.id_persona=t.id_profesional WHERE t.estado = 0 '+
+                     'and pt.id_paciente ='+req.params.id+' and (t.fecha > CURDATE() OR (t.fecha = CURDATE() and t.hora >= DATE_FORMAT(NOW( ), "%H:%i:%S"))) '+
+                     'order by t.fecha asc limit 1',function(err,sql){
+        if(err){
+            console.log(err);
+            res.status(400).json({
+                error:"error"
+            });
+        }
+        else{           
+             res.status(200).send(sql);
+        }
+    });
+}
 
+   

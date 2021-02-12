@@ -32,5 +32,6 @@ router.get('/getTurnosTipoGrupal/:id',ctrlTurno.getTurnosTipoGrupal);
 router.get('/getTurnosTipoIndividual/:id',ctrlTurno.getTurnosTipoIndividual);
 router.get('/getTurnosGrupales/:id',ctrlTurno.getTurnosGrupales);
 router.delete('/deleteTurnoGrupal/:id_paciente_turno',ctrlTurno.deleteTurnoGrupal);
+router.get('/getProximoTurnoGrupal/:id',ctrlTurno.getProximoTurnoGrupal);
 
 module.exports = router;
