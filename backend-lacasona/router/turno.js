@@ -30,6 +30,7 @@ router.get('/getTurnosEntrevistaAdmision',ctrlTurno.getTurnosEntrevistaAdmision)
 router.post('/turnosGrupales',ctrlTurno.turnosGrupales);
 router.get('/getTurnosTipoGrupal/:id',ctrlTurno.getTurnosTipoGrupal);
 router.get('/getTurnosTipoIndividual/:id',ctrlTurno.getTurnosTipoIndividual);
+router.get('/getTurnosGrupales/:id',ctrlTurno.getTurnosGrupales);
 router.delete('/deleteTurnoGrupal/:id_paciente_turno',ctrlTurno.deleteTurnoGrupal);
 
 module.exports = router;

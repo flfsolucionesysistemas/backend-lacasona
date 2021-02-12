@@ -517,3 +517,20 @@ exports.deleteTurnoGrupal = async (req, res)=>{
     });
 }
 
+exports.getTurnosGrupales = async (req, res) =>{      
+    await pool.query ('SELECT * FROM paciente_turno as tp INNER JOIN turno as t on '+
+                     't.id_turno=tp.id_turno inner join tipo_sesion as ts on t.id_tipo_sesion=ts.id_tipo_sesion '+
+                     'inner join persona as p on p.id_persona=tp.id_paciente '+
+                     'WHERE tp.id_turno='+req.params.id,function(err,sql){
+        if(err){
+            console.log(err);
+            res.status(400).json({
+                error:"error"
+            });
+        }
+        else{           
+             res.status(200).send(sql);
+        }
+    });
+}
+
