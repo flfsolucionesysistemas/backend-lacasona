@@ -437,7 +437,7 @@ exports.turnosGrupales = async (req, res) =>{
 	let datos=req.body;
 	axios.put('http://localhost:3000/turno/update',{
 		"id_turno": datos.id_turno,
-        "observacion": "asignado GRUPAL",
+        "observacion": "GRUPAL",
         "id_tipo_sesion":datos.id_tipo_sesion,
         "estado":0		
 	})
@@ -469,7 +469,7 @@ exports.turnosGrupales = async (req, res) =>{
 exports.getTurnosTipoIndividual = async (req, res) =>{      
 	
     await pool.query ('SELECT * FROM turno as t INNER JOIN tipo_sesion as ts ON '+
-                     't.id_tipo_sesion=ts.id_tipo_sesion '+
+                     't.id_tipo_sesion=ts.id_tipo_sesion inner join persona as p on p.id_persona=t.id_profesional '+
                      'WHERE t.id_paciente='+req.params.id,function(err,sql){
         if(err){
             console.log(err);
@@ -486,6 +486,7 @@ exports.getTurnosTipoIndividual = async (req, res) =>{
 exports.getTurnosTipoGrupal = async (req, res) =>{      
     await pool.query ('SELECT * FROM paciente_turno as tp INNER JOIN turno as t on '+
                      't.id_turno=tp.id_turno inner join tipo_sesion as ts on t.id_tipo_sesion=ts.id_tipo_sesion '+
+                     'inner join persona as p on p.id_persona=t.id_profesional '+
                      'WHERE tp.id_paciente='+req.params.id,function(err,sql){
         if(err){
             console.log(err);
@@ -494,6 +495,23 @@ exports.getTurnosTipoGrupal = async (req, res) =>{
             });
         }
         else{           
+             res.status(200).send(sql);
+        }
+    });
+}
+
+exports.deleteTurnoGrupal = async (req, res)=>{
+    let id_paciente_turno = req.params.id_paciente_turno;
+    
+    await pool.query ('DELETE FROM paciente_turno WHERE id_paciente_turno = ' + id_paciente_turno , function(err,sql){
+        if(err){
+			console.log(err);
+            res.status(400).json({
+                error:"error al borrar turno"
+            });
+        }
+        else{
+            let query= sql.affectedRows;
              res.status(200).send(sql);
         }
     });
