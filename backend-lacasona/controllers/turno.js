@@ -1,4 +1,5 @@
 const pool = require('../config/database');
+const axios = require('axios');
 
 exports.addTurno = async (req, res) =>{
     let data = req.body;
@@ -432,3 +433,121 @@ exports.getTurnoId = async (req, res) =>{
 
 }
 
+exports.turnosGrupales = async (req, res) =>{      
+	let datos=req.body;
+	axios.put('http://localhost:3000/turno/update',{
+		"id_turno": datos.id_turno,
+        "observacion": "GRUPAL",
+        "id_tipo_sesion":datos.id_tipo_sesion,
+        "estado":0		
+	})
+	.then(function(res) {
+	  if(res.status==200 ) {
+		console.log("OK");
+	  }
+	})
+	.catch(function(err) {
+	  console.log(err);
+    });
+    let data = {
+        "id_paciente":datos.id_paciente,
+        "id_turno":datos.id_turno
+    }
+	await pool.query ('INSERT INTO paciente_turno set ?', [data] ,function(err,sql){
+        if(err){
+            console.log(err);
+            res.status(400).json({
+                error:"error"
+            });
+        }
+        else{           
+             res.status(200).send(sql);
+        }
+    });
+}
+
+exports.getTurnosTipoIndividual = async (req, res) =>{      
+	
+    await pool.query ('SELECT * FROM turno as t INNER JOIN tipo_sesion as ts ON '+
+                     't.id_tipo_sesion=ts.id_tipo_sesion inner join persona as p on p.id_persona=t.id_profesional '+
+                     'WHERE t.id_paciente='+req.params.id,function(err,sql){
+        if(err){
+            console.log(err);
+            res.status(400).json({
+                error:"error"
+            });
+        }
+        else{           
+             res.status(200).send(sql);
+        }
+    });
+}
+
+exports.getTurnosTipoGrupal = async (req, res) =>{      
+    await pool.query ('SELECT * FROM paciente_turno as tp INNER JOIN turno as t on '+
+                     't.id_turno=tp.id_turno inner join tipo_sesion as ts on t.id_tipo_sesion=ts.id_tipo_sesion '+
+                     'inner join persona as p on p.id_persona=t.id_profesional '+
+                     'WHERE tp.id_paciente='+req.params.id,function(err,sql){
+        if(err){
+            console.log(err);
+            res.status(400).json({
+                error:"error"
+            });
+        }
+        else{           
+             res.status(200).send(sql);
+        }
+    });
+}
+
+exports.deleteTurnoGrupal = async (req, res)=>{
+    let id_paciente_turno = req.params.id_paciente_turno;
+    
+    await pool.query ('DELETE FROM paciente_turno WHERE id_paciente_turno = ' + id_paciente_turno , function(err,sql){
+        if(err){
+			console.log(err);
+            res.status(400).json({
+                error:"error al borrar turno"
+            });
+        }
+        else{
+            let query= sql.affectedRows;
+             res.status(200).send(sql);
+        }
+    });
+}
+
+exports.getTurnosGrupales = async (req, res) =>{      
+    await pool.query ('SELECT * FROM paciente_turno as tp INNER JOIN turno as t on '+
+                     't.id_turno=tp.id_turno inner join tipo_sesion as ts on t.id_tipo_sesion=ts.id_tipo_sesion '+
+                     'inner join persona as p on p.id_persona=tp.id_paciente '+
+                     'WHERE tp.id_turno='+req.params.id,function(err,sql){
+        if(err){
+            console.log(err);
+            res.status(400).json({
+                error:"error"
+            });
+        }
+        else{           
+             res.status(200).send(sql);
+        }
+    });
+}
+exports.getProximoTurnoGrupal = async (req, res) =>{      
+    await pool.query ('SELECT * FROM paciente_turno as pt inner join turno as t on t.id_turno=pt.id_turno '+
+                     'inner join persona as p on p.id_persona=t.id_profesional WHERE t.estado = 0 '+
+                     'and pt.id_paciente ='+req.params.id+' and (t.fecha > CURDATE() OR (t.fecha = CURDATE() and t.hora >= DATE_FORMAT(NOW( ), "%H:%i:%S"))) '+
+                     'order by t.fecha asc limit 1',function(err,sql){
+        if(err){
+            console.log(err);
+            res.status(400).json({
+                error:"error"
+            });
+        }
+        else{           
+             res.status(200).send(sql);
+        }
+    });
+}
+
+   
