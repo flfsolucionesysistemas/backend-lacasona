@@ -9,6 +9,7 @@ var config = require('./config/init');
 var flash = require('connect-flash');
 var bodyParser = require('body-parser');
 var axios = require('axios');
+const conex = require('../config/config');
 
 
 var indexRouter = require('./router/index');
@@ -91,7 +92,7 @@ app.use(function(err, req, res, next) {
 setInterval(()=>{
   console.log("control pago ->"+ new Date());
   axios({
-    url: 'http://localhost:3000/global/controlPagos',
+    url: conex.host+conex.port+'/global/controlPagos',
     method: 'get'
   }); 
 },86400000);
