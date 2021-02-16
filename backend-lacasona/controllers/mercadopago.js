@@ -1,12 +1,13 @@
 const mercadopago = require('mercadopago');
 const axios = require('axios');
 const pool = require('../config/database');
+const conex = require('../config/config');
 
 mercadopago.configure({
     //access_token:'APP_USR-4270581017673819-123020-3e1ebfa9966447defc6fb2ce89684d47-155012162'
     //access_token: 'TEST-4270581017673819-123020-8674ab1ab7b0e591e0605c04da95e07a-155012162'
-    access_token:'TEST-8637663116620364-020519-09b2baaff4c92f3659971829ba616328-706792879'//lacasonaweb
-    //access_token:'APP_USR-8637663116620364-020519-2757ce08b5b6ce9477ca7528d5c02011-706792879'; //lacasona 
+    //access_token:'TEST-8637663116620364-020519-09b2baaff4c92f3659971829ba616328-706792879'//lacasonaweb
+    access_token:'APP_USR-8637663116620364-020519-2757ce08b5b6ce9477ca7528d5c02011-706792879' //lacasona 
   });
   
   
@@ -23,11 +24,11 @@ let preference = {
     }
   ],
   back_urls: {
-    success: 'http://lacasonaweb-front.dyndnss.net/',
-    failure: 'http://lacasonaweb-front.dyndnss.net/',
-    pending: 'http://lacasonaweb-front.dyndnss.net/'
+    success: 'https://psicointeraccion.com/',
+    failure: 'https://psicointeraccion.com/',
+    pending: 'https://psicointeraccion.com/'
   },
-  notification_url: 'http://ec2-52-14-22-254.us-east-2.compute.amazonaws.com:3000/mercadopago/notificacion/'+usuario.nombre+'/'+usuario.apellido+'/'+usuario.email+'/'+usuario.telefono+'/'+usuario.id_localidad+'/'+usuario.id_turno+'/'+usuario.costo_entrevista
+  notification_url: 'https://ec2-52-14-22-254.us-east-2.compute.amazonaws.com:3000/mercadopago/notificacion/'+usuario.nombre+'/'+usuario.apellido+'/'+usuario.email+'/'+usuario.telefono+'/'+usuario.id_localidad+'/'+usuario.id_turno+'/'+usuario.costo_entrevista
 };
 console.log(preference);
 const response = await mercadopago.preferences.create(preference) 
@@ -94,7 +95,7 @@ else{
       }
       
       const addPago = await axios({
-        url: 'http://localhost:3000/global/add/',
+        url: conex.host+conex.port+'/global/add/',
         method: 'post',
         data: pago
       });
@@ -130,8 +131,8 @@ else{
         params: {
           //access_token:'APP_USR-4270581017673819-123020-3e1ebfa9966447defc6fb2ce89684d47-155012162',
           // access_token: 'TEST-4270581017673819-123020-8674ab1ab7b0e591e0605c04da95e07a-155012162',
-          //access_token:'APP_USR-8637663116620364-020519-2757ce08b5b6ce9477ca7528d5c02011-706792879'; //lacasona 
-          access_token:'TEST-8637663116620364-020519-09b2baaff4c92f3659971829ba616328-706792879',//lacasonaweb
+          access_token:'APP_USR-8637663116620364-020519-2757ce08b5b6ce9477ca7528d5c02011-706792879', //lacasona 
+          //access_token:'TEST-8637663116620364-020519-09b2baaff4c92f3659971829ba616328-706792879',//lacasonaweb
           status: 'approved',
           offset: 0,
           limit: 10,
@@ -160,11 +161,11 @@ let preference = {
     }
   ],
   back_urls: {
-    success: 'http://lacasonaweb-front.dyndnss.net/#/pago',
-    failure: 'http://lacasonaweb-front.dyndnss.net/#/pago',
-    pending: 'http://lacasonaweb-front.dyndnss.net/#pago'
+    success: 'https://psicointeraccion.com/#/pago',
+    failure: 'https://psicointeraccion.com/#/pago',
+    pending: 'https://psicointeraccion.com/#pago'
   },
-  notification_url: 'http://ec2-52-14-22-254.us-east-2.compute.amazonaws.com:3000/mercadopago/notificacionTratamiento/'+data.id_hc+'/'+data.id_cupon
+  notification_url: 'https://ec2-52-14-22-254.us-east-2.compute.amazonaws.com:3000/mercadopago/notificacionTratamiento/'+data.id_hc+'/'+data.id_cupon
 };
 console.log(preference);
 const response = await mercadopago.preferences.create(preference) 
@@ -225,7 +226,7 @@ async function confirmarPagoTratamiento(reqBody, reqParams) {
     }
     
     const addPago = await axios({
-      url: 'http://localhost:3000/global/add/',
+      url: conex.host+conex.port+'/global/add/',
       method: 'post',
       data: pago
     });
@@ -256,8 +257,8 @@ async function obtenerInfoDePagoTratamiento(paymentId) {
       params: {
         //access_token:'APP_USR-4270581017673819-123020-3e1ebfa9966447defc6fb2ce89684d47-155012162',
         //access_token: 'TEST-4270581017673819-123020-8674ab1ab7b0e591e0605c04da95e07a-155012162',
-        //access_token:'APP_USR-8637663116620364-020519-2757ce08b5b6ce9477ca7528d5c02011-706792879'; //lacasona 
-        access_token:'TEST-8637663116620364-020519-09b2baaff4c92f3659971829ba616328-706792879',//lacasonaweb
+        access_token:'APP_USR-8637663116620364-020519-2757ce08b5b6ce9477ca7528d5c02011-706792879', //lacasona 
+        //access_token:'TEST-8637663116620364-020519-09b2baaff4c92f3659971829ba616328-706792879',//lacasonaweb
         status: 'approved',
         offset: 0,
         limit: 10,

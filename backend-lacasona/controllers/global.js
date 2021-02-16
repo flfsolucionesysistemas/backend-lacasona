@@ -1,4 +1,5 @@
 const pool = require('../config/database');
+const conex = require('../config/config');
 //const jwt = require('../config/jwt');
 //const helpers = require('../config/helpers');
 var nodemailer = require('nodemailer');
@@ -68,13 +69,13 @@ exports.updateProvincia = async (req, res) =>{
 exports.getLecturaHC =  async(req, res)=>{
     id_persona = req.params.idPersona;
     const admin= await axios({
-        url:'http://localhost:3000/users/getUserTipo/1',
+        url:conex.host+conex.port+'/users/getUserTipo/1',
         method:'get'
     });
     console.log(admin);
     administradores=admin.data;
     const response = await axios({
-        url: 'http://localhost:3000/users/getUserId/'+id_persona,
+        url: conex.host+conex.port+'/users/getUserId/'+id_persona,
         method: 'get'
       });
     if(response){
@@ -147,7 +148,7 @@ exports.addPago =  async(req, res)=>{
                         id_pago:rest.insertId
                         }
                     const addConsulta = await axios({
-                        url: 'http://localhost:3000/consulta/add/',
+                        url: conex.host+conex.port+'/consulta/add/',
                         method: 'post',
                         data: consulta
                       });
@@ -188,7 +189,7 @@ exports.addPago =  async(req, res)=>{
                     }
                    
                     const updateCupon = await axios({
-                        url: 'http://localhost:3000/global/updateCupon/',
+                        url: conex.host+conex.port+'/global/updateCupon/',
                         method: 'put',
                         data: cupon
                       });
@@ -249,7 +250,7 @@ exports.updateCupon = async(req, res)=>{
 }
 exports.getCuponid_hc = async(req, res)=>{
     const hc_tratamiento = await axios({
-        url: 'http://localhost:3000/hc/getHCTratamientoPorHC/'+req.params.id_hc,
+        url: conex.host+conex.port+'/hc/getHCTratamientoPorHC/'+req.params.id_hc,
         method: 'get'
       });
      console.log(hc_tratamiento.data.body[0]); 
@@ -269,7 +270,7 @@ exports.getCuponid_hc = async(req, res)=>{
 
 exports.getCuponid_hclimit = async(req, res)=>{
     const hc_tratamiento = await axios({
-        url: 'http://localhost:3000/hc/getHCTratamientoPorHC/'+req.params.id_hc,
+        url: conex.host+conex.port+'/hc/getHCTratamientoPorHC/'+req.params.id_hc,
         method: 'get'
       });
      console.log(hc_tratamiento.data.body[0]); 
@@ -296,7 +297,7 @@ exports.controlPagos = async(req, res)=>{
         for(var i=0; i<body.length; i++){
             
                 const user = await axios({
-                    url: 'http://localhost:3000/users/deleteUser/'+body[i].id_persona_paciente,
+                    url: conex.host+conex.port+'/users/deleteUser/'+body[i].id_persona_paciente,
                     method: 'delete'
                   }); 
                //agregar email para avisar al admin

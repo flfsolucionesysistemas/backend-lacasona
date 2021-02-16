@@ -1,6 +1,7 @@
 const pool = require('../config/database');
 const jwt = require('../config/jwt');
 const helpers = require('../config/helpers');
+const conex = require('../config/config');
 
 
 exports.getTiposPersonaGestionables= async (req, res) =>{

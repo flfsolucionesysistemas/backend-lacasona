@@ -1,5 +1,6 @@
 const pool = require('../config/database');
 const axios = require('axios');
+const conex = require('../config/config');
 
 exports.addTurno = async (req, res) =>{
     let data = req.body;
@@ -435,7 +436,7 @@ exports.getTurnoId = async (req, res) =>{
 
 exports.turnosGrupales = async (req, res) =>{      
 	let datos=req.body;
-	axios.put('http://localhost:3000/turno/update',{
+	axios.put(conex.host+conex.port+'/turno/update',{
 		"id_turno": datos.id_turno,
         "observacion": "GRUPAL",
         "id_tipo_sesion":datos.id_tipo_sesion,

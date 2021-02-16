@@ -1,6 +1,7 @@
 const pool = require('../config/database');
 const axios = require('axios');
 const helpers = require('../config/helpers');
+const conex = require('../config/config');
 
 exports.addHC = async (req, res)=>{
     let datos = req.body;
@@ -9,7 +10,7 @@ exports.addHC = async (req, res)=>{
     
   
     //utilizo metodo ya creado  
-        axios.post('http://localhost:3000/users/add',{
+        axios.post(conex.host+conex.port+'/users/add',{
             "id_persona": id_persona_paciente,
             "id_tipo_persona": 4,
             "dni": datos.dni,
@@ -62,7 +63,7 @@ exports.addHCTratamiento= async(req,res)=>{
                
                 axios({
                     method:'post',
-                    url:'http://localhost:3000/hc/addEvolucion',
+                    url:conex.host+conex.port+'/hc/addEvolucion',
                     data:{
                         id_hc_tratamiento:sql.insertId,
                         fase:0,
@@ -91,7 +92,7 @@ exports.updateHCTra=async(req,res)=>{
     //DOY DE BAJA EL PACIENTE
     if(datos.fecha_alta){
         const response = await axios({
-            url: 'http://localhost:3000/hc/getHC/'+datos.id_hc,
+            url: conex.host+conex.port+'/hc/getHC/'+datos.id_hc,
             method: 'get'
           });
         paciente={
@@ -102,7 +103,7 @@ exports.updateHCTra=async(req,res)=>{
         
          sql= await pool.query('INSERT INTO paciente_baja set ?', [paciente]);
          const response2 = await axios({
-            url: 'http://localhost:3000/users/deleteUser/'+paciente.id_paciente,
+            url: conex.host+conex.port+'/users/deleteUser/'+paciente.id_paciente,
             method: 'delete'
           });
         
@@ -137,20 +138,20 @@ exports.addEvolucion=async(req,res)=>{
 	if(datos.es_evolucion == 0 && datos.fase!=0){
         //obtengo datos para el cupon de pago
         const response = await axios({
-            url: 'http://localhost:3000/hc/getHCTratamiento/'+datos.id_hc_tratamiento,
+            url: conex.host+conex.port+'/hc/getHCTratamiento/'+datos.id_hc_tratamiento,
             method: 'get'
           });
         //get id tratamiento para cupon
         const tratamiento = await axios({
-            url:'http://localhost:3000/tratamiento/getTratamientoId/'+response.data[0].id_tratamiento,
+            url:conex.host+conex.port+'/tratamiento/getTratamientoId/'+response.data[0].id_tratamiento,
             method:'get'
         }); 
         const historia_clinica = await axios({
-            url:'http://localhost:3000/hc/getHC/'+response.data[0].id_hc,
+            url:conex.host+conex.port+'/hc/getHC/'+response.data[0].id_hc,
             method:'get'
         });
         const cupon = await axios({
-            url:'http://localhost:3000/global/getCuponeslimit/'+historia_clinica.data[0].id_historia_clinica,
+            url:conex.host+conex.port+'/global/getCuponeslimit/'+historia_clinica.data[0].id_historia_clinica,
             method:'get'
         });  
         
@@ -163,7 +164,7 @@ exports.addEvolucion=async(req,res)=>{
        // if(datos.fase!=0){
             axios({
                 method:'post',
-                url:'http://localhost:3000/global/addCupon',
+                url:conex.host+conex.port+'/global/addCupon',
                 data:{
                     pagado:0,
                     total:tratamiento.data[0].costo_mensual,

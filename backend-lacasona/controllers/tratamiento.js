@@ -1,5 +1,6 @@
 const pool = require('../config/database');
 const axios = require('axios');
+const conex = require('../config/config');
 
 exports.add=async(req,res)=>{
     let datos = req.body;       

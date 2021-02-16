@@ -2,6 +2,7 @@ const pool = require('../config/database');
 const jwt = require('../config/jwt');
 const helpers = require('../config/helpers');
 const axios = require('axios');
+const conex = require('../config/config');
 
 exports.loginUser= async(req, res)=>{
 	var params = req.body	
@@ -225,7 +226,7 @@ exports.setFechaContrato = async (req, res) =>{
         if(sql!=null){
             //generar primer cupon con fecha actual mas 5 dias
             const persona = await axios({
-                url:'http://localhost:3000/users/getUserId/'+datos,
+                url:conex.host+conex.port+'/users/getUserId/'+datos,
                 method:'get'
             });
             //setero fecha de vencimiento de cupon
@@ -235,18 +236,18 @@ exports.setFechaContrato = async (req, res) =>{
                 console.log("dia "+numeroDia);
                 //obtengo el hc_tratamiento vigente del paciente
                 const hc_tratamiento = await axios({
-                    url:'http://localhost:3000/tratamiento/tratamientoIdPaciente/'+datos,
+                    url:conex.host+conex.port+'/tratamiento/tratamientoIdPaciente/'+datos,
                     method:'get'
                 }); 
                 //obtengo el costo mensual del tratamiento
                 const tratamiento =  await axios({
-                    url:'http://localhost:3000/tratamiento/getTratamientoId/'+hc_tratamiento.data.sql[0].id_tratamiento,
+                    url:conex.host+conex.port+'/tratamiento/getTratamientoId/'+hc_tratamiento.data.sql[0].id_tratamiento,
                     method:'get'
                 }); 
             //genero primer cupon de pago luego de haber haceptado los terminos y condiciones    
             axios({
                 method:'post',
-                url:'http://localhost:3000/global/addCupon',
+                url:conex.host+conex.port+'/global/addCupon',
                 data:{
                     pagado:0,
                     total:tratamiento.data[0].costo_mensual,

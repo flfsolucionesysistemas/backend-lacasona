@@ -1,4 +1,5 @@
 const pool = require('../config/database');
+const conex = require('../config/config');
 var nodemailer = require('nodemailer');
 const axios = require('axios');
 const fs = require('fs');
@@ -13,7 +14,7 @@ var meses = [
   ]
 
 exports.addConsulta= async (req, res) =>{
-	axios.get('http://localhost:3000/users/getUserTipo/1').then(resul=>
+	axios.get(conex.host+conex.port+'/users/getUserTipo/1').then(resul=>
 	administradores=resul.data);
 					
     let variable = req.body;
@@ -64,7 +65,7 @@ exports.addConsulta= async (req, res) =>{
 						console.log(result);
 					//SE ENVIAN LOS CORREOS ELECTRONICOS	
 						const turnoasignado = await axios({
-							url: 'http://localhost:3000/turno/getTurnoId/'+variable.id_turno,
+							url: conex.host+conex.port+'/turno/getTurnoId/'+variable.id_turno,
 							method: 'get'
 						});
 						let mes =(new Date (turnoasignado.data[0].fecha)).getMonth();
@@ -74,13 +75,13 @@ exports.addConsulta= async (req, res) =>{
 						var transporter = nodemailer.createTransport({
 							service: 'Gmail',
 							auth: {
-							user: 'flf.solucionesysistemas@gmail.com',
-							pass: 'everLAST2020'
+							user: 'coopcarrilloltda@gmail.com',
+							pass: 'castelli303'
 							}
 						});
 						
 						var meet="https://meet.jit.si/lacasonameet"+variable.email;
-						var emailCliente="<h1>BIENVENIDOS A LA CASONA WEB. </h1>"+
+						var emailCliente="<h1>BIENVENIDO A LA CASONA WEB. </h1>"+
 										 "<p>El turno que ud. ha solicitado está confirmado para Fecha:<em> "+fecha+". </em> Hora: <em>"+turnoasignado.data[0].hora+" </em></p>"+
 										 "<p>Rogamos puntualidad en la comunicación, muchas gracias."+
 										 "<p><h4>El enlace para acceder a la videollamada en la fecha señalada es el siguiente:   "+ meet+" </h4></p>";
@@ -137,7 +138,7 @@ exports.registroEntrevista = async (req, res) =>{
 	let datos = req.body;
 	let ramdon= Math.random();
 	
-	axios.put('http://localhost:3000/users/updateUser',{
+	axios.put(conex.host+conex.port+'/users/updateUser',{
 		"id_persona": datos.id_cliente,
 		"obra_social": datos.obra_social,
 		"numero_afiliado": datos.numero_afiliado,
@@ -151,7 +152,7 @@ exports.registroEntrevista = async (req, res) =>{
 	.catch(function(err) {
 	  console.log(err);
 	});
-	axios.get('http://localhost:3000/users/getUserId/'+datos.id_profesional)
+	axios.get(conex.host+conex.port+'/users/getUserId/'+datos.id_profesional)
 	.then(function(resul){
 		emailProfesional=resul.data[0].email
 		console.log(emailProfesional);
@@ -164,9 +165,10 @@ exports.registroEntrevista = async (req, res) =>{
 		  });
 		  pdf.fontSize(20)
 			   .text('Formulario de registración de entrevista', 100, 100)
+			   .text('')
 			   .text('');
 		  pdf.fontSize(18)
-			   .text('Admitido: '+datos.admitido, 100, 100)
+			   .text('Admitido: '+datos.admitido)
 			   .text('');
 		  pdf.fontSize(11)
 			   .text('Fecha: '+datos.fecha+'-  Tipo de consulta: '+datos.tipo_consulta)
@@ -193,8 +195,8 @@ exports.registroEntrevista = async (req, res) =>{
 		  var transporter = nodemailer.createTransport({
 			service: 'Gmail',
 			auth: {
-			user: 'flf.solucionesysistemas@gmail.com',
-			pass: 'everLAST2020'
+			user: 'coopcarrilloltda@gmail.com',
+			pass: 'castelli303'
 			}
 		});
 		
