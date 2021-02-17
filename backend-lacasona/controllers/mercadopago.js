@@ -6,8 +6,8 @@ const conex = require('../config/config');
 mercadopago.configure({
     //access_token:'APP_USR-4270581017673819-123020-3e1ebfa9966447defc6fb2ce89684d47-155012162'
     //access_token: 'TEST-4270581017673819-123020-8674ab1ab7b0e591e0605c04da95e07a-155012162'
-    //access_token:'TEST-8637663116620364-020519-09b2baaff4c92f3659971829ba616328-706792879'//lacasonaweb
-    access_token:'APP_USR-8637663116620364-020519-2757ce08b5b6ce9477ca7528d5c02011-706792879' //lacasona 
+    access_token:'TEST-8637663116620364-020519-09b2baaff4c92f3659971829ba616328-706792879'//lacasonaweb
+    //access_token:'APP_USR-8637663116620364-020519-2757ce08b5b6ce9477ca7528d5c02011-706792879' //lacasona 
   });
   
   
@@ -131,8 +131,8 @@ else{
         params: {
           //access_token:'APP_USR-4270581017673819-123020-3e1ebfa9966447defc6fb2ce89684d47-155012162',
           // access_token: 'TEST-4270581017673819-123020-8674ab1ab7b0e591e0605c04da95e07a-155012162',
-          access_token:'APP_USR-8637663116620364-020519-2757ce08b5b6ce9477ca7528d5c02011-706792879', //lacasona 
-          //access_token:'TEST-8637663116620364-020519-09b2baaff4c92f3659971829ba616328-706792879',//lacasonaweb
+          //access_token:'APP_USR-8637663116620364-020519-2757ce08b5b6ce9477ca7528d5c02011-706792879', //lacasona 
+          access_token:'TEST-8637663116620364-020519-09b2baaff4c92f3659971829ba616328-706792879',//lacasonaweb
           status: 'approved',
           offset: 0,
           limit: 10,
@@ -257,8 +257,8 @@ async function obtenerInfoDePagoTratamiento(paymentId) {
       params: {
         //access_token:'APP_USR-4270581017673819-123020-3e1ebfa9966447defc6fb2ce89684d47-155012162',
         //access_token: 'TEST-4270581017673819-123020-8674ab1ab7b0e591e0605c04da95e07a-155012162',
-        access_token:'APP_USR-8637663116620364-020519-2757ce08b5b6ce9477ca7528d5c02011-706792879', //lacasona 
-        //access_token:'TEST-8637663116620364-020519-09b2baaff4c92f3659971829ba616328-706792879',//lacasonaweb
+        //access_token:'APP_USR-8637663116620364-020519-2757ce08b5b6ce9477ca7528d5c02011-706792879', //lacasona 
+        access_token:'TEST-8637663116620364-020519-09b2baaff4c92f3659971829ba616328-706792879',//lacasonaweb
         status: 'approved',
         offset: 0,
         limit: 10,
