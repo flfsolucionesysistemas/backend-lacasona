@@ -1,6 +1,6 @@
 let conex = {
     port:3000,
-    host:'https://localhost:',
+    host:'https://psicointeraccion.com:',
      
     /*session:{
         secretPass:'lacasonasession',
