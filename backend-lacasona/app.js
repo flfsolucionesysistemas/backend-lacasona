@@ -9,7 +9,7 @@ var config = require('./config/init');
 var flash = require('connect-flash');
 var bodyParser = require('body-parser');
 var axios = require('axios');
-const conex = require('../config/config');
+const conex = require('./config/config');
 
 
 var indexRouter = require('./router/index');
