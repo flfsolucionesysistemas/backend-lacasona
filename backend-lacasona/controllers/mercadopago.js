@@ -81,7 +81,7 @@ else{
       if (paymentStatus !== 'approved') return true   //si el pago no está aprobado salimos
       console.log("entra");
       //addConsulta
-      let pago = {
+      /*let pago = {
         fecha: paymentInfo.date_created,
         total: paymentInfo.transaction_details.net_received_amount,
         estado: "aprobado",
@@ -95,13 +95,36 @@ else{
         id_localidad:reqParams.id_localidad,
         id_turno:reqParams.id_turno,
         costo_entrevista:reqParams.costo_entrevista
-      }
-      
-      const addPago = await axios({
+      }*/
+
+      axios.post(conex.host+conex.port+'/global/add/',{
+        "fecha": paymentInfo.date_created,
+        "total": paymentInfo.transaction_details.net_received_amount,
+        "estado": "aprobado",
+        "pago_tratamiento": 0,
+        "id_mercadopago": paymentInfo.id,
+        "estado_mercadopago": paymentStatus,
+        "nombre":reqParams.nombre,
+        "apellido":reqParams.apellido,
+        "email":reqParams.email,
+        "telefono":reqParams.telefono,
+        "id_localidad":reqParams.id_localidad,
+        "id_turno":reqParams.id_turno,
+        "costo_entrevista":reqParams.costo_entrevista		
+      })
+      .then(function(res) {
+        if(res.status==200 ) {
+        console.log("OK");
+        }
+      })
+      .catch(function(err) {
+        console.log(err);
+        });
+      /*const addPago = await axios({
         url: conex.host+conex.port+'/global/add/',
         method: 'post',
         data: pago
-      });
+      });*/
        /*const addConsulta = await axios({
         url: 'http://localhost:3000/consulta/add/',
         method: 'post',
