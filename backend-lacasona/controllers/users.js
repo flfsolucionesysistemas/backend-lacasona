@@ -278,7 +278,7 @@ exports.olvideClave = async (req, res) =>{
       .then(function(resul) {
         axios.put(conex.host+conex.port+'/users/updateUser',{
             "id_persona":resul.data[0].id_persona,
-            "clave":ramdon
+            "clave_usuario":ramdon
         })
         .then(function(resul2) {
          var transporter = nodemailer.createTransport({
