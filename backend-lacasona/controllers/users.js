@@ -274,7 +274,7 @@ exports.olvideClave = async (req, res) =>{
     let email = req.params.email;
     let ramdon= Math.random();
 	
-    axios.get(conex.host+conex.port+'users/getExisteUser/'+email)
+    axios.get(conex.host+conex.port+'/users/getExisteUser/'+email)
       .then(function(resul) {
         axios.put(conex.host+conex.port+'/updateUser',{
             "id_persona":resul.data[0].id_persona,
