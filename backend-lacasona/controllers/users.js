@@ -272,11 +272,11 @@ exports.setFechaContrato = async (req, res) =>{
 
 exports.olvideClave = async (req, res) =>{
     let email = req.params.email;
-    let ramdon= Math.random();
+    let ramdon= Math.random().toString(36).substring(7);;
 	
     axios.get(conex.host+conex.port+'/users/getExisteUser/'+email)
       .then(function(resul) {
-        axios.put(conex.host+conex.port+'/updateUser',{
+        axios.put(conex.host+conex.port+'/users/updateUser',{
             "id_persona":resul.data[0].id_persona,
             "clave":ramdon
         })
