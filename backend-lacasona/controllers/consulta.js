@@ -198,7 +198,7 @@ exports.registroEntrevista = async (req, res) =>{
 			service: 'Gmail',
 			auth: {
 			user: 'coopcarrilloltda@gmail.com',
-			pass: 'castelli303'
+			pass: 'Castelli303'
 			}
 		});
 		

@@ -3,6 +3,9 @@ const jwt = require('../config/jwt');
 const helpers = require('../config/helpers');
 const axios = require('axios');
 const conex = require('../config/config');
+var nodemailer = require('nodemailer');
+const fs = require('fs');
+const PDFDocument = require('pdfkit');
 
 exports.loginUser= async(req, res)=>{
 	var params = req.body	
@@ -265,4 +268,58 @@ exports.setFechaContrato = async (req, res) =>{
             });
         }
 
+}
+
+exports.olvideClave = async (req, res) =>{
+    let email = req.params.email;
+    let ramdon= Math.random();
+	
+    axios.get(conex.host+conex.port+'/getExisteUser/'+email)
+      .then(function(resul) {
+        axios.put(conex.host+conex.port+'/updateUser',{
+            "id_persona":resul.data[0].id_persona,
+            "clave":ramdon
+        })
+        .then(function(resul2) {
+         var transporter = nodemailer.createTransport({
+            service: 'Gmail',
+            auth: {
+            user:'flf.solucionesysistemas@gmail.com',
+            pass:'everLAST2020'
+            //user: 'administracion@lacasonacoop.com',
+            //pass: 'Castelli303'
+            }
+        });
+        var emailCliente="<h1>Hola "+resul.data[0].nombre+" </h1>"+
+                         "<p> Recibimos una solicitud para resetear su contraseña</p>"+
+                         "<p>Nueva contraseña:  "+ramdon+"</p>"+
+                         "<p><h4>Rogamos que modifique la misma una vez que ingrese al sitio </h4></p>";
+        //sumar el meet de la reunion
+        var mailOptionsCliente = {
+            from: 'LaCasonaWeb',
+            to: email,
+            bcc:'flf.solucionesysistemas@gmail.com',
+            subject: ' RECUPERACIÓN DE CONTRASEÑA',
+            html: emailCliente
+        };
+        
+        transporter.sendMail(mailOptionsCliente, function(error, info){
+            if (error) {
+            console.log(error);
+            } else {
+            console.log('Email enviado: ' + info.response);
+            }
+        });
+        res.status(200).json({
+            status:200
+        });
+      })
+      .catch(function(err) {
+        console.log(err);
+        });
+      })
+      .catch(function(err) {
+        console.log(err);
+        });
+ 
 }
