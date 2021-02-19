@@ -75,10 +75,10 @@ exports.addConsulta= async (req, res) =>{
 						var transporter = nodemailer.createTransport({
 							service: 'Gmail',
 							auth: {
-							user:'flf.solucionesysistemas@gmail.com',
-							pass:'everLAST2020'
-							//user: 'coopcarrilloltda@gmail.com',
-							//pass: 'castelli303'
+							//user:'flf.solucionesysistemas@gmail.com',
+							//pass:'everLAST2020'
+							user: 'coopcarrilloltda@gmail.com',
+							pass: 'Castelli303'
 							}
 						});
 						
