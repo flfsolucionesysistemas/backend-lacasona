@@ -327,6 +327,7 @@ exports.olvideClave = async (req, res) =>{
 
 exports.upadateClave= async (req, res) =>{
     let datos = req.body;
+    let clave= await helpers.encryptPassword(datos.nueva);
     let row = await pool.query ('SELECT * FROM persona as p INNER JOIN tipo_persona as tp ON p.id_tipo_persona = tp.id_tipo_persona WHERE p.id_persona = ?', [datos.id_persona]);
 		if (row[0]){
         let usuario = row[0];
@@ -338,7 +339,7 @@ exports.upadateClave= async (req, res) =>{
                 url:conex.host+conex.port+'/users/updateUser',
                 data:{
                     id_persona:datos.id_persona,
-                    clave_usuario:datos.nueva
+                    clave_usuario:clave
                 }
             });
           
