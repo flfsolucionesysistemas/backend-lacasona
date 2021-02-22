@@ -17,6 +17,7 @@ router.get('/getUserTipo/:tipo',ctrlUsuario.getUserTipo);
 router.get('/getUserId/:idUser',ctrlUsuario.getUserId);
 router.get('/getExisteUser/:email',ctrlUsuario.getExisteUser);
 router.get('/olvideClave/:email',ctrlUsuario.olvideClave);
+router.put('/updateClave',ctrlUsuario.upadateClave);
 
 
 module.exports = router;
