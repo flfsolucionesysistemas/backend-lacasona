@@ -12,6 +12,6 @@ router.get('/getHCTratamientoSinFechaAlta',ctrlHC.getHCTratamientoSinFechaAlta);
 router.get('/getHC/:idHC',ctrlHC.getHC);
 router.get('/getHCTratamiento/:id',ctrlHC.getHCTratamientoId);
 router.get('/leerHC/:id',ctrlHC.leerhc);
-router.get('/getEvolucion/:idHC/:fecha',ctrlHC.getEvolucionHCFecha);
+router.get('/getEvolucion/:id_hc_tratamiento/:fecha',ctrlHC.getEvolucionHCFecha);
 
 module.exports = router;
