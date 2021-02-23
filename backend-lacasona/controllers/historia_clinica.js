@@ -285,6 +285,22 @@ exports.getHCTratamientoId= async (req, res)=>{
     })
 }
 
+exports.getEvolucionHCFecha= async (req, res)=>{
+    let fecha= req.params.fecha;
+	let id_hc_tratamiento=req.params.id_hc_tratamiento;
+    await pool.query('select * from hc_tratamiento where id_hc_tratamiento ='+id_hc_tratamiento + ' fecha_creacion = ' + fecha, function(err,sql){
+        if(err){
+            return res.status(400).json({
+                ok:false           
+            }); 
+                 
+        }
+        else{
+            res.status(200).send(sql); 
+        } 
+    })
+}
+
 exports.leerhc= async (req, res)=>{
     let id_hct=req.params.id;
     await pool.query('SELECT * FROM evolucion as e INNER JOIN persona as p ON p.id_persona=e.id_persona_creacion WHERE id_hc_tratamiento = ?', [id_hct], function(err,sql){
