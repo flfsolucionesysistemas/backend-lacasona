@@ -297,6 +297,7 @@ exports.getEvolucionHCFecha= async (req, res)=>{
                  
         }
         else{
+			console.log(sql);
             res.status(200).send(sql); 
         } 
     })
