@@ -320,3 +320,31 @@ exports.leerhc= async (req, res)=>{
     })
 }
 
+
+exports.updateEvolucion=async(req,res)=>{
+    let datos = req.body;
+      
+    if(datos!=null){
+        await pool.query('UPDATE evolucion SET ? WHERE id_evolucion = ?', [datos, datos.id_evolucion], function(err, sql){
+            if(err){
+                console.log(err);
+                res.status(400).json({
+                    mensaje: 'Ocurrio un problema al modificar'
+                });
+            }
+            else{
+                console.log(sql);
+                res.status(200).json({
+                mensaje: 'Se modifico ok'
+                }); 
+            }
+        });
+    }
+    else{
+        res.status(400).json({
+            mensaje: 'Los datos no estan bien cargados'
+        });
+    }
+    
+}
+

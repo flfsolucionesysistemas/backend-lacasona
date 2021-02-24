@@ -5,7 +5,14 @@ const conex = require('../config/config');
 exports.addTurno = async (req, res) =>{
     let data = req.body;
     console.log(data);
-
+    /*axios.get(conex.host+conex.port+'/turno/getTurnoFecha/'+data.fecha)
+        .then(function(resul) {
+        if(data.hora!=resul.data)
+        })
+        .catch(function(err) {
+            console.log(err);
+            });
+        */
     if(data!= null){
          await pool.query('INSERT INTO turno set ?', [data], function(err, sql, fields){
             if(err){
