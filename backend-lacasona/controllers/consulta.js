@@ -73,7 +73,7 @@ exports.addConsulta= async (req, res) =>{
 						console.log(fecha);
 					 
 						var transporter = nodemailer.createTransport({
-							host:'smtp.lacasonacoop.com',
+							host:'mail.lacasonacoop.com',
 							port:25,
 							secure: false,
 							auth:{
