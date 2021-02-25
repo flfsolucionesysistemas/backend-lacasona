@@ -76,6 +76,11 @@ exports.addConsulta= async (req, res) =>{
 							host:'smtp.lacasonacoop.com',
 							port:25,
 							secure: false,
+							auth:{
+								"type":"login",
+								"user":"administracion@lacasonacoop.com", 
+								"pass":"Castelli303"
+							},
 							
 						});
 						
@@ -87,7 +92,7 @@ exports.addConsulta= async (req, res) =>{
 						var emailAdmin="Se acaba de registrar una nueva solicitud de consulta via web"
 						//sumar el meet de la reunion
 						var mailOptionsCliente = {
-							from: 'administracion@lacasonacoop.com',
+							from: 'LA CASONA WEB',
 							to: 'flf.solucionesysistemas@gmail.com',
 							//to: variable.email,
 							subject: 'TURNO CONFIRMADO',
@@ -104,7 +109,7 @@ exports.addConsulta= async (req, res) =>{
 						for(var i=0; i<administradores.length; i++){
 							//console.log(administradores[i].email);
 							var mailOptionsAdmin = {
-								from: 'LaCasonaWeb',
+								from: 'administracion@lacasonacoop.com',
 								to: administradores[i].email,
 								subject: 'Entrevista la casona web',
 								text: emailAdmin
