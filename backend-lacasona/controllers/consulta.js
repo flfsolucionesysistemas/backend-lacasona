@@ -73,15 +73,11 @@ exports.addConsulta= async (req, res) =>{
 						console.log(fecha);
 					 
 						var transporter = nodemailer.createTransport({
-							host:'mail.lacasonacoop.com',
-							port:25,
-							secure: false,
-							auth:{
-								"type":"login",
-								"user":"administracion@lacasonacoop.com", 
-								"pass":"Castelli303"
-							},
-							
+							service: 'Gmail',
+							auth: {
+							user:'flf.solucionesysistemas@gmail.com',
+							pass:'everLAST2020'
+							}
 						});
 						
 						var meet="https://meet.jit.si/lacasonameet"+variable.email;
@@ -92,10 +88,9 @@ exports.addConsulta= async (req, res) =>{
 						var emailAdmin="Se acaba de registrar una nueva solicitud de consulta via web"
 						//sumar el meet de la reunion
 						var mailOptionsCliente = {
-							from: 'LA CASONA WEB',
-							to: 'flf.solucionesysistemas@gmail.com',
-							//to: variable.email,
-							subject: 'TURNO CONFIRMADO',
+							from: 'LaCasonaWeb',
+							to: variable.email,
+							subject: ' TURNO CONFIRMADO',
 							html: emailCliente
 						};
 						
@@ -109,7 +104,7 @@ exports.addConsulta= async (req, res) =>{
 						for(var i=0; i<administradores.length; i++){
 							//console.log(administradores[i].email);
 							var mailOptionsAdmin = {
-								from: 'administracion@lacasonacoop.com',
+								from: 'LaCasonaWeb',
 								to: administradores[i].email,
 								subject: 'Entrevista la casona web',
 								text: emailAdmin
