@@ -111,7 +111,7 @@ exports.useradd= async (req, res) =>{
                         if(err){
                             console.log(err);
                             res.status(400).json({
-                                error: 'No se ha podido guardar el profesional'
+                                error: 'No se ha podido guardar la persona'
                             });
                         }
                         else{
