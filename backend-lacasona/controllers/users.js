@@ -103,7 +103,8 @@ exports.useradd= async (req, res) =>{
                     clave_usuario: clave_usuario,
                     email: newUser.email,
                     telefono: newUser.telefono,
-                    activo:1
+                    activo:1,
+                    entrevistador: newUser.entrevistador
                     };
                    // user.clave_usuario= await helpers.encryptPassword(newUser.dni);
                     await pool.query('INSERT INTO persona set ?', [user], function(err, sql, fields){
