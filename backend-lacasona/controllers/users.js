@@ -112,7 +112,7 @@ exports.useradd= async (req, res) =>{
                             console.log(err);
                             if(err.sqlMessage=="Duplicate entry '"+user.dni+"' for key 'persona.dni'"){
                                 res.status(400).json({
-                                    error: 'El n° de DNI ingresado ya exite'
+                                    error: 'El DNI ingresado ya exite'
                                 });
                             }
                             else{
