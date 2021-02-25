@@ -110,9 +110,17 @@ exports.useradd= async (req, res) =>{
                     await pool.query('INSERT INTO persona set ?', [user], function(err, sql, fields){
                         if(err){
                             console.log(err);
-                            res.status(400).json({
-                                error: 'No se ha podido guardar la persona'
-                            });
+                            if(err.sqlMessage=="Duplicate entry "+user.dni+" for key 'persona.dni'"){
+                                res.status(400).json({
+                                    error: 'El n° de DNI ingresado ya exite'
+                                });
+                            }
+                            else{
+                                res.status(400).json({
+                                    error: 'No se ha podido guardar la persona'
+                                });
+                            }
+                            
                         }
                         else{
                             res.status(200).send({sql});
