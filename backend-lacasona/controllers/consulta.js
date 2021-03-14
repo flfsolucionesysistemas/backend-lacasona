@@ -14,6 +14,7 @@ var meses = [
   ]
 
 exports.addConsulta= async (req, res) =>{
+	
 	axios.get(conex.host+conex.port+'/users/getUserTipo/1').then(resul=>
 	administradores=resul.data);
 					
@@ -71,69 +72,176 @@ exports.addConsulta= async (req, res) =>{
 						let mes =(new Date (turnoasignado.data[0].fecha)).getMonth();
 						let fecha=(new Date (turnoasignado.data[0].fecha)).getDate()+'-'+meses[mes] +'-'+(new Date (turnoasignado.data[0].fecha)).getFullYear();
 						console.log(fecha);
-					 
-						var transporter = nodemailer.createTransport({
-							service: 'Gmail',
-							auth: {
-							user:'flf.solucionesysistemas@gmail.com',
-							pass:'everLAST2020'
+						if(variable.forma_pago === "Transferencia Bancaria"){
+										var transporter = nodemailer.createTransport({
+										service: 'Gmail',
+										auth: {
+										user:'flf.solucionesysistemas@gmail.com',
+										pass:'everLAST2020'
+										}
+									});
+									
+									var meet="https://meet.jit.si/lacasonameet"+variable.email;
+									var emailCliente="<h1>BIENVENIDO A LA CASONA WEB. </h1>"+
+													"<h3>Datos de nuestra cuenta:</h3>"+
+													"<p>-CBU:12365478963258741</p>"+
+													"<p>-CUIT:2136589651</p>"+
+													"<p>El turno que ud. ha solicitado está confirmado para Fecha:<em> "+fecha+". </em> Hora: <em>"+turnoasignado.data[0].hora+" </em></p>"+
+													"<p>Rogamos puntualidad en la comunicación, muchas gracias."+
+													"<p><h4>El enlace para acceder a la videollamada en la fecha señalada es el siguiente:   "+ meet+" </h4></p>";
+									var emailAdmin="Se acaba de registrar una nueva solicitud de consulta via web"
+									//sumar el meet de la reunion
+									var mailOptionsCliente = {
+										from: 'LaCasonaWeb',
+										to: variable.email,
+										subject: ' TURNO CONFIRMADO',
+										html: emailCliente
+									};
+									
+									transporter.sendMail(mailOptionsCliente, function(error, info){
+										if (error) {
+										console.log(error);
+										} else {
+										console.log('Email enviado: ' + info.response);
+										}
+									});
+									for(var i=0; i<administradores.length; i++){
+										//console.log(administradores[i].email);
+										var mailOptionsAdmin = {
+											from: 'LaCasonaWeb',
+											to: administradores[i].email,
+											subject: 'Entrevista la casona web',
+											text: emailAdmin
+										};
+										transporter.sendMail(mailOptionsAdmin, function(error, info){
+											if (error) {
+											console.log(error);
+											} else {
+											console.log('Email enviado: ' + info.response);
+											}
+										});
+									}
+								res.status(200).json({
+									status:200,
+									mensaje:"Su turno se asigno correctamente, recibirá un correo electronico"
+								});
+								
 							}
-						});
-						
-						var meet="https://meet.jit.si/lacasonameet"+variable.email;
-						var emailCliente="<h1>BIENVENIDO A LA CASONA WEB. </h1>"+
-										 "<p>El turno que ud. ha solicitado está confirmado para Fecha:<em> "+fecha+". </em> Hora: <em>"+turnoasignado.data[0].hora+" </em></p>"+
-										 "<p>Rogamos puntualidad en la comunicación, muchas gracias."+
-										 "<p><h4>El enlace para acceder a la videollamada en la fecha señalada es el siguiente:   "+ meet+" </h4></p>";
-						var emailAdmin="Se acaba de registrar una nueva solicitud de consulta via web"
-						//sumar el meet de la reunion
-						var mailOptionsCliente = {
-							from: 'LaCasonaWeb',
-							to: variable.email,
-							subject: ' TURNO CONFIRMADO',
-							html: emailCliente
-						};
-						
-						transporter.sendMail(mailOptionsCliente, function(error, info){
-							if (error) {
-							console.log(error);
-							} else {
-							console.log('Email enviado: ' + info.response);
-							}
-						});
-						for(var i=0; i<administradores.length; i++){
-							//console.log(administradores[i].email);
-							var mailOptionsAdmin = {
-								from: 'LaCasonaWeb',
-								to: administradores[i].email,
-								subject: 'Entrevista la casona web',
-								text: emailAdmin
-							};
-							transporter.sendMail(mailOptionsAdmin, function(error, info){
-								if (error) {
-								console.log(error);
-								} else {
-								console.log('Email enviado: ' + info.response);
+							else if(variable.forma_pago === "Personamente"){
+								var transporter = nodemailer.createTransport({
+									service: 'Gmail',
+									auth: {
+									user:'flf.solucionesysistemas@gmail.com',
+									pass:'everLAST2020'
+									}
+								});
+								
+								var meet="https://meet.jit.si/lacasonameet"+variable.email;
+								var emailCliente="<h1>BIENVENIDO A LA CASONA WEB. </h1>"+
+												"<h3>Le solicitamos que abone presencialmente en nuestra sucursal ubicada en Catelli 303 de 8:00 a 13:00hs</p>"
+												"<p>El turno que ud. ha solicitado está confirmado para Fecha:<em> "+fecha+". </em> Hora: <em>"+turnoasignado.data[0].hora+" </em></p>"+
+												"<p>Rogamos puntualidad en la comunicación, muchas gracias."+
+												"<p><h4>El enlace para acceder a la videollamada en la fecha señalada es el siguiente:   "+ meet+" </h4></p>";
+								var emailAdmin="Se acaba de registrar una nueva solicitud de consulta via web"
+								//sumar el meet de la reunion
+								var mailOptionsCliente = {
+									from: 'LaCasonaWeb',
+									to: variable.email,
+									subject: ' TURNO CONFIRMADO',
+									html: emailCliente
+								};
+								
+								transporter.sendMail(mailOptionsCliente, function(error, info){
+									if (error) {
+									console.log(error);
+									} else {
+									console.log('Email enviado: ' + info.response);
+									}
+								});
+								for(var i=0; i<administradores.length; i++){
+									//console.log(administradores[i].email);
+									var mailOptionsAdmin = {
+										from: 'LaCasonaWeb',
+										to: administradores[i].email,
+										subject: 'Entrevista la casona web',
+										text: emailAdmin
+									};
+									transporter.sendMail(mailOptionsAdmin, function(error, info){
+										if (error) {
+										console.log(error);
+										} else {
+										console.log('Email enviado: ' + info.response);
+										}
+									});
 								}
+							res.status(200).json({
+								status:200,
+								mensaje:"Su turno se asigno correctamente, recibirá un correo electronico"
 							});
+							}
+							else{
+										var transporter = nodemailer.createTransport({
+											service: 'Gmail',
+											auth: {
+											user:'flf.solucionesysistemas@gmail.com',
+											pass:'everLAST2020'
+											}
+										});
+										
+										var meet="https://meet.jit.si/lacasonameet"+variable.email;
+										var emailCliente="<h1>BIENVENIDO A LA CASONA WEB. </h1>"+
+														"<p>El turno que ud. ha solicitado está confirmado para Fecha:<em> "+fecha+". </em> Hora: <em>"+turnoasignado.data[0].hora+" </em></p>"+
+														"<p>Rogamos puntualidad en la comunicación, muchas gracias."+
+														"<p><h4>El enlace para acceder a la videollamada en la fecha señalada es el siguiente:   "+ meet+" </h4></p>";
+										var emailAdmin="Se acaba de registrar una nueva solicitud de consulta via web"
+										//sumar el meet de la reunion
+										var mailOptionsCliente = {
+											from: 'LaCasonaWeb',
+											to: variable.email,
+											subject: ' TURNO CONFIRMADO',
+											html: emailCliente
+										};
+										
+										transporter.sendMail(mailOptionsCliente, function(error, info){
+											if (error) {
+											console.log(error);
+											} else {
+											console.log('Email enviado: ' + info.response);
+											}
+										});
+										for(var i=0; i<administradores.length; i++){
+											//console.log(administradores[i].email);
+											var mailOptionsAdmin = {
+												from: 'LaCasonaWeb',
+												to: administradores[i].email,
+												subject: 'Entrevista la casona web',
+												text: emailAdmin
+											};
+											transporter.sendMail(mailOptionsAdmin, function(error, info){
+												if (error) {
+												console.log(error);
+												} else {
+												console.log('Email enviado: ' + info.response);
+												}
+											});
+										}
+									res.status(200).json({
+										status:200,
+										mensaje:"Su turno se asigno correctamente, recibirá un correo electronico"
+									});
+									
+								}
+							}
+							else{
+								return res.status(400).json({
+									status:400,
+									mensaje:'No se ha podido asignar el turno'            
+								});
+							}
 						}
-					res.status(200).json({
-						status:200,
-						mensaje:"Su turno se asigno correctamente, recibirá un correo electronico"
-					});
-					
-				}else{
-					return res.status(400).json({
-						status:400,
-						mensaje:'No se ha podido asignar el turno'            
-					});
+						
 				}	
-			
-		}
 	
-		}
-
-
 exports.registroEntrevista = async (req, res) =>{
 	let datos = req.body;
 	let ramdon= Math.random();
