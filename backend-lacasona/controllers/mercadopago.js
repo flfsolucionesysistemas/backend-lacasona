@@ -35,28 +35,27 @@ let preference = {
 };
 console.log(preference);
 const response = await mercadopago.preferences.create(preference) 
-if(response){
-    res.status(200).send(response);      
-}
-else{
-    return res.status(400).json({
-        ok:false           
-    }); 
+    if(response){
+        res.status(200).send(response);      
+    }
+    else{
+        return res.status(400).json({
+            ok:false           
+        }); 
+    } 
 } 
-  } 
 
-
-
-  exports.confirmarPago = (req, res, next) => {
-    confirmarPago(req.body, req.params)
+exports.confirmarPago = (req, res, next) => {
+    confirmaPago(req.body, req.params)
       .then(retorno => {
         res.status(200).json(retorno)
       })
       .catch(error => {
+        console.log(error);
         throw new Error('Error al confirmar el pago')
       })
   } 
- async function confirmarPago(reqBody, reqParams) {
+ async function confirmaPago(reqBody, reqParams) {
     /*
     si el topic es 'merchant_order', es porque nos llegó una orden de pago, 
     eso no nos interesa de momento, así que salimos y esperamos 
@@ -69,6 +68,44 @@ else{
     console.log('usuario   ',nombreusuario);
     const paymentId = reqBody.data.id //identifación del pago
   
+    await obtenerInfoDePago(paymentId)
+    .then(paymentInfo => {
+      const paymentStatus = paymentInfo.status
+      console.log('Id del pago: ',paymentInfo.id);
+      console.log('Estado del Pago:', paymentStatus)
+  
+      if (paymentStatus !== 'approved') return true   //si el pago no está aprobado salimos
+      console.log("entra");
+      axios.post(conex.host+conex.port+'/global/add/',{
+        "fecha": paymentInfo.date_created,
+        "total": paymentInfo.transaction_details.net_received_amount,
+        "estado": "aprobado",
+        "pago_tratamiento": 0,
+        "id_mercadopago": paymentInfo.id,
+        "estado_mercadopago": paymentStatus,
+        "nombre":reqParams.nombre,
+        "apellido":reqParams.apellido,
+        "email":reqParams.email,
+        "telefono":reqParams.telefono,
+        "id_localidad":reqParams.id_localidad,
+        "id_turno":reqParams.id_turno,
+        "costo_entrevista":reqParams.costo_entrevista		
+      })
+      .then(function(res) {
+        if(res.status==200 ) {
+        console.log("OK");
+        }
+      })
+      .catch(function(err) {
+        console.log(err);
+        });
+    })
+    .catch(error => {
+      console.log(error);
+      //throw new Error('Error al confirmar el pago')
+    })
+  
+    /*metodo viejo
     try {
   
       const paymentInfo = await obtenerInfoDePago(paymentId)
@@ -97,7 +134,7 @@ else{
         costo_entrevista:reqParams.costo_entrevista
       }*/
 
-      axios.post(conex.host+conex.port+'/global/add/',{
+      /*axios.post(conex.host+conex.port+'/global/add/',{
         "fecha": paymentInfo.date_created,
         "total": paymentInfo.transaction_details.net_received_amount,
         "estado": "aprobado",
@@ -140,12 +177,12 @@ else{
       como asignarle el producto al curso
       crear entradas en tu base de contabilidad, etc.
       */
-  
+  /*
       return true
     }
     catch (error) {
       throw error
-    }
+    }*/
   }
   
   

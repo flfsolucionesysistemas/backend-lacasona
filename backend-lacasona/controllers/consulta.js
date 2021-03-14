@@ -138,7 +138,7 @@ exports.addConsulta= async (req, res) =>{
 								
 								var meet="https://meet.jit.si/lacasonameet"+variable.email;
 								var emailCliente="<h1>BIENVENIDO A LA CASONA WEB. </h1>"+
-												"<h3>Le solicitamos que abone presencialmente en nuestra sucursal ubicada en Catelli 303 de 8:00 a 13:00hs</p>"
+												"<h3>Le solicitamos que abone presencialmente en nuestra sucursal ubicada en Catelli 303 de 8:00 a 13:00hs</p>"+
 												"<p>El turno que ud. ha solicitado está confirmado para Fecha:<em> "+fecha+". </em> Hora: <em>"+turnoasignado.data[0].hora+" </em></p>"+
 												"<p>Rogamos puntualidad en la comunicación, muchas gracias."+
 												"<p><h4>El enlace para acceder a la videollamada en la fecha señalada es el siguiente:   "+ meet+" </h4></p>";
