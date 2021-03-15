@@ -73,23 +73,24 @@ exports.addConsulta= async (req, res) =>{
 						let fecha=(new Date (turnoasignado.data[0].fecha)).getDate()+'-'+meses[mes] +'-'+(new Date (turnoasignado.data[0].fecha)).getFullYear();
 						console.log(fecha);
 						if(variable.forma_pago === "Transferencia Bancaria"){
-										/*
+										
 										var transporter = nodemailer.createTransport({
-											host:"smtp.lacasonacoop.email",
-											post:587,
+											host:"mail.lacasonacoop.com",
+											post:2084,
 											secure:false,
 											auth: {
 												user:'administracion@lacasonacoop.com',
 												pass:'Castelli303'
 											}
-										*/
+										
+										/*
 										var transporter = nodemailer.createTransport({
 										service: 'Gmail',
 										auth: {
 										user:'flf.solucionesysistemas@gmail.com',
 										pass:'everLAST2020'
 										}
-										
+										*/
 									});
 									
 									var meet="https://meet.jit.si/lacasonameet"+variable.email;
