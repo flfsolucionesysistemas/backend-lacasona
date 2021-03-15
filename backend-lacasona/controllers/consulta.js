@@ -81,6 +81,9 @@ exports.addConsulta= async (req, res) =>{
 											auth: {
 												user:'administracion@lacasonacoop.com',
 												pass:'Castelli303'
+											},
+											tls: {
+												rejectUnauthorized: false
 											}
 										
 										/*
