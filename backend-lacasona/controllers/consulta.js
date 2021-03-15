@@ -74,11 +74,21 @@ exports.addConsulta= async (req, res) =>{
 						console.log(fecha);
 						if(variable.forma_pago === "Transferencia Bancaria"){
 										var transporter = nodemailer.createTransport({
+											host:"smtp.lacasonacoop.email",
+											post:587,
+											secure:false,
+											auth: {
+												user:'administracion@lacasonacoop.com',
+												pass:'Castelli303'
+											}
+										/*
+										var transporter = nodemailer.createTransport({
 										service: 'Gmail',
 										auth: {
 										user:'flf.solucionesysistemas@gmail.com',
 										pass:'everLAST2020'
 										}
+										*/
 									});
 									
 									var meet="https://meet.jit.si/lacasonameet"+variable.email;
