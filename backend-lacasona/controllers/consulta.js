@@ -96,8 +96,7 @@ exports.addConsulta= async (req, res) =>{
 									var meet="https://meet.jit.si/lacasonameet"+variable.email;
 									var emailCliente="<h1>BIENVENIDO A LA CASONA WEB. </h1>"+
 													"<h3>Datos de nuestra cuenta:</h3>"+
-													"<p>-CBU:12365478963258741</p>"+
-													"<p>-CUIT:2136589651</p>"+
+													"<p>-CBU:55037559701146</p>"+
 													"<p>El turno que ud. ha solicitado está confirmado para Fecha:<em> "+fecha+". </em> Hora: <em>"+turnoasignado.data[0].hora+" </em></p>"+
 													"<p>Rogamos puntualidad en la comunicación, muchas gracias."+
 													"<p><h4>El enlace para acceder a la videollamada en la fecha señalada es el siguiente:   "+ meet+" </h4></p>";
@@ -140,14 +139,22 @@ exports.addConsulta= async (req, res) =>{
 								
 							}
 							else if(variable.forma_pago === "Personamente"){
-								var transporter = nodemailer.createTransport({
+								/*var transporter = nodemailer.createTransport({
 									service: 'Gmail',
 									auth: {
 									user:'flf.solucionesysistemas@gmail.com',
 									pass:'everLAST2020'
 									}
+								});*/
+								var transporter = nodemailer.createTransport({
+									host:"mail.lacasonacoop.com",
+									post:2084,
+									secure:false,
+									auth: {
+										user:'administracion@lacasonacoop.com',
+										pass:'Castelli303'
+									}
 								});
-								
 								var meet="https://meet.jit.si/lacasonameet"+variable.email;
 								var emailCliente="<h1>BIENVENIDO A LA CASONA WEB. </h1>"+
 												"<h3>Le solicitamos que abone presencialmente en nuestra sucursal ubicada en Catelli 303 de 8:00 a 13:00hs</p>"+
@@ -192,11 +199,20 @@ exports.addConsulta= async (req, res) =>{
 							});
 							}
 							else{
-										var transporter = nodemailer.createTransport({
+										/*var transporter = nodemailer.createTransport({
 											service: 'Gmail',
 											auth: {
 											user:'flf.solucionesysistemas@gmail.com',
 											pass:'everLAST2020'
+											}
+										});*/
+										var transporter = nodemailer.createTransport({
+											host:"mail.lacasonacoop.com",
+											post:2084,
+											secure:false,
+											auth: {
+												user:'administracion@lacasonacoop.com',
+												pass:'Castelli303'
 											}
 										});
 										
