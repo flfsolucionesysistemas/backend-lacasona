@@ -79,7 +79,7 @@ exports.addConsulta= async (req, res) =>{
 											post:2084,
 											secure:false,
 											auth: {
-												user:'contacto@lacasonacoop.com',
+												user:'administracion@lacasonacoop.com',
 												pass:'SanMartin1650'
 											},
 											tls: {
@@ -98,7 +98,9 @@ exports.addConsulta= async (req, res) =>{
 									var meet="https://meet.jit.si/lacasonameet"+variable.email;
 									var emailCliente="<h1>BIENVENIDO A LA CASONA WEB. </h1>"+
 													"<h3>Datos de nuestra cuenta:</h3>"+
-													"<p>-CBU:55037559701146</p>"+
+													"<p>-Banco: Credicoop</p>"+
+													"<p>-A nombre de: Cooperativa de Trabajo en Salud Ramón Carrillo Limitada</p>"+
+													"<p>-CBU:19103758 55037559701146</p>"+
 													"<p>El turno que ud. ha solicitado está confirmado para Fecha:<em> "+fecha+". </em> Hora: <em>"+turnoasignado.data[0].hora+" </em></p>"+
 													"<p>Rogamos puntualidad en la comunicación, muchas gracias."+
 													"<p><h4>El enlace para acceder a la videollamada en la fecha señalada es el siguiente:   "+ meet+" </h4></p>";
@@ -346,7 +348,7 @@ exports.registroEntrevista = async (req, res) =>{
 				post:2084,
 				secure:false,
 				auth: {
-					user:'contacto@lacasonacoop.com',
+					user:'administracion@lacasonacoop.com',
 					pass:'SanMartin1650'
 				},
 				tls: {
