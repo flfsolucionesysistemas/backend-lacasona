@@ -66,11 +66,10 @@ exports.confirmarPago = (req, res, next) => {
     const nombreusuario = reqParams.nombre   //el que colocamos en la notification_url del objeto preference
     //const idDelProducto = reqParams.idDelProducto //IDEM
     console.log('usuario   ',nombreusuario);
-    var object = JSON.parse(reqBody);
-    console.log("imprimir que viene"+object);
+    console.log("imprimir que viene"+Object.values(reqBody));
 
     const paymentId = reqBody.data.id //identifación del pago
-  
+    console.log("el id que quiere capturar"+paymentId);
     await obtenerInfoDePago(paymentId)
     .then(paymentInfo => {
       const paymentStatus = paymentInfo.status
