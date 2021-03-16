@@ -48,7 +48,7 @@ const response = await mercadopago.preferences.create(preference)
 exports.confirmarPago = (req, res, next) => {
     confirmaPago(req.body, req.params)
       .then(retorno => {
-        res.status(200).json(retorno)
+        res.status(200).json.parse(retorno)
       })
       .catch(error => {
         console.log(error);
