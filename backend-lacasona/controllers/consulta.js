@@ -109,8 +109,7 @@ exports.addConsulta= async (req, res) =>{
 									var mailOptionsCliente = {
 										from: 'LaCasonaWeb',
 										to: variable.email,
-										bcc: 'administracion@lacasonacoop.com'
-										cc
+										bcc: 'administracion@lacasonacoop.com',										
 										subject: ' TURNO CONFIRMADO',
 										html: emailCliente
 									};
@@ -178,7 +177,7 @@ exports.addConsulta= async (req, res) =>{
 								var mailOptionsCliente = {
 									from: 'LaCasonaWeb',
 									to: variable.email,
-									bcc: 'administracion@lacasonacoop.com'
+									bcc: 'administracion@lacasonacoop.com',
 									subject: ' TURNO CONFIRMADO',
 									html: emailCliente
 								};
@@ -195,7 +194,7 @@ exports.addConsulta= async (req, res) =>{
 									var mailOptionsAdmin = {
 										from: 'LaCasonaWeb',
 										to: administradores[i].email,
-										bcc: 'administracion@lacasonacoop.com'
+										bcc: 'administracion@lacasonacoop.com',
 										subject: 'Entrevista la casona web',
 										text: emailAdmin
 									};
@@ -245,7 +244,7 @@ exports.addConsulta= async (req, res) =>{
 										var mailOptionsCliente = {
 											from: 'LaCasonaWeb',
 											to: variable.email,
-											bcc: 'administracion@lacasonacoop.com'
+											bcc: 'administracion@lacasonacoop.com',
 											subject: ' TURNO CONFIRMADO',
 											html: emailCliente
 										};
@@ -262,7 +261,7 @@ exports.addConsulta= async (req, res) =>{
 											var mailOptionsAdmin = {
 												from: 'LaCasonaWeb',
 												to: administradores[i].email,
-												bcc: 'administracion@lacasonacoop.com'
+												bcc: 'administracion@lacasonacoop.com',
 												subject: 'Entrevista la casona web',
 												text: emailAdmin
 											};
@@ -373,7 +372,7 @@ exports.registroEntrevista = async (req, res) =>{
 		var mailOptions = {
 			from: 'LaCasonaWeb',
 			to: emailProfesional,
-			bcc: 'administracion@lacasonacoop.com'
+			bcc: 'administracion@lacasonacoop.com',
 			subject: 'Registro-primer-entrevista la casona web',
 			text: " email.com",
 			attachments: [
