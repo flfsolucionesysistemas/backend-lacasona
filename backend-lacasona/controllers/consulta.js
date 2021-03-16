@@ -74,24 +74,24 @@ exports.addConsulta= async (req, res) =>{
 						console.log(fecha);
 						if(variable.forma_pago === "Transferencia Bancaria"){
 										
-										/*var transporter = nodemailer.createTransport({
+										var transporter = nodemailer.createTransport({
 											host:"mail.lacasonacoop.com",
 											post:2084,
 											secure:false,
 											auth: {
 												user:'contacto@lacasonacoop.com',
-												pass:'Castelli303'
+												pass:'SanMartin1650'
 											},
 											tls: {
 												rejectUnauthorized: false
-											}*/
+											}
 										
-										var transporter = nodemailer.createTransport({
+										/*var transporter = nodemailer.createTransport({
 										service: 'Gmail',
 										auth: {
 										user:'flf.solucionesysistemas@gmail.com',
 										pass:'everLAST2020'
-										}
+										}*/
 										
 									});
 									
@@ -141,26 +141,27 @@ exports.addConsulta= async (req, res) =>{
 								
 							}
 							else if(variable.forma_pago === "Personamente"){
-								var transporter = nodemailer.createTransport({
+								/*var transporter = nodemailer.createTransport({
 									service: 'Gmail',
 									auth: {
 									user:'flf.solucionesysistemas@gmail.com',
 									pass:'everLAST2020'
 									}
-								});
-								/*
+								});*/
+
+								
 								var transporter = nodemailer.createTransport({
 									host:"mail.lacasonacoop.com",
 									post:2084,
 									secure:false,
 									auth: {
 										user:'administracion@lacasonacoop.com',
-										pass:'Castelli303'
+										pass:'SanMartin1650'
 									},
 									tls: {
 										rejectUnauthorized: false
 									}
-								});*/
+								});
 								var meet="https://meet.jit.si/lacasonameet"+variable.email;
 								var emailCliente="<h1>BIENVENIDO A LA CASONA WEB. </h1>"+
 												"<h3>Le solicitamos que abone presencialmente en nuestra sucursal ubicada en Catelli 303 de 8:00 a 13:00hs</p>"+
@@ -205,6 +206,7 @@ exports.addConsulta= async (req, res) =>{
 							});
 							}
 							else{
+										/*
 										var transporter = nodemailer.createTransport({
 											service: 'Gmail',
 											auth: {
@@ -212,18 +214,19 @@ exports.addConsulta= async (req, res) =>{
 											pass:'everLAST2020'
 											}
 										});
-										/*var transporter = nodemailer.createTransport({
+										*/
+										var transporter = nodemailer.createTransport({
 											host:"mail.lacasonacoop.com",
 											post:2084,
 											secure:false,
 											auth: {
 												user:'administracion@lacasonacoop.com',
-												pass:'Castelli303'
+												pass:'SanMartin1650'
 											},
 											tls: {
 												rejectUnauthorized: false
 											}
-										});*/
+										});
 										
 										var meet="https://meet.jit.si/lacasonameet"+variable.email;
 										var emailCliente="<h1>BIENVENIDO A LA CASONA WEB. </h1>"+
@@ -337,12 +340,25 @@ exports.registroEntrevista = async (req, res) =>{
 		  .on('finish', function () {
 			console.log('PDF closed');
 		  });
+
 		  var transporter = nodemailer.createTransport({
+				host:"mail.lacasonacoop.com",
+				post:2084,
+				secure:false,
+				auth: {
+					user:'contacto@lacasonacoop.com',
+					pass:'SanMartin1650'
+				},
+				tls: {
+					rejectUnauthorized: false
+				}
+
+		  /*var transporter = nodemailer.createTransport({
 			service: 'Gmail',
 			auth: {
 				user:'flf.solucionesysistemas@gmail.com',
 				pass:'everLAST2020'
-			}
+			}*/
 		});
 		
 		var mailOptions = {
