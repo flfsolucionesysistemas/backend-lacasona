@@ -73,8 +73,8 @@ exports.confirmarPago = (req, res, next) => {
     
     console.log("el id que quiere capturar"+paymentId);
 
-    if(!empty(paymentId)){
-      await obtenerInfoDePago(paymentId)
+    
+    await obtenerInfoDePago(paymentId)
     .then(paymentInfo => {
       const paymentStatus = paymentInfo.status
       console.log('Id del pago: ',paymentInfo.id);
@@ -110,8 +110,6 @@ exports.confirmarPago = (req, res, next) => {
       console.log(error);
       //throw new Error('Error al confirmar el pago')
     })
-    }
-    
   
     /*metodo viejo
     try {
