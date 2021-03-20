@@ -417,3 +417,36 @@ exports.update = async (req, res)=>{
     });
 }
  
+exports.getTurnosNoMp= async (req, res)=>{
+  let valor = req.params.valor;
+  if(valor==0){
+    let body = await pool.query ('SELECT * FROM entrevista as e'+
+      'INNER JOIN persona as pe on pe.id_persona=e.id_persona '+
+      'INNER JOIN turno as t on t.id_tipo_turno=e.id_entrevista');
+		
+    if(body != null){
+        res.status(200).send(body);      
+    }
+    else{
+        return res.status(400).json({
+            ok:false           
+        }); 
+    }
+  }
+  else{
+    
+    let body = await pool.query ('SELECT * FROM cupon as c '+
+      'INNER JOIN hc_tratamiento as hct on c.id_hc_tratamiento=hct.id_hc_tratamiento '+
+      'INNER JOIN historia_clinica as hc on hct.id_hc= hc.id_historia_clinica '+
+      'INNER JOIN persona as p on hc.id_persona_paciente=p.id_persona order by c.id_cupon');
+		
+    if(body != null){
+        res.status(200).send(body);      
+    }
+    else{
+        return res.status(400).json({
+            ok:false           
+        }); 
+    }
+  }    
+}

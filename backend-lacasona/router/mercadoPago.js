@@ -9,5 +9,5 @@ router.post('/obtenerurlTratamiento',ctrlMP.obtenerUrlDePagoTratamiento);
 router.get('/getCuponesPaciente/:id_paciente',ctrlMP.getCuponesPacientes);
 router.get('/getPagoTipo/:tipo',ctrlMP.getCuponTipo);
 router.put('/update',ctrlMP.update);
-
+router.get('/getTurnosNoMP/:valor',ctrlMP.getTurnosNoMp);
 module.exports = router;
