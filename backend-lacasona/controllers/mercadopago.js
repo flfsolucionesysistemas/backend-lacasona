@@ -366,7 +366,7 @@ exports.getCuponTipo = async(req, res)=>{
   if(tipo==0){
     let body = await pool.query ('SELECT * FROM pago as p '+
       'INNER JOIN entrevista as e on e.id_pago=p.id_pago '+
-	  'INNER JOIN persona as pe on pe.id_persona=e.id_persona '+
+	    'INNER JOIN persona as pe on pe.id_persona=e.id_persona '+
       'INNER JOIN turno as t on t.id_tipo_turno=e.id_entrevista WHERE p.pago_tratamiento='+tipo);
 		
     if(body != null){

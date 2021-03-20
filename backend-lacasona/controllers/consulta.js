@@ -20,6 +20,16 @@ exports.addConsulta= async (req, res) =>{
 					
     let variable = req.body;
 	let costo_en = variable.costo_entrevista;
+	let tipo_pago;
+	if(variable.forma_pago === "Transferencia Bancaria"){
+		tipo_pago=2;
+	}
+	else if(variable.forma_pago==="Personamente"){
+		tipo_pago=3;
+	}
+	else{
+		tipo_pago=1;
+	}
 	let idPersona;
 	//EJECUTO EL ALTA DE PERSONA CLIENTE
 	
@@ -59,7 +69,8 @@ exports.addConsulta= async (req, res) =>{
 						id_tipo_turno: idEntrevista,
 						turno_tratamiento: 0,
 						estado: 0,
-						observacion:'asignado'
+						observacion:'asignado',
+						tipo_pago:tipo_pago
 						};
 					//SE ASIGNA EL TURNO	  
 						result = await pool.query('UPDATE turno SET ? WHERE id_turno = ?', [updateTurno, variable.id_turno]);
