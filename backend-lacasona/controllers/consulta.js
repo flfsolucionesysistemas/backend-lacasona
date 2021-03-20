@@ -112,7 +112,8 @@ exports.addConsulta= async (req, res) =>{
 													"<p>-Banco: Credicoop</p>"+
 													"<p>-A nombre de: Cooperativa de Trabajo en Salud Ramón Carrillo Limitada</p>"+
 													"<p>-CBU:19103758 55037559701146</p>"+
-													"<p>El turno que ud. ha solicitado está confirmado para Fecha:<em> "+fecha+". </em> Hora: <em>"+turnoasignado.data[0].hora+" </em></p>"+
+													"<p>El turno que ud. ha solicitado para Fecha:<em> "+fecha+". </em> Hora: <em>"+turnoasignado.data[0].hora+" </em></p>"+
+													"<p>Será confirmado una vez que realice el pago<p>"+ 
 													"<p>Rogamos puntualidad en la comunicación, muchas gracias."+
 													"<p><h4>El enlace para acceder a la videollamada en la fecha señalada es el siguiente:   "+ meet+" </h4></p>";
 									var emailAdmin="Se acaba de registrar una nueva solicitud de consulta via web"
@@ -180,7 +181,8 @@ exports.addConsulta= async (req, res) =>{
 								var meet="https://meet.jit.si/lacasonameet"+variable.email;
 								var emailCliente="<h1>BIENVENIDO A LA CASONA WEB. </h1>"+
 												"<h3>Le solicitamos que abone presencialmente en nuestra sucursal ubicada en Catelli 303 de 8:00 a 13:00hs</p>"+
-												"<p>El turno que ud. ha solicitado está confirmado para Fecha:<em> "+fecha+". </em> Hora: <em>"+turnoasignado.data[0].hora+" </em></p>"+
+												"<p>El turno que ud. ha solicitado para Fecha:<em> "+fecha+". </em> Hora: <em>"+turnoasignado.data[0].hora+" </em></p>"+
+												"<p>Será confirmado una vez que realice el pago<p>"+ 
 												"<p>Rogamos puntualidad en la comunicación, muchas gracias."+
 												"<p><h4>El enlace para acceder a la videollamada en la fecha señalada es el siguiente:   "+ meet+" </h4></p>";
 								var emailAdmin="Se acaba de registrar una nueva solicitud de consulta via web"
