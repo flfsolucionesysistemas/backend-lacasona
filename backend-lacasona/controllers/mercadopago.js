@@ -420,9 +420,10 @@ exports.update = async (req, res)=>{
 exports.getTurnosNoMp= async (req, res)=>{
   let valor = req.params.valor;
   if(valor==0){
-    let body = await pool.query ('SELECT * FROM entrevista as e'+
-      'INNER JOIN persona as pe on pe.id_persona=e.id_persona '+
-      'INNER JOIN turno as t on t.id_tipo_turno=e.id_entrevista');
+    let body = await pool.query ('SELECT * FROM entrevista as e  ' +
+	 'INNER JOIN turno as t on t.id_tipo_turno = e.id_entrevista ' +
+	 'INNER JOIN persona as p on p.id_persona = e.id_persona ' +
+	 'WHERE e.id_pago is null and t.tipo_pago <> 1 and t.turno_tratamiento = 0;');
 		
     if(body != null){
         res.status(200).send(body);      
