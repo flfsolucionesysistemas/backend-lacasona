@@ -125,6 +125,47 @@ exports.getLecturaHC =  async(req, res)=>{
 
 exports.addPago =  async(req, res)=>{
     let data = req.body;
+    if(data.estado_mercadopago==="COBRO MANUAL"){
+        let pago = {
+            fecha: "2021-03-22",
+            total: data.costo,
+            estado:"Aprobado",
+            pago_tratamiento: 0,
+            estado_mercadopago: data.estado_mercadopago,
+        }  
+        let rest = await pool.query('INSERT INTO pago set ?', [pago]);
+                if(rest != null){
+                     let datos ={
+                        id_pago:rest.insertId
+                        }
+                        await pool.query('UPDATE entrevista SET ? WHERE id_entrevista = ?', [datos, datos.id_entrevista ], function(err, sql){
+                            if(err){
+                                console.log(err);
+                                res.status(400).json({
+                                    mensaje: 'Ocurrio un problema al modificar '
+                                });
+                            }
+                            else{
+                                console.log(sql);
+                                res.status(200).json({
+                                mensaje: 'Se modifico ok.'
+                                }); 
+                            }
+                        });
+                    
+                }
+                else{
+                    res.status(400).json({
+                        mensaje: 'Ocurrio un problema al intentar guardar'
+                    });
+                }
+                res.status(200).json({
+                mensaje: 'Nuevo pago registrado'
+                   }); 
+    }
+    else{
+
+    
     if(data.pago_tratamiento==0){
         let pago = {
             fecha: data.fecha,
@@ -211,6 +252,7 @@ exports.addPago =  async(req, res)=>{
             });  
         }
     }
+}
     
 }
 
