@@ -439,7 +439,7 @@ exports.getTurnosNoMp= async (req, res)=>{
     let body = await pool.query ('SELECT * FROM cupon as c '+
       'INNER JOIN hc_tratamiento as hct on c.id_hc_tratamiento=hct.id_hc_tratamiento '+
       'INNER JOIN historia_clinica as hc on hct.id_hc= hc.id_historia_clinica '+
-      'INNER JOIN persona as p on hc.id_persona_paciente=p.id_persona order by c.id_cupon');
+      'INNER JOIN persona as p on hc.id_persona_paciente=p.id_persona where c.pagado = 0 order by c.id_cupon');
 		
     if(body != null){
         res.status(200).send(body);      
