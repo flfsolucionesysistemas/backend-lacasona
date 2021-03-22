@@ -125,9 +125,10 @@ exports.getLecturaHC =  async(req, res)=>{
 
 exports.addPago =  async(req, res)=>{
     let data = req.body;
-    if(data.estado_mercadopago==="COBRO MANUAL"){
+    let now = new Date();
+       if(data.estado_mercadopago==="COBRO MANUAL"){
         let pago = {
-            fecha: "2021-03-22",
+            fecha: now,
             total: data.costo,
             estado:"Aprobado",
             pago_tratamiento: 0,
