@@ -134,11 +134,13 @@ exports.addPago =  async(req, res)=>{
             estado_mercadopago: data.estado_mercadopago,
         }  
         let rest = await pool.query('INSERT INTO pago set ?', [pago]);
+        console.log("nuevo pago"+rest);
                 if(rest != null){
+                    console.log(rest.insertId);
                      let datos ={
                         id_pago:rest.insertId
                         }
-                        await pool.query('UPDATE entrevista SET ? WHERE id_entrevista = ?', [datos, datos.id_entrevista ], function(err, sql){
+                        await pool.query('UPDATE entrevista SET ? WHERE id_entrevista = ?', [datos, data.id_entrevista ], function(err, sql){
                             if(err){
                                 console.log(err);
                                 res.status(400).json({
