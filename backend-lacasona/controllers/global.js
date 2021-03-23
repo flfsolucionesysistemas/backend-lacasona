@@ -166,9 +166,48 @@ exports.addPago =  async(req, res)=>{
                 mensaje: 'Nuevo pago registrado'
                    }); 
     }
+    else if(data.estado_mercadopago==="COBRO MANUAL TRATAMIENTO"){
+        let pago = {
+            fecha: NOW,
+            total: data.costo,
+            estado: "aprobado",
+            pago_tratamiento: 1,
+            estado_mercadopago: data.estado_mercadopago,
+        }  
+        if(data!=null){
+            let rest = await pool.query('INSERT INTO pago set ?', [pago]);
+                if(rest != null){
+                    //updatear el cupon
+                    let cupon={
+                        id_cupon:data.id_cupon,
+                        pagado: 1
+                    }
+                   
+                    const updateCupon = await axios({
+                        url: conex.host+conex.port+'/global/updateCupon/',
+                        method: 'put',
+                        data: cupon
+                      });
+                    
+                }
+                else{
+                    res.status(400).json({
+                        mensaje: 'Ocurrio un problema al intentar guardar'
+                    });
+                }
+                res.status(200).json({
+                mensaje: 'Nuevo pago registrado'
+                   }); 
+               
+        }
+        else{
+            res.status(400).json({
+                mensaje: 'No se obtuvieron correctamente los datos'
+            });
+        } 
+    }
     else{
 
-    
     if(data.pago_tratamiento==0){
         let pago = {
             fecha: data.fecha,
