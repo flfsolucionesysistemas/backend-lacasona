@@ -168,7 +168,7 @@ exports.addPago =  async(req, res)=>{
     }
     else if(data.estado_mercadopago==="COBRO MANUAL TRATAMIENTO"){
         let pago = {
-            fecha: NOW,
+            fecha: now,
             total: data.costo,
             estado: "aprobado",
             pago_tratamiento: 1,
