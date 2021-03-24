@@ -111,6 +111,7 @@ exports.addConsulta= async (req, res) =>{
 													"<h3>Datos de nuestra cuenta:</h3>"+
 													"<p>-Banco: Credicoop</p>"+
 													"<p>-A nombre de: Cooperativa de Trabajo en Salud Ramón Carrillo Limitada</p>"+
+													"<p>-CUIT: 30-71135434-0</p>"+
 													"<p>-CBU:19103758 55037559701146</p>"+
 													"<p>El turno que ud. ha solicitado para Fecha:<em> "+fecha+". </em> Hora: <em>"+turnoasignado.data[0].hora+" </em></p>"+
 													"<p>Será confirmado una vez que realice el pago<p>"+ 
@@ -180,7 +181,7 @@ exports.addConsulta= async (req, res) =>{
 								});
 								var meet="https://meet.jit.si/lacasonameet"+variable.email;
 								var emailCliente="<h1>BIENVENIDO A LA CASONA WEB. </h1>"+
-												"<h3>Le solicitamos que abone presencialmente en nuestra sucursal ubicada en Catelli 303 de 8:00 a 13:00hs</p>"+
+												"<h3>Para pagar de manera presencial usted debe concurrir a nuestra sede administrativa ubicada en Av. Castelli 303 de la ciudad de Resistencia (Chaco, Argentina)</p>"+
 												"<p>El turno que ud. ha solicitado para Fecha:<em> "+fecha+". </em> Hora: <em>"+turnoasignado.data[0].hora+" </em></p>"+
 												"<p>Será confirmado una vez que realice el pago<p>"+ 
 												"<p>Rogamos puntualidad en la comunicación, muchas gracias."+
