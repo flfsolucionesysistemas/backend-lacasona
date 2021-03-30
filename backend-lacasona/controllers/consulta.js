@@ -91,7 +91,7 @@ exports.addConsulta= async (req, res) =>{
 											secure:false,
 											auth: {
 												user:'administracion@lacasonacoop.com',
-												pass:'SanMartin1650'
+												pass:'AvCastelli303'
 											},
 											tls: {
 												rejectUnauthorized: false
@@ -173,7 +173,7 @@ exports.addConsulta= async (req, res) =>{
 									secure:false,
 									auth: {
 										user:'administracion@lacasonacoop.com',
-										pass:'SanMartin1650'
+										pass:'AvCastelli303'
 									},
 									tls: {
 										rejectUnauthorized: false
@@ -241,7 +241,7 @@ exports.addConsulta= async (req, res) =>{
 											secure:false,
 											auth: {
 												user:'administracion@lacasonacoop.com',
-												pass:'SanMartin1650'
+												pass:'AvCastelli303'
 											},
 											tls: {
 												rejectUnauthorized: false
@@ -369,7 +369,7 @@ exports.registroEntrevista = async (req, res) =>{
 				secure:false,
 				auth: {
 					user:'administracion@lacasonacoop.com',
-					pass:'SanMartin1650'
+					pass:'AvCastelli303'
 				},
 				tls: {
 					rejectUnauthorized: false
