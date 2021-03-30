@@ -24,7 +24,7 @@ exports.addConsulta= async (req, res) =>{
 	if(variable.forma_pago === "Transferencia Bancaria"){
 		tipo_pago=2;
 	}
-	else if(variable.forma_pago==="Personamente"){
+	else if(variable.forma_pago==="Personalmente"){
 		tipo_pago=3;
 	}
 	else{
@@ -157,7 +157,7 @@ exports.addConsulta= async (req, res) =>{
 								});
 								
 							}
-							else if(variable.forma_pago === "Personamente"){
+							else if(variable.forma_pago === "Personalmente"){
 								/*var transporter = nodemailer.createTransport({
 									service: 'Gmail',
 									auth: {
