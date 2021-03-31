@@ -117,7 +117,11 @@ exports.addConsulta= async (req, res) =>{
 													"<p>Será confirmado una vez que realice el pago<p>"+ 
 													"<p>Rogamos puntualidad en la comunicación, muchas gracias."+
 													"<p><h4>El enlace para acceder a la videollamada en la fecha señalada es el siguiente:   "+ meet+" </h4></p>";
-									var emailAdmin="Se acaba de registrar una nueva solicitud de consulta via web"
+									//var emailAdmin="Se acaba de registrar una nueva solicitud de consulta via web"
+									var emailAdmin= 
+										variable.apellido + ', ' + variable.nombre +							
+										" ha solicitado una consulta para la fecha " + fecha +
+										", a pagar por Trans. Bancaria."
 									//sumar el meet de la reunion
 									var mailOptionsCliente = {
 										from: 'LaCasonaWeb',
@@ -139,7 +143,7 @@ exports.addConsulta= async (req, res) =>{
 										var mailOptionsAdmin = {
 											from: 'LaCasonaWeb',
 											to: administradores[i].email,
-											bcc: 'administracion@lacasonacoop.com',
+											//bcc: 'administracion@lacasonacoop.com',
 											subject: 'Entrevista la casona web',
 											text: emailAdmin
 										};
@@ -186,7 +190,12 @@ exports.addConsulta= async (req, res) =>{
 												"<p>Será confirmado una vez que realice el pago<p>"+ 
 												"<p>Rogamos puntualidad en la comunicación, muchas gracias."+
 												"<p><h4>El enlace para acceder a la videollamada en la fecha señalada es el siguiente:   "+ meet+" </h4></p>";
-								var emailAdmin="Se acaba de registrar una nueva solicitud de consulta via web"
+								
+								//var emailAdmin="Se acaba de registrar una nueva solicitud de consulta via web"
+								var emailAdmin = variable.apellido + ', ' + variable.nombre +							
+										" ha solicitado una consulta para la fecha " + fecha +
+										", a pagar personalmente."
+										
 								//sumar el meet de la reunion
 								var mailOptionsCliente = {
 									from: 'LaCasonaWeb',
@@ -208,7 +217,7 @@ exports.addConsulta= async (req, res) =>{
 									var mailOptionsAdmin = {
 										from: 'LaCasonaWeb',
 										to: administradores[i].email,
-										bcc: 'administracion@lacasonacoop.com',
+										//bcc: 'administracion@lacasonacoop.com',
 										subject: 'Entrevista la casona web',
 										text: emailAdmin
 									};
@@ -253,7 +262,10 @@ exports.addConsulta= async (req, res) =>{
 														"<p>El turno que ud. ha solicitado está confirmado para Fecha:<em> "+fecha+". </em> Hora: <em>"+turnoasignado.data[0].hora+" </em></p>"+
 														"<p>Rogamos puntualidad en la comunicación, muchas gracias."+
 														"<p><h4>El enlace para acceder a la videollamada en la fecha señalada es el siguiente:   "+ meet+" </h4></p>";
-										var emailAdmin="Se acaba de registrar una nueva solicitud de consulta via web"
+										//var emailAdmin="Se acaba de registrar una nueva solicitud de consulta via web"
+										var emailAdmin = variable.apellido + ', ' + variable.nombre +							
+											" ha solicitado una consulta para la fecha " + fecha +
+											", a por Mercado Pago."
 										//sumar el meet de la reunion
 										var mailOptionsCliente = {
 											from: 'LaCasonaWeb',
@@ -275,7 +287,7 @@ exports.addConsulta= async (req, res) =>{
 											var mailOptionsAdmin = {
 												from: 'LaCasonaWeb',
 												to: administradores[i].email,
-												bcc: 'administracion@lacasonacoop.com',
+												//bcc: 'administracion@lacasonacoop.com',
 												subject: 'Entrevista la casona web',
 												text: emailAdmin
 											};
