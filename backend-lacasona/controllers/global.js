@@ -82,12 +82,24 @@ exports.getLecturaHC =  async(req, res)=>{
        
     //SE ENVIAN LOS CORREOS ELECTRONICOS	
 					 
-    var transporter = nodemailer.createTransport({
+	var transporter = nodemailer.createTransport({
+		host:"mail.lacasonacoop.com",
+		post:2084,
+		secure:false,
+		auth: {
+			user:'administracion@lacasonacoop.com',
+			pass:'AvCastelli303'
+		},
+		tls: {
+			rejectUnauthorized: false
+		}
+						 
+    /*var transporter = nodemailer.createTransport({
         service: 'Gmail',
         auth: {
         user: 'flf.solucionesysistemas@gmail.com',
         pass: 'everLAST2020'
-        }
+        }*/
     });
     var emailAdmin="El paciente con D.N.I:"+response.data[0].dni+" solicita ver su historia clinica";
    console.log(administradores[0].email);
