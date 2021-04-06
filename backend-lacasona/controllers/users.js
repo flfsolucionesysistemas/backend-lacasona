@@ -152,6 +152,38 @@ exports.deleteUser = async (req, res) =>{
     let result = await pool.query("UPDATE persona SET activo = 0 WHERE id_persona="+idUser);
     res.status(200).send({result});
 }
+
+exports.borrarUser = async (req, res) =>{
+    let idUsuario = req.params.idUser;
+    let body = await pool.query ('SELECT * FROM entrevista WHERE id_persona = ?', [idUsuario]);
+	
+    if(body != null){
+        console.log("entrevista "+body);
+        let turno = await pool.query ('SELECT * FROM turno WHERE id_tipo_turno = ?', [body.id_entrevista]);
+        console.log("turno "+turno);
+        axios({
+            method:'post',
+            url:conex.host+conex.port+'/turno/update',
+            data:{
+                id_turno:turno.id_turno,
+                observacion:"NULL",
+                estado:1,
+                id_tipo_turno:0
+            }
+        });
+        let borra = await pool.query ('DELETE FROM entrevista WHERE id_persona = ?', [idUsuario]);
+        let borrarPersona = await pool.query('DELETE FROM persona WHERE id_persona = ?', [idUsuario]);
+        res.status(200).send(borrarPersona);
+       
+    }
+    else{
+        return res.status(400).json({
+            ok:false
+            
+        }); 
+    }
+ 
+}
 exports.getUserActivo= async (req, res) =>{
     let valor = req.params.activos;
     let body

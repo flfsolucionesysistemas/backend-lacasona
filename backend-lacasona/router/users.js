@@ -18,6 +18,7 @@ router.get('/getUserId/:idUser',ctrlUsuario.getUserId);
 router.get('/getExisteUser/:email',ctrlUsuario.getExisteUser);
 router.get('/olvideClave/:email',ctrlUsuario.olvideClave);
 router.put('/updateClave',ctrlUsuario.upadateClave);
+router.get('/borrarUser',ctrlUsuario.borrarUser);
 
 
 module.exports = router;
