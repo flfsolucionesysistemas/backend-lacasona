@@ -162,7 +162,7 @@ exports.borrarUser = async (req, res) =>{
         let turno = await pool.query ('SELECT * FROM turno WHERE id_tipo_turno = ?', [body.id_entrevista]);
         console.log("turno "+turno);
         axios({
-            method:'post',
+            method:'put',
             url:conex.host+conex.port+'/turno/update',
             data:{
                 id_turno:turno.id_turno,
