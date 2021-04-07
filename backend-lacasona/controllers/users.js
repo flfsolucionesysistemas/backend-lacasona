@@ -161,7 +161,8 @@ exports.borrarUser = async (req, res) =>{
         console.log("entrevista "+body);
         let turno = await pool.query ('SELECT * FROM turno WHERE id_tipo_turno = ?', [body.id_entrevista]);
         console.log("turno "+turno);
-        axios({
+        if(turno != null){
+            axios({
             method:'put',
             url:conex.host+conex.port+'/turno/update',
             data:{
@@ -175,6 +176,8 @@ exports.borrarUser = async (req, res) =>{
         let borrarPersona = await pool.query('DELETE FROM persona WHERE id_persona = ?', [idUsuario]);
         res.status(200).send(borrarPersona);
        
+        }
+        
     }
     else{
         return res.status(400).json({
