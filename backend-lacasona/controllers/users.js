@@ -158,15 +158,15 @@ exports.borrarUser = async (req, res) =>{
     let body = await pool.query ('SELECT * FROM entrevista WHERE id_persona = ?', [idUsuario]);
 	
     if(body != null){
-        console.log("entrevista "+body);
-        let turno = await pool.query ('SELECT * FROM turno WHERE id_tipo_turno = ?', [body.id_entrevista]);
-        console.log("turno "+turno);
+        console.log("entrevista "+body[0]);
+        let turno = await pool.query ('SELECT * FROM turno WHERE id_tipo_turno = ?', [body[0].id_entrevista]);
+        console.log("turno "+turno[0]);
         if(turno != null){
             axios({
             method:'put',
             url:conex.host+conex.port+'/turno/update',
             data:{
-                id_turno:turno.id_turno,
+                id_turno:turno[0].id_turno,
                 observacion:"NULL",
                 estado:1,
                 id_tipo_turno:0
