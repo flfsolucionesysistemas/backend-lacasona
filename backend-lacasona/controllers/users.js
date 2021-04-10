@@ -169,8 +169,7 @@ exports.borrarUser = async (req, res) =>{
                 id_turno:turno[0].id_turno,
                 observacion:"NULL",
                 estado:1,
-                id_tipo_turno:0,
-				tipo_pago:"NULL"
+                id_tipo_turno:0
             }
         });
         let borra = await pool.query ('DELETE FROM entrevista WHERE id_persona = ?', [idUsuario]);
