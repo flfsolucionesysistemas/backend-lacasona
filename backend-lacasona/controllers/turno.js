@@ -473,6 +473,25 @@ exports.turnosGrupales = async (req, res) =>{
         }
     });
 }
+exports.turnosGrupalesProfesional = async (req, res) =>{      
+	let datos=req.body;
+	
+    let data = {
+        "id_profesional":datos.id_profesional,
+        "id_turno":datos.id_turno
+    }
+	await pool.query ('INSERT INTO profesional_turno set ?', [data] ,function(err,sql){
+        if(err){
+            console.log(err);
+            res.status(400).json({
+                error:"error"
+            });
+        }
+        else{           
+             res.status(200).send(sql);
+        }
+    });
+}
 
 exports.getTurnosTipoIndividual = async (req, res) =>{      
 	
@@ -496,6 +515,22 @@ exports.getTurnosTipoGrupal = async (req, res) =>{
                      't.id_turno=tp.id_turno inner join tipo_sesion as ts on t.id_tipo_sesion=ts.id_tipo_sesion '+
                      'inner join persona as p on p.id_persona=t.id_profesional '+
                      'WHERE tp.id_paciente='+req.params.id,function(err,sql){
+        if(err){
+            console.log(err);
+            res.status(400).json({
+                error:"error"
+            });
+        }
+        else{           
+             res.status(200).send(sql);
+        }
+    });
+}
+
+exports.getTurnosTipoGrupalProfesional = async (req, res) =>{      
+    await pool.query ('SELECT * FROM profesional_turno as tp INNER JOIN turno as t on '+
+                     't.id_turno=tp.id_turno inner join tipo_sesion as ts on t.id_tipo_sesion=ts.id_tipo_sesion '+
+                     'WHERE tp.id_profesional='+req.params.id,function(err,sql){
         if(err){
             console.log(err);
             res.status(400).json({
