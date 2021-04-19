@@ -544,10 +544,44 @@ exports.getTurnosTipoGrupalProfesional = async (req, res) =>{
     });
 }
 
+exports.getTurnosGrupalesProfesional = async (req, res) =>{      
+    await pool.query ('SELECT * FROM profesional_turno as tp INNER JOIN turno as t on '+
+                     't.id_turno=tp.id_turno inner join tipo_sesion as ts on t.id_tipo_sesion=ts.id_tipo_sesion '+
+                     'inner join persona as p on p.id_persona=tp.id_profesional '+
+                     'WHERE tp.id_profesional='+req.params.id,function(err,sql){
+        if(err){
+            console.log(err);
+            res.status(400).json({
+                error:"error"
+            });
+        }
+        else{           
+             res.status(200).send(sql);
+        }
+    });
+}
+
 exports.deleteTurnoGrupal = async (req, res)=>{
     let id_paciente_turno = req.params.id_paciente_turno;
     
     await pool.query ('DELETE FROM paciente_turno WHERE id_paciente_turno = ' + id_paciente_turno , function(err,sql){
+        if(err){
+			console.log(err);
+            res.status(400).json({
+                error:"error al borrar turno"
+            });
+        }
+        else{
+            let query= sql.affectedRows;
+             res.status(200).send(sql);
+        }
+    });
+}
+
+exports.deleteTurnoGrupalProfesional = async (req, res)=>{
+    let id_profesional_turno = req.params.id_profesional_turno;
+    
+    await pool.query ('DELETE FROM profesional_turno WHERE id_profesional_turno = ' + id_profesional_turno , function(err,sql){
         if(err){
 			console.log(err);
             res.status(400).json({

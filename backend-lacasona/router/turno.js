@@ -29,11 +29,13 @@ router.get('/getTurnosEntrevistaAdmisionPorFecha/:fecha',ctrlTurno.getTurnosEntr
 router.get('/getTurnosEntrevistaAdmision',ctrlTurno.getTurnosEntrevistaAdmision);
 router.post('/turnosGrupales',ctrlTurno.turnosGrupales);
 router.post('/turnosGrupalesProfesionales',ctrlTurno.turnosGrupalesProfesional);
+router.get('/getTurnosGrupalesProfesional',ctrlTurno.getTurnosGrupalesProfesional);
 router.get('/getTurnosTipoGrupal/:id',ctrlTurno.getTurnosTipoGrupal);
 router.get('/getTurnosTipoGrupalProfesional/:id',ctrlTurno.getTurnosTipoGrupalProfesional);
 router.get('/getTurnosTipoIndividual/:id',ctrlTurno.getTurnosTipoIndividual);
 router.get('/getTurnosGrupales/:id',ctrlTurno.getTurnosGrupales);
 router.delete('/deleteTurnoGrupal/:id_paciente_turno',ctrlTurno.deleteTurnoGrupal);
+router.delete('/deleteTurnoGrupalProfesional/:id_profesional_turno',ctrlTurno.deleteTurnoGrupalProfesional);
 router.get('/getProximoTurnoGrupal/:id',ctrlTurno.getProximoTurnoGrupal);
 
 module.exports = router;
