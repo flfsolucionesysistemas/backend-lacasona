@@ -530,7 +530,8 @@ exports.getTurnosTipoGrupal = async (req, res) =>{
 exports.getTurnosTipoGrupalProfesional = async (req, res) =>{      
     await pool.query ('SELECT * FROM profesional_turno as tp INNER JOIN turno as t on '+
                      't.id_turno=tp.id_turno inner join tipo_sesion as ts on t.id_tipo_sesion=ts.id_tipo_sesion '+
-                     'WHERE tp.id_profesional='+req.params.id,function(err,sql){
+                     'inner join persona as p on p.id_persona=tp.id_profesional '+
+                     'WHERE tp.id_turno='+req.params.id,function(err,sql){
         if(err){
             console.log(err);
             res.status(400).json({
