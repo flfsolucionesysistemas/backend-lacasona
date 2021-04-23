@@ -402,8 +402,9 @@ exports.registroEntrevista = async (req, res) =>{
 			subject: 'Registro-primer-entrevista la casona web',
 			text: " email.com",
 			attachments: [
-				{
-					"path": './registro_entrevista/registro_entrevista_' +datos.id_cliente+ramdon+ '.pdf'                                         
+				{	
+					"path": './registro_entrevista/registro_entrevista_' +datos.id_cliente+'.pdf'
+					//"path": './registro_entrevista/registro_entrevista_' +datos.id_cliente+ramdon+ '.pdf'                                         
 					//contentType: 'application/pdf'
 				}]
 		};
