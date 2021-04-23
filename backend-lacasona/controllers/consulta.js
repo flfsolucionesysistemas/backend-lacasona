@@ -69,7 +69,7 @@ exports.addConsulta= async (req, res) =>{
 						id_tipo_turno: idEntrevista,
 						turno_tratamiento: 0,
 						estado: 0,
-						observacion:'asignado',
+						observacion:'asignado  '+variable.nombre+'  '+variable.apellido,
 						tipo_pago:tipo_pago
 						};
 					//SE ASIGNA EL TURNO	  
