@@ -633,7 +633,11 @@ TURNOS GRUPALES EN LOS QUE PARTICIPA EL PROFESIONAL
 FILTRADO POR FECHA
 */
 exports.getTurnosGrupalesComoAdicional = async (req, res) =>{      
-    await pool.query ('SELECT p.nombre, p.apellido, t.id_profesional,t.fecha, t.hora '+
+    
+	//await pool.query ('SELECT p.nombre, p.apellido, t.id_profesional,t.fecha, t.hora '+	
+	await pool.query ('SELECT t.id_turno, t.id_tipo_turno, t.costo_base, t.estado, t.fecha, t.hora, '+
+					' t.id_profesional, t.id_paciente, t.id_tipo_turno, t.observacion, t.profesional_disponible, ' +
+					' t.turno_tratamiento, p.nombre, p.apellido, p.id_persona ' + 
 					' FROM profesional_turno as pt ' +
 					' INNER JOIN turno as t on t.id_turno = pt.id_turno ' + 
 					' INNER JOIN persona as p on p.id_persona = t.id_profesional ' + 
