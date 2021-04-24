@@ -353,27 +353,17 @@ exports.registroEntrevista = async (req, res) =>{
 			   .text('Admitido: '+datos.admitido)
 			   .text('');
 		  pdf.fontSize(11)
-			   .text('Fecha: '+datos.fecha )
-			   .text('')
-			   .text('');
-			   .text('Tipo de consulta: '+datos.tipo_consulta)
-			   .text('');
+			   .text('Fecha: '+datos.fecha +' -  Tipo de consulta: '+datos.tipo_consulta)
 			   .text('Obra social: '+datos.obra_social+' -  N° de afiliado: '+datos.numero_afiliado )
-			   .text('Fecha de nacimiento: '+datos.fecha_nacimiento+'-  Domicilio: '+datos.domicilio)
-			   .text('Telefono: '+datos.telefono )
+			   .text('Fecha de nacimiento: '+datos.fecha_nacimiento+'-  Domicilio: '+datos.domicilio+ '- Telefono: '+datos.telefono )
 			   .text('Edad: '+datos.edad+' -  Estado civil: '+datos.estado_civil+ ' - D.N.I: '+datos.numero_documento+' -  Ocupación:'+datos.ocupacion );
-			   .text('');
 		 pdf.fontSize(20)
 			   .text('CGIP: '+datos.cgip)
 			   .text('');	  
 		 pdf.fontSize(11)
-			   .text('Motivo: '+datos.motivo)
-			   .text('Derivado por: '+datos.derivado_por)
-			   .text('Padecimiento: '+datos.padecimiento)
-			   .text('Antecedentes: '+datos.antecedentes)
-			   .text('Diagnostico: '+datos.diagnostico)
-			   .text('Tratamiento: '+datos.tratamiento)
-			   .text('Farmacologia: '+datos.farmacologia);
+			   .text('Motivo: '+datos.motivo+' -  Derivado por: '+datos.derivado_por)
+			   .text('Padecimiento: '+datos.padecimiento+' -  Antecedentes: '+datos.antecedentes)
+			   .text('Diagnostico: '+datos.diagnostico+' -  Tratamiento: '+datos.tratamiento+' -  Farmacologia: '+datos.farmacologia );
 		 
 		  /*pdf.addPage()
 			   .fontSize(12)
