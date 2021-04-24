@@ -354,7 +354,7 @@ exports.registroEntrevista = async (req, res) =>{
 			   .text('');
 		  pdf.fontSize(11)
 			   .text('Fecha: '+datos.fecha )
-			   .text('');
+			   .text('')
 			   .text('');
 			   .text('Tipo de consulta: '+datos.tipo_consulta)
 			   .text('');
