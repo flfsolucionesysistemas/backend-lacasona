@@ -628,4 +628,26 @@ exports.getProximoTurnoGrupal = async (req, res) =>{
     });
 }
 
-   
+/*
+TURNOS GRUPALES EN LOS QUE PARTICIPA EL PROFESIONAL 
+FILTRADO POR FECHA
+*/
+exports.getTurnosGrupalesComoAdicional = async (req, res) =>{      
+    await pool.query ('SELECT p.nombre, p.apellido, t.id_profesional,t.fecha, t.hora '+
+					' FROM profesional_turno as pt ' +
+					' INNER JOIN turno as t on t.id_turno = pt.id_turno ' + 
+					' INNER JOIN persona as p on p.id_persona = t.id_profesional ' + 
+					' WHERE pt.id_profesional = ' + req.params.id_profesional + ' +
+					' AND t.fecha = ' + req.params.fecha + 
+					' AND t.id_tipo_sesion = 3 ',function(err,sql){
+        if(err){
+            console.log(err);
+            res.status(400).json({
+                error:"error"
+            });
+        }
+        else{           
+             res.status(200).send(sql);
+        }
+    });
+}   
