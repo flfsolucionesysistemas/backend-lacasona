@@ -37,5 +37,6 @@ router.get('/getTurnosGrupales/:id',ctrlTurno.getTurnosGrupales);
 router.delete('/deleteTurnoGrupal/:id_paciente_turno',ctrlTurno.deleteTurnoGrupal);
 router.delete('/deleteTurnoGrupalProfesional/:id_profesional_turno',ctrlTurno.deleteTurnoGrupalProfesional);
 router.get('/getProximoTurnoGrupal/:id',ctrlTurno.getProximoTurnoGrupal);
+router.get('/getTurnosGruplesComoAdicional/:id_profesional/:fecha',ctrlTurno.getTurnosGrupalesComoAdicional);
 
 module.exports = router;
