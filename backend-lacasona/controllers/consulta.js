@@ -372,7 +372,7 @@ exports.registroEntrevista = async (req, res) =>{
 			fs.createWriteStream('./registro_entrevista/registro_entrevista_'+datos.id_cliente+ramdon+'.pdf')
 		  )*/
 		  pdf.pipe(
-			fs.createWriteStream('/var/www/html/registro_entrevista/registro_entrevista_'+datos.id_cliente+ramdon+'.pdf')
+			fs.createWriteStream('/var/www/html/dist/registro/registro_entrevista_'+datos.id_cliente+'.pdf')
 		  )
 		  .on('finish', function () {
 			console.log('PDF closed');
@@ -406,7 +406,7 @@ exports.registroEntrevista = async (req, res) =>{
 			text: " email.com",
 			attachments: [
 				{	
-					"path": '/var/www/html/registro_entrevista/registro_entrevista_' +datos.id_cliente+'.pdf'
+					"path": '/var/www/html/dist/registro/registro_entrevista_' +datos.id_cliente+'.pdf'
 					//"path": './registro_entrevista/registro_entrevista_' +datos.id_cliente+'.pdf'
 					//"path": './registro_entrevista/registro_entrevista_' +datos.id_cliente+ramdon+ '.pdf'                                         
 					//contentType: 'application/pdf'
