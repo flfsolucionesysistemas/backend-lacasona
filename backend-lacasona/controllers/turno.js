@@ -638,7 +638,7 @@ exports.getTurnosGrupalesComoAdicional = async (req, res) =>{
 					' INNER JOIN turno as t on t.id_turno = pt.id_turno ' + 
 					' INNER JOIN persona as p on p.id_persona = t.id_profesional ' + 
 					' WHERE pt.id_profesional = ' + req.params.id_profesional +
-					' AND t.fecha = ' + req.params.fecha + 
+					' AND t.fecha = "' + req.params.fecha +  '"' +
 					' AND t.id_tipo_sesion = 3 ',function(err,sql){
         if(err){
             console.log(err);
