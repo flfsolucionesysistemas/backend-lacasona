@@ -341,35 +341,48 @@ exports.registroEntrevista = async (req, res) =>{
 		var pdf = new PDFDocument({
 			size: 'LEGAL', // See other page sizes here: https://github.com/devongovett/pdfkit/blob/d95b826475dd325fb29ef007a9c1bf7a527e9808/lib/page.coffee#L69
 			info: {
-			  Title: 'Tile of File Here',
-			  Author: 'Some Author',
+			  Title: 'Registro de Entrevista',
+			  Author: 'La Casona Web',
 			}
 		  });
 		  pdf.fontSize(20)
-			   .text('Formulario de registración de entrevista', 100, 100)
+			   .text('Formulario de Registración de Entrevista', 100, 100)
 			   .text('')
 			   .text('');
 		  pdf.fontSize(18)
 			   .text('Admitido: '+datos.admitido)
 			   .text('');
 		  pdf.fontSize(11)
-			   .text('Fecha: '+datos.fecha+'-  Tipo de consulta: '+datos.tipo_consulta)
-			   .text('Obra social: '+datos.obra_social+'-  N° de afiliado: '+datos.numero_afiliado )
-			   .text('Fecha de nacimiento: '+datos.fecha_nacimiento+'-  Domicilio: '+datos.domicilio+ '- Telefono: '+datos.telefono )
-			   .text('Edad: '+datos.edad+'-  Estado civil: '+datos.estado_civil+ '- D.N.I: '+datos.numero_documento+' -  Ocupación:'+datos.ocupacion );
+			   .text('Fecha: '+datos.fecha )
+			   .text('');
+			   .text('');
+			   .text('Tipo de consulta: '+datos.tipo_consulta)
+			   .text('');
+			   .text('Obra social: '+datos.obra_social+' -  N° de afiliado: '+datos.numero_afiliado )
+			   .text('Fecha de nacimiento: '+datos.fecha_nacimiento+'-  Domicilio: '+datos.domicilio)
+			   .text('Telefono: '+datos.telefono )
+			   .text('Edad: '+datos.edad+' -  Estado civil: '+datos.estado_civil+ ' - D.N.I: '+datos.numero_documento+' -  Ocupación:'+datos.ocupacion );
+			   .text('');
 		 pdf.fontSize(20)
 			   .text('CGIP: '+datos.cgip)
 			   .text('');	  
 		 pdf.fontSize(11)
-			   .text('Motivo: '+datos.motivo+'-  Derivado por: '+datos.derivado_por)
-			   .text('Padecimiento: '+datos.padecimiento+'-  antecedentes: '+datos.antecedentes)
-			   .text('Diagnostico: '+datos.diagnostico+'-  Tratamiento: '+datos.tratamiento+'-  Farmacologia: '+datos.farmacologia );
+			   .text('Motivo: '+datos.motivo)
+			   .text('Derivado por: '+datos.derivado_por)
+			   .text('Padecimiento: '+datos.padecimiento)
+			   .text('Antecedentes: '+datos.antecedentes)
+			   .text('Diagnostico: '+datos.diagnostico)
+			   .text('Tratamiento: '+datos.tratamiento)
+			   .text('Farmacologia: '+datos.farmacologia);
 		 
 		  /*pdf.addPage()
 			   .fontSize(12)
 			   .text('Fecha: '+datos.fecha+'  Tipo de consulta: '+datos.tipo_consulta+ ' Telefono: '+datos.telefono );*/
-		  pdf.pipe(
+		  /*pdf.pipe(
 			fs.createWriteStream('./registro_entrevista/registro_entrevista_'+datos.id_cliente+ramdon+'.pdf')
+		  )*/
+		  pdf.pipe(
+			fs.createWriteStream('/var/www/html/registro_entrevista/registro_entrevista_'+datos.id_cliente+ramdon+'.pdf')
 		  )
 		  .on('finish', function () {
 			console.log('PDF closed');
@@ -403,7 +416,8 @@ exports.registroEntrevista = async (req, res) =>{
 			text: " email.com",
 			attachments: [
 				{	
-					"path": './registro_entrevista/registro_entrevista_' +datos.id_cliente+'.pdf'
+					"path": '/var/www/html/registro_entrevista/registro_entrevista_' +datos.id_cliente+'.pdf'
+					//"path": './registro_entrevista/registro_entrevista_' +datos.id_cliente+'.pdf'
 					//"path": './registro_entrevista/registro_entrevista_' +datos.id_cliente+ramdon+ '.pdf'                                         
 					//contentType: 'application/pdf'
 				}]
