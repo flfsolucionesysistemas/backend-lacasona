@@ -676,7 +676,8 @@ exports.getTurnosGrupalesComoAdicional = async (req, res) =>{
 
 
 exports.getProfesionalTitularTurnoGrupal = async (req, res) =>{          
-	await pool.query ('SELECT p.nombre, p.apellido FROM turno as t ' +
+	await pool.query ('SELECT p.nombre, p.apellido, p.email ' + 
+					' FROM turno as t ' +
 					' INNER JOIN persona as p on p.id_persona = t.id_profesional ' + 
 					' WHERE id_turno= '+ req.params.id_turno ,function(err,sql){
         if(err){
