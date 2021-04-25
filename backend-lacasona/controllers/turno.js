@@ -595,6 +595,24 @@ exports.deleteTurnoGrupalProfesional = async (req, res)=>{
     });
 }
 
+exports.deleteTurnoGrupalProfesionalPorTurno = async (req, res)=>{
+    let id_profesional_turno = req.params.id_profesional_turno;
+    
+    await pool.query ('DELETE FROM profesional_turno WHERE id_turno = ' + id_turno , function(err,sql){
+        if(err){
+			console.log(err);
+            res.status(400).json({
+                error:"error al borrar turno"
+            });
+        }
+        else{
+            let query= sql.affectedRows;
+             res.status(200).send(sql);
+        }
+    });
+}
+
+
 exports.getTurnosGrupales = async (req, res) =>{      
     await pool.query ('SELECT * FROM paciente_turno as tp INNER JOIN turno as t on '+
                      't.id_turno=tp.id_turno inner join tipo_sesion as ts on t.id_tipo_sesion=ts.id_tipo_sesion '+
