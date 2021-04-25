@@ -596,7 +596,7 @@ exports.deleteTurnoGrupalProfesional = async (req, res)=>{
 }
 
 exports.deleteTurnoGrupalProfesionalPorTurno = async (req, res)=>{
-    let id_profesional_turno = req.params.id_profesional_turno;
+    let id_turno = req.params.id_turno;
     
     await pool.query ('DELETE FROM profesional_turno WHERE id_turno = ' + id_turno , function(err,sql){
         if(err){
