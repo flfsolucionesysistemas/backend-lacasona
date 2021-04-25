@@ -528,10 +528,11 @@ exports.getTurnosTipoGrupal = async (req, res) =>{
 }
 
 exports.getTurnosTipoGrupalProfesional = async (req, res) =>{      
-    await pool.query ('SELECT * FROM profesional_turno as tp INNER JOIN turno as t on '+
-                     't.id_turno=tp.id_turno inner join tipo_sesion as ts on t.id_tipo_sesion=ts.id_tipo_sesion '+
-                     'inner join persona as p on p.id_persona=tp.id_profesional '+
-                     'WHERE tp.id_turno='+req.params.id,function(err,sql){
+    await pool.query ('SELECT * FROM profesional_turno as tp '+
+					 ' INNER JOIN turno as t on t.id_turno=tp.id_turno '+
+                     ' INNER JOIN tipo_sesion as ts on t.id_tipo_sesion=ts.id_tipo_sesion '+
+                     ' INNER JOIN persona as p on p.id_persona=tp.id_profesional '+
+                     ' WHERE tp.id_turno='+req.params.id,function(err,sql){
         if(err){
             console.log(err);
             res.status(400).json({
@@ -650,8 +651,7 @@ exports.getProximoTurnoGrupal = async (req, res) =>{
 TURNOS GRUPALES EN LOS QUE PARTICIPA EL PROFESIONAL 
 FILTRADO POR FECHA
 */
-exports.getTurnosGrupalesComoAdicional = async (req, res) =>{      
-    
+exports.getTurnosGrupalesComoAdicional = async (req, res) =>{          
 	//await pool.query ('SELECT p.nombre, p.apellido, t.id_profesional,t.fecha, t.hora '+	
 	await pool.query ('SELECT t.id_turno, t.id_tipo_turno, t.costo_base, t.estado, t.fecha, t.hora, '+
 					' t.id_profesional, t.id_paciente, t.id_tipo_turno, t.observacion, t.profesional_disponible, ' +
@@ -662,6 +662,23 @@ exports.getTurnosGrupalesComoAdicional = async (req, res) =>{
 					' WHERE pt.id_profesional = ' + req.params.id_profesional +
 					' AND t.fecha = "' + req.params.fecha +  '"' +
 					' AND t.id_tipo_sesion = 3 ',function(err,sql){
+        if(err){
+            console.log(err);
+            res.status(400).json({
+                error:"error"
+            });
+        }
+        else{           
+             res.status(200).send(sql);
+        }
+    });
+}   
+
+
+exports.getProfesionalTitularTurnoGrupal = async (req, res) =>{          
+	await pool.query ('SELECT p.nombre, p.apellido FROM turno as t ' +
+					' INNER JOIN persona as p on p.id_persona = t.id_profesional ' + 
+					' WHERE id_turno= '+ req.params.id_turno ,function(err,sql){
         if(err){
             console.log(err);
             res.status(400).json({
