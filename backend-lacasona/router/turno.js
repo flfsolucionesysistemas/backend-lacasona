@@ -39,7 +39,7 @@ router.delete('/deleteTurnoGrupalProfesional/:id_profesional_turno',ctrlTurno.de
 router.delete('/deleteTurnoGrupalProfesionalPorTurno/:id_turno',ctrlTurno.deleteTurnoGrupalProfesionalPorTurno);
 
 router.get('/getProximoTurnoGrupal/:id',ctrlTurno.getProximoTurnoGrupal);
-router.get('/getProfesionalTitularTurnoGrupal/:id_profesional/:fecha',ctrlTurno.getProfesionalTitularTurnoGrupal);
-router.get('/getTurnosGruplesComoTitular/:id_profesional/',ctrlTurno.getTurnosGruplesComoTitular);
+router.get('/getTurnosGruplesComoAdicional/:id_profesional/:fecha',ctrlTurno.getTurnosGrupalesComoAdicional);
+router.get('/getProfesionalTitularTurnoGrupal/:id_turno',ctrlTurno.getProfesionalTitularTurnoGrupal);
 
 module.exports = router;
