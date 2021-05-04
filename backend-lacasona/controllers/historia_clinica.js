@@ -348,3 +348,30 @@ exports.updateEvolucion=async(req,res)=>{
     
 }
 
+
+exports.cambioTratamiento=async(req,res)=>{
+    let datos = req.body;
+    //SDDASDlet now= new Date();
+	
+	if(datos.id_hc_tratamiento!=null){
+        await pool.query('UPDATE hc_tratamiento SET ? WHERE id_hc_tratamiento = ?', [datos, datos.id_hc_tratamiento ], function(err, sql){
+            if(err){
+                console.log(err);
+                res.status(400).json({
+                    mensaje: 'Ocurrio un problema al modificar la asignacion de tratamiento'
+                });
+            }
+            else{
+                console.log(sql);
+                res.status(200).json({
+                mensaje: 'ok. Fin tratamiento 1.'
+                }); 
+            }
+        });
+    }
+    else{
+        res.status(400).json({
+            mensaje: 'Los datos no estan bien cargados'
+        });
+    }
+}
