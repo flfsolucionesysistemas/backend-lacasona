@@ -375,3 +375,21 @@ exports.cambioTratamiento=async(req,res)=>{
         });
     }
 }
+
+exports.getTratamientosRealizadosPorHC= async (req, res) =>{
+    let valor = req.params.idHC;
+	
+	let body = await pool.query ('SELECT t.programa_tratamiento, t.id_tratamiento, hct.fecha_alta ' +
+								' FROM hc_tratamiento AS hct ' +
+								' INNER JOIN tratamiento AS t ON t.id_tratamiento = hct.id_tratamiento  ' + 
+								' WHERE id_hc = ?', [valor]);
+	
+    if(body != null){
+        res.status(200).send({body});      
+    }
+    else{
+        return res.status(400).json({
+            ok:false           
+        }); 
+    }
+}
