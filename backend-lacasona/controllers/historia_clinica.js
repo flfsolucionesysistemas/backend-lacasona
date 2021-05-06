@@ -380,7 +380,7 @@ exports.getTratamientosRealizadosPorHC= async (req, res) =>{
     console.log(req.params.idHC);
 	let valor = req.params.idHC;
 	
-	let body = await pool.query ('SELECT hct.id_hc, t.programa_tratamiento, t.id_tratamiento, hct.fecha_alta ' +
+	let body = await pool.query ('SELECT hct.id_hc_tratamiento, t.programa_tratamiento, t.id_tratamiento, hct.fecha_alta ' +
 								' FROM hc_tratamiento AS hct ' +
 								' INNER JOIN tratamiento AS t ON t.id_tratamiento = hct.id_tratamiento  ' + 
 								' WHERE hct.id_hc = ?', [valor]);
