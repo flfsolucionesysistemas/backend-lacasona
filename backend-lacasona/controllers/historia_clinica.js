@@ -306,7 +306,9 @@ exports.getEvolucionHCFecha= async (req, res)=>{
 
 exports.leerhc= async (req, res)=>{
     let id_hct=req.params.id;
-    await pool.query('SELECT * FROM evolucion as e INNER JOIN persona as p ON p.id_persona=e.id_persona_creacion WHERE id_hc_tratamiento = ?', [id_hct], function(err,sql){
+    await pool.query('SELECT * FROM evolucion as e ' + 
+					' INNER JOIN persona as p ON p.id_persona=e.id_persona_creacion ' +
+					' WHERE e.fecha_creacion is not null and e.id_hc_tratamiento = ?', [id_hct], function(err,sql){
         if(err){
             console.log(err);
             return res.status(400).json({
