@@ -68,7 +68,7 @@ exports.addHCTratamiento= async(req,res)=>{
                         id_hc_tratamiento:sql.insertId,
                         fase:0,
                         avanzo:0,
-                        id_persona_creacion: 3,
+                        id_persona_creacion: 289,
                         es_evolucion:0
                     }
                 });

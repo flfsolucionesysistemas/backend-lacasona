@@ -155,6 +155,7 @@ exports.deleteUser = async (req, res) =>{
 
 exports.borrarUser = async (req, res) =>{
     let idUsuario = req.params.idUser;
+
     let body = await pool.query ('SELECT * FROM entrevista WHERE id_persona = ?', [idUsuario]);
 	
     if(body != null){
@@ -174,12 +175,14 @@ exports.borrarUser = async (req, res) =>{
         });
         let borra = await pool.query ('DELETE FROM entrevista WHERE id_persona = ?', [idUsuario]);
         let borrarPersona = await pool.query('DELETE FROM persona WHERE id_persona = ?', [idUsuario]);
-        res.status(200).send(borrarPersona);
-       
-        }
-        
+        res.status(200).send(borrarPersona);       
+        }        
     }
-    else{
+	else if(body === null){
+		let borra = await pool.query ('DELETE FROM entrevista WHERE id_persona = ?', [idUsuario]);
+        res.status(200).send(borra);       
+	}
+    else{		
         return res.status(400).json({
             ok:false
             
@@ -187,6 +190,7 @@ exports.borrarUser = async (req, res) =>{
     }
  
 }
+
 exports.getUserActivo= async (req, res) =>{
     let valor = req.params.activos;
     let body
