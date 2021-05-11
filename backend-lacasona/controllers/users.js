@@ -179,7 +179,7 @@ exports.borrarUser = async (req, res) =>{
         }        
     }
 	else if(body === null){
-		let borra = await pool.query ('DELETE FROM entrevista WHERE id_persona = ?', [idUsuario]);
+		let borra = await pool.query ('DELETE FROM persona WHERE id_persona = ?', [idUsuario]);
         res.status(200).send(borra);       
 	}
     else{		
