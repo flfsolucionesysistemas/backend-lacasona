@@ -178,7 +178,7 @@ exports.borrarUser = async (req, res) =>{
         res.status(200).send(borrarPersona);       
         }        
     }
-	else if(body === null){
+	else if(body[0] === undefined){
 		let borra = await pool.query ('DELETE FROM persona WHERE id_persona = ?', [idUsuario]);
         res.status(200).send(borra);       
 	}
