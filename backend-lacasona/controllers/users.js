@@ -157,7 +157,7 @@ exports.borrarUser = async (req, res) =>{
     let idUsuario = req.params.idUser;
 
     let body = await pool.query ('SELECT * FROM entrevista WHERE id_persona = ?', [idUsuario]);
-	console.log('body length: ',body[0].length);
+	console.log('body length: ',body[0]);
     if(body != null){
         console.log("entrevista "+body[0]);
         let turno = await pool.query ('SELECT * FROM turno WHERE id_tipo_turno = ?', [body[0].id_entrevista]);
