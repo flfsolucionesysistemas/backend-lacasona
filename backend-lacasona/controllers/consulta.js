@@ -4,6 +4,7 @@ var nodemailer = require('nodemailer');
 const axios = require('axios');
 const fs = require('fs');
 const PDFDocument = require('pdfkit');
+
 let administradores=[];
 let emailProfesional;
 var meses = [
@@ -338,25 +339,38 @@ exports.registroEntrevista = async (req, res) =>{
 	.then(function(resul){
 		emailProfesional=resul.data[0].email
 		console.log(emailProfesional);
-		var pdf = new PDFDocument({
+		/*var pdf = new PDFDocument({
 			size: 'LEGAL', // See other page sizes here: https://github.com/devongovett/pdfkit/blob/d95b826475dd325fb29ef007a9c1bf7a527e9808/lib/page.coffee#L69
 			info: {
 			  Title: 'Registro de Entrevista',
 			  Author: 'La Casona Web',
 			}
-		  });
-		  pdf.fontSize(20)
+		  });*/
+		  const pdf = new PDFDocument();
+		  pdf.pipe(fs.createWriteStream('/var/www/html/dist/registro/registro_entrevista_'+datos.id_cliente+'.pdf'));
+		  pdf
+				.font('fonts/PalatinoBold.ttf')
+				.fontSize(20)
+				.text('Formulario de Registración de Entrevista', 100, 100);
+
+		  /*pdf.fontSize(20)
 			   .text('Formulario de Registración de Entrevista', 100, 100)
 			   .text('')
-			   .text('');
+			   .text('');*/
 		  pdf.fontSize(18)
+		  	   .fillColor('blue')
 			   .text('Admitido: '+datos.admitido)
 			   .text('');
 		  pdf.fontSize(11)
-			   .text('Fecha: '+datos.fecha +' -  Tipo de consulta: '+datos.tipo_consulta)
-			   .text('Obra social: '+datos.obra_social+' -  N° de afiliado: '+datos.numero_afiliado )
-			   .text('Fecha de nacimiento: '+datos.fecha_nacimiento+'-  Domicilio: '+datos.domicilio+ '- Telefono: '+datos.telefono )
-			   .text('Edad: '+datos.edad+' -  Estado civil: '+datos.estado_civil+ ' - D.N.I: '+datos.numero_documento+' -  Ocupación:'+datos.ocupacion );
+			   .textIndent('Fecha: '+datos.fecha)
+			   .textIndent('Tipo de consulta: '+datos.tipo_consulta)
+			   .textIndent('Obra social: '+datos.obra_social+   ' -  N° de afiliado: '+datos.numero_afiliado )
+			   .textIndent('D.N.I: '+datos.numero_documento)
+			   .textIndent('Fecha de nacimiento: '+datos.fecha_nacimiento)
+			   .textIndent('Domicilio: '+datos.domicilio+    '- Telefono: '+datos.telefono )
+			   .textIndent('Edad: '+datos.edad)
+			   .textIndent('Estado civil: '+datos.estado_civil+'  - Ocupación:'+datos.ocupacion )
+			   .moveDown(0.5);
 		 pdf.fontSize(20)
 			   .text('CGIP: '+datos.cgip)
 			   .text('');	  
