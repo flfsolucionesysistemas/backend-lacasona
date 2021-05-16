@@ -373,24 +373,25 @@ exports.registroEntrevista = async (req, res) =>{
 			   .moveDown(0.5);
 		 pdf.fontSize(20)
 			   .text('CGIP: '+datos.cgip)
-			   .text('');	  
+			   .text('')
+			   .moveDown(0.5);	  
 		 pdf.fontSize(11)
 			   .text('Motivo: '+datos.motivo+' -  Derivado por: '+datos.derivado_por)
 			   .text('Padecimiento: '+datos.padecimiento+' -  Antecedentes: '+datos.antecedentes)
 			   .text('Diagnostico: '+datos.diagnostico+' -  Tratamiento: '+datos.tratamiento+' -  Farmacologia: '+datos.farmacologia );
-		 
+		 pdf.close();
 		  /*pdf.addPage()
 			   .fontSize(12)
 			   .text('Fecha: '+datos.fecha+'  Tipo de consulta: '+datos.tipo_consulta+ ' Telefono: '+datos.telefono );*/
 		  /*pdf.pipe(
 			fs.createWriteStream('./registro_entrevista/registro_entrevista_'+datos.id_cliente+ramdon+'.pdf')
 		  )*/
-		  pdf.pipe(
-			fs.createWriteStream('/var/www/html/dist/registro/registro_entrevista_'+datos.id_cliente+'.pdf')
-		  )
-		  .on('finish', function () {
-			console.log('PDF closed');
-		  });
+		  //pdf.pipe(
+			//fs.createWriteStream('/var/www/html/dist/registro/registro_entrevista_'+datos.id_cliente+'.pdf')
+		  //)
+		  //.on('finish', function () {
+			//console.log('PDF closed');
+		  //});
 
 		  var transporter = nodemailer.createTransport({
 				host:"mail.lacasonacoop.com",
