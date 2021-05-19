@@ -349,7 +349,7 @@ exports.registroEntrevista = async (req, res) =>{
 		  const pdf = new PDFDocument();
 		  pdf.pipe(fs.createWriteStream('/var/www/html/dist/registro/registro_entrevista_'+datos.id_cliente+'.pdf'));
 		  pdf
-				.font('fonts/PalatinoBold.ttf')
+				/*.font('fonts/PalatinoBold.ttf')*/
 				.fontSize(20)
 				.text('Formulario de Registración de Entrevista', 100, 100);
 
