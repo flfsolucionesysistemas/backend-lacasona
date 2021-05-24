@@ -346,34 +346,31 @@ exports.registroEntrevista = async (req, res) =>{
 			  Author: 'La Casona Web',
 			}
 		  });
-		  /*const pdf = new PDFDocument();
-		  pdf.pipe(fs.createWriteStream('/var/www/html/dist/registro/registro_entrevista_'+datos.id_cliente+'.pdf'));
-		  pdf
-				//.font('fonts/PalatinoBold.ttf')
-				.fontSize(20)
-				.text('Formulario de Registración de Entrevista', 100, 100);
-*/
+		  
 		  pdf.fontSize(20)
-			   .text('Formulario de Registración de Entrevista', 100, 100)
-			   .text('')
-			   .text('');
+			   .text('Formulario de Registración de Entrevista', 100, 100,{
+				underline: true
+			   })
+			   .moveDown(0.5);;
 		  pdf.fontSize(18)
 		  	   .fillColor('blue')
 			   .text('Admitido: '+datos.admitido)
-			   .text('');
-		  pdf.fontSize(11)
-			   .textIndent('Fecha: '+datos.fecha)
-			   .textIndent('Tipo de consulta: '+datos.tipo_consulta)
-			   .textIndent('Obra social: '+datos.obra_social+   ' -  N° de afiliado: '+datos.numero_afiliado )
-			   .textIndent('D.N.I: '+datos.numero_documento)
-			   .textIndent('Fecha de nacimiento: '+datos.fecha_nacimiento)
-			   .textIndent('Domicilio: '+datos.domicilio+    '- Telefono: '+datos.telefono )
-			   .textIndent('Edad: '+datos.edad)
-			   .textIndent('Estado civil: '+datos.estado_civil+'  - Ocupación:'+datos.ocupacion )
 			   .moveDown(0.5);
-		 pdf.fontSize(20)
+		  pdf.fontSize(11)
+		  	   .fillColor('black')
+			   .text('Fecha: '+datos.fecha)
+			   .text('Tipo de consulta: '+datos.tipo_consulta)
+			   .text('Obra social: '+datos.obra_social+   ' -  N° de afiliado: '+datos.numero_afiliado )
+			   .text('D.N.I: '+datos.numero_documento)
+			   .text('Fecha de nacimiento: '+datos.fecha_nacimiento)
+			   .text('Domicilio: '+datos.domicilio+    '- Telefono: '+datos.telefono )
+			   .text('Edad: '+datos.edad)
+			   .text('Estado civil: '+datos.estado_civil+'  - Ocupación:'+datos.ocupacion )
+			   .moveDown(0.5);
+			   height = pdf.currentLineHeight();
+		 pdf.fontSize(18)
+		 	   .highlight(100, pdf.y, pdf.widthOfString('CGIP: '+datos.cgip), height)
 			   .text('CGIP: '+datos.cgip)
-			   .text('')
 			   .moveDown(0.5);	  
 		 pdf.fontSize(11)
 			   .text('Motivo: '+datos.motivo+' -  Derivado por: '+datos.derivado_por)
