@@ -330,14 +330,25 @@ exports.olvideClave = async (req, res) =>{
             "clave_usuario":clave
         })
         .then(function(resul2) {
-         var transporter = nodemailer.createTransport({
+            var transporter = nodemailer.createTransport({
+                host:"mail.lacasonacoop.com",
+                post:2084,
+                secure:false,
+                auth: {
+                    user:'administracion@lacasonacoop.com',
+                    pass:'AvCastelli303'
+                },
+                tls: {
+                    rejectUnauthorized: false
+                }
+         /*var transporter = nodemailer.createTransport({
             service: 'Gmail',
             auth: {
             user:'flf.solucionesysistemas@gmail.com',
             pass:'everLAST2020'
             //user: 'administracion@lacasonacoop.com',
             //pass: 'Castelli303'
-            }
+            }*/
         });
         var emailCliente="<h1>Hola "+resul.data[0].nombre+" </h1>"+
                          "<p> Recibimos una solicitud para resetear su contraseña</p>"+
@@ -347,7 +358,7 @@ exports.olvideClave = async (req, res) =>{
         var mailOptionsCliente = {
             from: 'LaCasonaWeb',
             to: email,
-            bcc:'flf.solucionesysistemas@gmail.com',
+            bcc: 'administracion@lacasonacoop.com',
             subject: ' RECUPERACIÓN DE CONTRASEÑA',
             html: emailCliente
         };
