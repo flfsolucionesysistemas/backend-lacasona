@@ -22,7 +22,7 @@ var HCRouter = require('./router/historia_clinica');
 var patologiaRouter = require('./router/patologia');
 var tratamientoRouter = require('./router/tratamiento');
 var mercadopago=require('./router/mercadoPago');
-
+var zoom=require('./router/zoom');
 
 var app = express();
 
@@ -72,6 +72,7 @@ app.use('/hc', HCRouter);
 app.use('/patologia', patologiaRouter);
 app.use('/tratamiento',tratamientoRouter);
 app.use('/mercadopago',mercadopago);
+//app.use('/zoom',zoom);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
@@ -110,7 +111,7 @@ var serverSSL = https.createServer({
     key: fs.readFileSync('/etc/letsencrypt/live/psicointeraccion.com/privkey.pem'),
     cert: fs.readFileSync('/etc/letsencrypt/live/psicointeraccion.com/fullchain.pem')
 }, app)
-.listen(app.get('port'), () => { console.log('Listening to port: ' + app.get('port')) })
+listen(app.get('port'), () => { console.log('Listening to port: ' + app.get('port')) })
 
 module.exports = app;
 
