@@ -3,7 +3,7 @@ var router = express.Router();
 var ctrlTurno = require('../controllers/turno');
 var ctrlZoom = require('../controllers/zoom');
 
-router.post('/addMeeting',ctrlZoom.addMeeting);
+router.get('/addMeeting/:id_persona',ctrlZoom.addMeeting);
 
 router.get('/getTurnosDisponiblesTipo/:id_tipo',ctrlTurno.getTurnosDisponiblesTipo);
 router.post('/add',ctrlTurno.addTurno);

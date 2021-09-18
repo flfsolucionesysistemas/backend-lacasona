@@ -15,13 +15,16 @@ var meses = [
   ]
 
 exports.addConsulta= async (req, res) =>{
-	
+
+	//se obtienen datos de administradores para enviar info
 	axios.get(conex.host+conex.port+'/users/getUserTipo/1').then(resul=>
 	administradores=resul.data);
 					
     let variable = req.body;
 	let costo_en = variable.costo_entrevista;
 	let tipo_pago;
+	let meet;
+	
 	if(variable.forma_pago === "Transferencia Bancaria"){
 		tipo_pago=2;
 	}
@@ -66,14 +69,24 @@ exports.addConsulta= async (req, res) =>{
 			 result = await pool.query('INSERT INTO entrevista set ?', [newEntrevista])
 				let idEntrevista = result.insertId;
 				if(result != null){
+					const datos_zoom = await axios({
+						url: conex.host+conex.port+'/turno/addMeeting/'+idPersona,
+						method: 'get'
+					});
+					console.log("datos zoom"+datos_zoom.data[0]);
+					//seteo el join_url para enviar por email
+					meet=datos_zoom.data[0].join_url;	
 					updateTurno = {
 						id_tipo_turno: idEntrevista,
 						turno_tratamiento: 0,
 						estado: 0,
 						observacion:'asignado  '+variable.nombre+'  '+variable.apellido,
-						tipo_pago:tipo_pago
+						tipo_pago:tipo_pago,
+						zoom_paciente: datos_zoom.data[0].join_url,
+						zoom_profesiona: datos_zoom.data[0].start_url
 						};
-					//SE ASIGNA EL TURNO	  
+					//SE ASIGNA EL TURNO
+						  
 						result = await pool.query('UPDATE turno SET ? WHERE id_turno = ?', [updateTurno, variable.id_turno]);
 						console.log(result);
 					//SE ENVIAN LOS CORREOS ELECTRONICOS	
@@ -84,6 +97,8 @@ exports.addConsulta= async (req, res) =>{
 						let mes =(new Date (turnoasignado.data[0].fecha)).getMonth();
 						let fecha=(new Date (turnoasignado.data[0].fecha)).getDate()+'-'+meses[mes] +'-'+(new Date (turnoasignado.data[0].fecha)).getFullYear();
 						console.log(fecha);
+
+						
 						if(variable.forma_pago === "Transferencia Bancaria"){
 										
 										var transporter = nodemailer.createTransport({
@@ -96,18 +111,9 @@ exports.addConsulta= async (req, res) =>{
 											},
 											tls: {
 												rejectUnauthorized: false
-											}
-										
-										/*var transporter = nodemailer.createTransport({
-										service: 'Gmail',
-										auth: {
-										user:'flf.solucionesysistemas@gmail.com',
-										pass:'everLAST2020'
-										}*/
-										
+											}									
 									});
 									
-									var meet="https://meet.jit.si/lacasonameet"+variable.email;
 									var emailCliente="<h1>BIENVENIDO A LA CASONA WEB. </h1>"+
 													"<h3>Datos de nuestra cuenta:</h3>"+
 													"<p>-Banco: Credicoop</p>"+
@@ -163,15 +169,7 @@ exports.addConsulta= async (req, res) =>{
 								
 							}
 							else if(variable.forma_pago === "Personalmente"){
-								/*var transporter = nodemailer.createTransport({
-									service: 'Gmail',
-									auth: {
-									user:'flf.solucionesysistemas@gmail.com',
-									pass:'everLAST2020'
-									}
-								});*/
-
-								
+															
 								var transporter = nodemailer.createTransport({
 									host:"mail.lacasonacoop.com",
 									post:2084,
@@ -184,7 +182,6 @@ exports.addConsulta= async (req, res) =>{
 										rejectUnauthorized: false
 									}
 								});
-								var meet="https://meet.jit.si/lacasonameet"+variable.email;
 								var emailCliente="<h1>BIENVENIDO A LA CASONA WEB. </h1>"+
 												"<h3>Para pagar de manera presencial usted debe concurrir a nuestra sede administrativa ubicada en Av. Castelli 303 de la ciudad de Resistencia (Chaco, Argentina)</p>"+
 												"<p>El turno que ud. ha solicitado para Fecha:<em> "+fecha+". </em> Hora: <em>"+turnoasignado.data[0].hora+" </em></p>"+
@@ -218,7 +215,6 @@ exports.addConsulta= async (req, res) =>{
 									var mailOptionsAdmin = {
 										from: 'LaCasonaWeb',
 										to: administradores[i].email,
-										//bcc: 'administracion@lacasonacoop.com',
 										subject: 'Entrevista la casona web',
 										text: emailAdmin
 									};
@@ -236,15 +232,7 @@ exports.addConsulta= async (req, res) =>{
 							});
 							}
 							else{
-										/*
-										var transporter = nodemailer.createTransport({
-											service: 'Gmail',
-											auth: {
-											user:'flf.solucionesysistemas@gmail.com',
-											pass:'everLAST2020'
-											}
-										});
-										*/
+									
 										var transporter = nodemailer.createTransport({
 											host:"mail.lacasonacoop.com",
 											post:2084,
@@ -258,7 +246,6 @@ exports.addConsulta= async (req, res) =>{
 											}
 										});
 										
-										var meet="https://meet.jit.si/lacasonameet"+variable.email;
 										var emailCliente="<h1>BIENVENIDO A LA CASONA WEB. </h1>"+
 														"<p>El turno que ud. ha solicitado está confirmado para Fecha:<em> "+fecha+". </em> Hora: <em>"+turnoasignado.data[0].hora+" </em></p>"+
 														"<p>Rogamos puntualidad en la comunicación, muchas gracias."+
