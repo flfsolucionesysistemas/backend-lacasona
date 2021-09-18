@@ -17,7 +17,7 @@ exports.addMeeting = async(req,res)=>{
     let idUser;
 
 profesional = await pool.query ('SELECT * FROM persona WHERE id_tipo_persona = 2  and id_persona = ?',[req.id_persona] );
-
+console.log(profesional)
 if (empty(profesional.id_user_zoom)){
     axios.post('https://api.zoom.us/v2/users',{
        "action": "custCreate",

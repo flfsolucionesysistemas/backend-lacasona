@@ -69,8 +69,9 @@ exports.addConsulta= async (req, res) =>{
 			 result = await pool.query('INSERT INTO entrevista set ?', [newEntrevista])
 				let idEntrevista = result.insertId;
 				if(result != null){
+					//se setea el id de marcelo como anfitrion
 					const datos_zoom = await axios({
-						url: conex.host+conex.port+'/turno/addMeeting/'+idPersona,
+						url: conex.host+conex.port+'/turno/addMeeting/289',
 						method: 'get'
 					});
 					console.log("datos zoom"+datos_zoom.data[0]);
