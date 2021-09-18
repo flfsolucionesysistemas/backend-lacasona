@@ -111,7 +111,7 @@ var serverSSL = https.createServer({
     key: fs.readFileSync('/etc/letsencrypt/live/psicointeraccion.com/privkey.pem'),
     cert: fs.readFileSync('/etc/letsencrypt/live/psicointeraccion.com/fullchain.pem')
 }, app)
-listen(app.get('port'), () => { console.log('Listening to port: ' + app.get('port')) })
+.listen(app.get('port'), () => { console.log('Listening to port: ' + app.get('port')) })
 
 module.exports = app;
 
