@@ -21,12 +21,12 @@ let idUser;
 //console.log(profesional)
 const profesional={
     id_persona:289,
-    id_user_zoom :'',
+    id_user_zoom :'NULL',
     email:'mgonza726@hotmail.com',
     nombre:'Marcelo',
     apellido:'Gonzalez'
 }
-if (isEmpty(profesional.id_user_zoom)){
+if (profesional.id_user_zoom === 'NULL'){
     axios.post('https://api.zoom.us/v2/users',{
        "action": "custCreate",
         "user_info": {
