@@ -66,12 +66,13 @@ if (profesional.id_user_zoom === 'NULL'){
               headers: header
           })
             .then(function(res) {
-                console.log(res.data);
-                res.status(200).json({
-                    status:200,
-                    start_url:res.data.start_url,
-                    join_url:res.data.join_url,
-                });
+                console.log(res.status);
+                if(res.status==200 ){
+                    data={
+                        start_url: res.data.start_url,
+                        join_url: res.data.join_url
+                    }                    
+                }
             })
             .catch(function(err) {
                 console.log(err);
