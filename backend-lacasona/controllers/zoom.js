@@ -26,7 +26,7 @@ const profesional={
     nombre:'Marcelo',
     apellido:'Gonzalez'
 }
-if (empty(profesional.id_user_zoom)){
+if (isEmpty(profesional.id_user_zoom)){
     axios.post('https://api.zoom.us/v2/users',{
        "action": "custCreate",
         "user_info": {
