@@ -74,8 +74,8 @@ exports.addConsulta= async (req, res) =>{
 						url: conex.host+conex.port+'/turno/addMeeting/289',
 						method: 'get'
 					});
-					console.log("datos zoom  "+ JSON.stringify(datos_zoom));
 					
+					console.log("datos zoom  "+datos_zoom.data);
 
 					//console.log("datos zoom  "+datos_zoom.data[0].join_url);
 					//seteo el join_url para enviar por email
