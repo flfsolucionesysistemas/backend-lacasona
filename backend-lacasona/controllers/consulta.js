@@ -96,7 +96,7 @@ exports.addConsulta= async (req, res) =>{
 						observacion:'asignado  '+variable.nombre+'  '+variable.apellido,
 						tipo_pago:tipo_pago,
 						zoom_paciente: datos_zoom.data.join_url,
-						zoom_profesiona: datos_zoom.data.start_url
+						zoom_profesional: datos_zoom.data.start_url
 						};
 					//SE ASIGNA EL TURNO
 						  
