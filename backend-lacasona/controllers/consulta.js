@@ -76,7 +76,13 @@ exports.addConsulta= async (req, res) =>{
 					});
 					
 					
-					console.log("datos zoom  consulta", datos_zoom.data); 
+					//console.log("datos zoom  consulta", datos_zoom.data); 
+					
+					for (let item of Object.keys(datos_zoom)) {
+						console.log("datos zoom  consulta ", datos_zoom[item]); 
+                    }
+					
+                    
 					
 					//console.log("datos zoom  "+datos_zoom); object object
 					//console.log("datos zoom  1"+datos_zoom.data);

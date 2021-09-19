@@ -115,11 +115,11 @@ else{
 					
                 }
 				console.log('data ', data);
-				const myObjStr = JSON.stringify(data);
-				console.log('data json ', myObjStr);
-				console.log('data json join_url ', myObjStr[0].join_url);
+				//const myObjStr = JSON.stringify(data);
+				//console.log('data json ', myObjStr);
+				console.log('data json join_url ', data.join_url);
 				
-				res.status(200).send(myObjStr);                                      
+				res.status(200).send(data);                                      
             })
             .catch(function(err){
                 console.log(err);
