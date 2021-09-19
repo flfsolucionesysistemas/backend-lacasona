@@ -114,7 +114,11 @@ else{
                     }
 					
                 }
-				console.log(data);
+				console.log('data ', data);
+				const myObjStr = JSON.stringify(data);
+				console.log('data json ', myObjStr);
+				console.log('data json join_url ', myObjStr.join_url);
+				
 				res.status(200).send(data);                                      
             })
             .catch(function(err){
