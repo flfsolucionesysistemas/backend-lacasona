@@ -114,10 +114,10 @@ else{
                     }
 					
                 }
-				console.log('data ', data);
+				//console.log('data ', data);
 				//const myObjStr = JSON.stringify(data);
 				//console.log('data json ', myObjStr);
-				console.log('data json join_url en zoom ', data.join_url);
+				//console.log('data json join_url en zoom ', data.join_url);
 				
 				res.status(200).send(data);                                      
             })
