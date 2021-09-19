@@ -74,17 +74,17 @@ exports.addConsulta= async (req, res) =>{
 						url: conex.host+conex.port+'/turno/addMeeting/289',
 						method: 'get'
 					});
-					console.log("datos zoom"+datos_zoom.data[0]);
+					console.log("datos zoom  "+datos_zoom);
 					//seteo el join_url para enviar por email
-					meet=datos_zoom.data[0].join_url;	
+					meet=datos_zoom.join_url;	
 					updateTurno = {
 						id_tipo_turno: idEntrevista,
 						turno_tratamiento: 0,
 						estado: 0,
 						observacion:'asignado  '+variable.nombre+'  '+variable.apellido,
 						tipo_pago:tipo_pago,
-						zoom_paciente: datos_zoom.data[0].join_url,
-						zoom_profesiona: datos_zoom.data[0].start_url
+						zoom_paciente: datos_zoom.join_url,
+						zoom_profesiona: datos_zoom.start_url
 						};
 					//SE ASIGNA EL TURNO
 						  
