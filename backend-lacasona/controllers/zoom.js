@@ -18,18 +18,15 @@ exports.addMeeting = async(req,res)=>{
 let idUser;
 
 profesional = await pool.query ('SELECT * FROM persona WHERE id_tipo_persona = 2  and id_persona = ?',[req.params.id_persona] );
-console.log(profesional[0]);
 
-console.log('profesional  '+profesional[0].id_user_zoom+profesional.email+profesional.nombre+profesional.apellido);
-
-if (profesional.id_user_zoom == 'NULL'){
+if (profesional[0].id_user_zoom == 'NULL'){
     axios.post('https://api.zoom.us/v2/users',{
        "action": "custCreate",
         "user_info": {
-            "email": profesional.email,
+            "email": profesional[0].email,
             "type": 1,
-            "first_name": profesional.nombre,
-            "last_name": profesional.apellido
+            "first_name": profesional[0].nombre,
+            "last_name": profesional[0].apellido
         }
     },
     {
@@ -39,7 +36,7 @@ if (profesional.id_user_zoom == 'NULL'){
         idUser=result.data.id;
         const profe = {
             id_user_zoom: idUser,
-            id_persona: profesional.id_persona
+            id_persona: profesional[0].id_persona
         }
         updateProfesional = pool.query('UPDATE persona SET ? WHERE id_persona = ?',[profe,profe.id_persona])
     
@@ -78,7 +75,7 @@ if (profesional.id_user_zoom == 'NULL'){
         });
 }
 else{
-    idUser = profesional.id_user_zoom;
+    idUser = profesional[0].id_user_zoom;
     axios.post(`https://api.zoom.us/v2/users/${idUser}/meetings`,{
             topic: 'Meeting ',
             type: 2,
