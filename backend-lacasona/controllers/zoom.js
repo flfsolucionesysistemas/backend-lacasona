@@ -18,7 +18,7 @@ exports.addMeeting = async(req,res)=>{
 let idUser;
 
 profesional = await pool.query ('SELECT * FROM persona WHERE id_tipo_persona = 2  and id_persona = ?',[req.params.id_persona] );
-
+console.log("profesional:  "+profesional.email+'  '+profesional.nombre+'  '+profesional.apellido);
 if (profesional.id_user_zoom == 'NULL'){
     axios.post('https://api.zoom.us/v2/users',{
        "action": "custCreate",
@@ -59,7 +59,6 @@ if (profesional.id_user_zoom == 'NULL'){
               headers: header
           })
             .then(function(result) {
-                console.log(result.status);
                 if(result.status==200 ){
                     data={
                         start_url: result.data.start_url,
