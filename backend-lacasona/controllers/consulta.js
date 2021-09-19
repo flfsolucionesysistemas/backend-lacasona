@@ -364,13 +364,7 @@ exports.registroEntrevista = async (req, res) =>{
 			   .text('Motivo: '+datos.motivo+' -  Derivado por: '+datos.derivado_por)
 			   .text('Padecimiento: '+datos.padecimiento+' -  Antecedentes: '+datos.antecedentes)
 			   .text('Diagnostico: '+datos.diagnostico+' -  Tratamiento: '+datos.tratamiento+' -  Farmacologia: '+datos.farmacologia );
-		// pdf.close();
-		  /*pdf.addPage()
-			   .fontSize(12)
-			   .text('Fecha: '+datos.fecha+'  Tipo de consulta: '+datos.tipo_consulta+ ' Telefono: '+datos.telefono );*/
-		  /*pdf.pipe(
-			fs.createWriteStream('./registro_entrevista/registro_entrevista_'+datos.id_cliente+ramdon+'.pdf')
-		  )*/
+		
 		  pdf.pipe(
 			fs.createWriteStream('/var/www/html/dist/registro/registro_entrevista_'+datos.id_cliente+'.pdf')
 		  )
@@ -389,13 +383,6 @@ exports.registroEntrevista = async (req, res) =>{
 				tls: {
 					rejectUnauthorized: false
 				}
-
-		  /*var transporter = nodemailer.createTransport({
-			service: 'Gmail',
-			auth: {
-				user:'flf.solucionesysistemas@gmail.com',
-				pass:'everLAST2020'
-			}*/
 		});
 		
 		var mailOptions = {
@@ -407,9 +394,7 @@ exports.registroEntrevista = async (req, res) =>{
 			attachments: [
 				{	
 					"path": '/var/www/html/dist/registro/registro_entrevista_' +datos.id_cliente+'.pdf'
-					//"path": './registro_entrevista/registro_entrevista_' +datos.id_cliente+'.pdf'
-					//"path": './registro_entrevista/registro_entrevista_' +datos.id_cliente+ramdon+ '.pdf'                                         
-					//contentType: 'application/pdf'
+					
 				}]
 		};
 		

@@ -17,9 +17,7 @@ exports.addMeeting = async(req,res)=>{
     
 let idUser;
 
-console.log('req.id_persona', req.params.id_persona);
 profesional = await pool.query ('SELECT * FROM persona WHERE id_tipo_persona = 2  and id_persona = ?',[req.params.id_persona] );
-console.log(profesional);
 
 if (profesional.id_user_zoom == 'NULL'){
     axios.post('https://api.zoom.us/v2/users',{
@@ -34,8 +32,8 @@ if (profesional.id_user_zoom == 'NULL'){
     {
         headers: header
     })
-    .then(function(res) {
-        idUser=res.data.id;
+    .then(function(result) {
+        idUser=result.data.id;
         const profe = {
             id_user_zoom: idUser,
             id_persona: profesional.id_persona
@@ -60,12 +58,12 @@ if (profesional.id_user_zoom == 'NULL'){
           {
               headers: header
           })
-            .then(function(res) {
-                console.log(res.status);
-                if(res.status==200 ){
+            .then(function(result) {
+                console.log(result.status);
+                if(result.status==200 ){
                     data={
-                        start_url: res.data.start_url,
-                        join_url: res.data.join_url
+                        start_url: result.data.start_url,
+                        join_url: result.data.join_url
                     }                    
                 }
             })
@@ -97,18 +95,19 @@ else{
           {
               headers: header
           })
-            .then(function(res) {
-                console.log(res.data);
-                res.status(200).json({
-                    status:200,
-                    start_url:res.data.start_url,
-                    join_url:res.data.join_url,
-                });
+            .then(function(result) {
+                if(result.status == 201){
+                   data = {
+                        start_url:result.data.start_url,
+                        join_url:result.data.join_url,
+                    }
+                }
+             res.status(200).json(data);                                      
             })
-            .catch(function(err) {
+            .catch(function(err){
                 console.log(err);
-            })
-            
+                res.status(400).json({msg:"error"});
+            });            
     }
 
 }
