@@ -96,7 +96,7 @@ else{
           })
             .then(function(result) {
                 if(result.status == 201){
-					console.log(result.data);
+					
                    data = {
                         start_url:result.data.start_url,
                         join_url:result.data.join_url,
