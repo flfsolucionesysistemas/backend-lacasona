@@ -96,12 +96,12 @@ else{
           })
             .then(function(result) {
                 if(result.status == 201){
-                  
-                     res.status(200).json({
-                         start_url:result.data.start_url,
-                         join_url:result.data.join_url
-                    })   
-                }                                  
+                   data = {
+                        start_url:result.data.start_url,
+                        join_url:result.data.join_url,
+                    }
+                }
+             res.status(200).send(data);                                      
             })
             .catch(function(err){
                 console.log(err);
