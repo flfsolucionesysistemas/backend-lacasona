@@ -97,6 +97,7 @@ else{
             .then(function(result) {
                 if(result.status == 201){
 					
+					/*
 					console.log('se va');
 					console.log(result.data.start_url);
 					console.log(result.data.join_url);
@@ -105,16 +106,16 @@ else{
 						start_url:result.data.start_url,
                         join_url:result.data.join_url,
 					});
-				
-                   /*
+					*/
+                   
 				   data = {
                         start_url:result.data.start_url,
                         join_url:result.data.join_url,
                     }
-					*/
+					
                 }
-			
-             //res.status(200).send(data);                                      
+				console.log(data);
+				res.status(200).send(data);                                      
             })
             .catch(function(err){
                 console.log(err);

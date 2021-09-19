@@ -76,7 +76,9 @@ exports.addConsulta= async (req, res) =>{
 					});
 					
 					
-					console.log("datos zoom  "+datos_zoom);
+					console.log("datos zoom  parse "+ JSON.parse(datos_zoom)); 
+					
+					//console.log("datos zoom  "+datos_zoom); object object
 					//console.log("datos zoom  1"+datos_zoom.data);
 					//console.log("datos zoom  2"+datos_zoom[0]);		undefined
 					//console.log("datos zoom  3"+join_url);
