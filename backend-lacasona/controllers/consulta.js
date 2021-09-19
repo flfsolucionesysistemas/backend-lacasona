@@ -76,10 +76,10 @@ exports.addConsulta= async (req, res) =>{
 					});
 					
 					
-					console.log("datos zoom  "+datos_zoom);
-					//console.log("datos zoom  "+datos_zoom[0].join_url);
-					//console.log("datos zoom  "+datos_zoom.data);
-					//console.log("datos zoom  "+datos_zoom.data[0]);
+					//console.log("datos zoom  "+datos_zoom);
+					console.log("datos zoom  "+datos_zoom.data);
+					console.log("datos zoom  "+datos_zoom[0].join_url);					
+					console.log("datos zoom  "+datos_zoom.data[0]);
 					
 					//console.log("datos zoom  "+datos_zoom.data[0].join_url);
 					//seteo el join_url para enviar por email
