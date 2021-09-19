@@ -98,7 +98,7 @@ else{
                 if(result.status == 201){
                   
                      res.status(200).json({
-                        start_url:result.data.start_url,
+                         start_url:result.data.start_url,
                          join_url:result.data.join_url
                     })   
                 }                                  
