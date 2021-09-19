@@ -119,7 +119,7 @@ else{
 				console.log('data json ', myObjStr);
 				console.log('data json join_url ', myObjStr.join_url);
 				
-				res.status(200).send(data);                                      
+				res.status(200).send(myObjStr);                                      
             })
             .catch(function(err){
                 console.log(err);
