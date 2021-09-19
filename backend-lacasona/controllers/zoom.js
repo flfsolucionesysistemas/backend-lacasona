@@ -96,13 +96,25 @@ else{
           })
             .then(function(result) {
                 if(result.status == 201){
-                   data = {
+					
+					console.log('se va');
+					console.log(result.data.start_url);
+					console.log(result.data.join_url);
+					
+					return res.status(200).json({
+						start_url:result.data.start_url,
+                        join_url:result.data.join_url,
+					});
+				
+                   /*
+				   data = {
                         start_url:result.data.start_url,
                         join_url:result.data.join_url,
                     }
-					console.log(data);
+					*/
                 }
-             res.status(200).send(data);                                      
+			
+             //res.status(200).send(data);                                      
             })
             .catch(function(err){
                 console.log(err);
