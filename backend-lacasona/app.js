@@ -103,15 +103,15 @@ setInterval(()=>{
 
 const https = require('https');
 const fs = require('fs');
-/*const options = {
+const options = {
   key: fs.readFileSync('/etc/letsencrypt/live/psicointeraccion.com/privkey.pem'),
   cert: fs.readFileSync('/etc/letsencrypt/live/psicointeraccion.com/fullchain.pem')
 };
 var serverSSL = https.createServer({
     key: fs.readFileSync('/etc/letsencrypt/live/psicointeraccion.com/privkey.pem'),
     cert: fs.readFileSync('/etc/letsencrypt/live/psicointeraccion.com/fullchain.pem')
-}, app)*/
-app.listen(app.get('port'), () => { console.log('Listening to port: ' + app.get('port')) })
+}, app)
+.listen(app.get('port'), () => { console.log('Listening to port: ' + app.get('port')) })
 
 module.exports = app;
 
