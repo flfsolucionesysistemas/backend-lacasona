@@ -117,7 +117,7 @@ else{
 				console.log('data ', data);
 				const myObjStr = JSON.stringify(data);
 				console.log('data json ', myObjStr);
-				console.log('data json join_url ', myObjStr.join_url);
+				console.log('data json join_url ', myObjStr[0].join_url);
 				
 				res.status(200).send(myObjStr);                                      
             })
