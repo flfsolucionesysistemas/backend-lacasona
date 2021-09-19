@@ -96,11 +96,11 @@ else{
           })
             .then(function(result) {
                 if(result.status == 201){
-					
                    data = {
                         start_url:result.data.start_url,
                         join_url:result.data.join_url,
                     }
+					console.log(data);
                 }
              res.status(200).send(data);                                      
             })
