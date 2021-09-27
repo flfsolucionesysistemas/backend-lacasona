@@ -40,6 +40,28 @@ exports.update = async (req, res)=>{
     let id_turno = datos.id_turno;
 	console.log(datos);
 	console.log(id_turno);
+
+	if (datos.observacion === 'GRUPAL' && datos.id_profesional <> 0) {
+		
+		let id_profesional = datos.id_profesional;
+		const datos_zoom = await axios({
+							url: conex.host+conex.port+'/turno/addMeeting/' + id_profesional,
+							method: 'get'
+						});
+
+		console.log('datos_zoom.data.join_url ', datos_zoom.data.join_url);
+		console.log('data.join_url ', data.join_url);
+
+		datos = {		
+			observacion: 'GRUPAL',
+			'id_tipo_sesion':3,
+			estado: 0,
+			zoom_paciente: datos_zoom.data.join_url,
+			zoom_profesional: datos_zoom.data.start_url
+		};
+
+	}
+	
     await pool.query ('UPDATE turno SET ? WHERE id_turno = ?', [datos, id_turno],function(err,sql){
         if(err){
 			console.log(err);
