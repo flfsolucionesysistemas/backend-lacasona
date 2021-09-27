@@ -41,7 +41,7 @@ exports.update = async (req, res)=>{
 	console.log(datos);
 	console.log(id_turno);
 
-	if (datos.observacion === 'GRUPAL' && datos.id_profesional <> 0) {
+	if (datos.observacion === 'GRUPAL' && datos.id_profesional != 0) {
 		
 		let id_profesional = datos.id_profesional;
 		const datos_zoom = await axios({
