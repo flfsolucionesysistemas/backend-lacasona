@@ -67,6 +67,8 @@ exports.update = async (req, res)=>{
 
 	}else{
 		let id_profesional = datos.id_profesional;
+		/*console.log('datos_', datos);*/
+		console.log('id_profesional', datos.id_profesional);
 		/*
 		const datos_zoom = await axios({
 							url: conex.host+conex.port+'/turno/addMeeting/289' ,
