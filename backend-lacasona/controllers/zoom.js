@@ -18,8 +18,9 @@ exports.addMeeting = async(req,res)=>{
 let idUser;
 
 profesional = await pool.query ('SELECT * FROM persona WHERE id_tipo_persona = 2  and id_persona = ?',[req.params.id_persona] );
+console.log('PROFESSS ',profesional[0]);
 
-if (profesional[0].id_user_zoom == 'NULL'){
+if (profesional[0].id_user_zoom == NULL){
 	console.log('ENTRO EN EL IF',profesional[0]);
 
     axios.post('https://api.zoom.us/v2/users',{
@@ -79,7 +80,7 @@ if (profesional[0].id_user_zoom == 'NULL'){
         });
 }
 else{
-    console.log('ENTRO EN EL else',idUser);
+    console.log('ENTRO EN EL else',profesional[0]);
 	idUser = profesional[0].id_user_zoom;
     axios.post(`https://api.zoom.us/v2/users/${idUser}/meetings`,{
             topic: 'Meeting ',
