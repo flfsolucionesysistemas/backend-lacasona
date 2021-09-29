@@ -65,6 +65,29 @@ exports.update = async (req, res)=>{
 			zoom_profesional: datos_zoom.data.start_url
 		};
 
+	}else{
+		let id_profesional = datos.id_profesional;
+		const datos_zoom = await axios({
+							url: conex.host+conex.port+'/turno/addMeeting/289' ,
+							method: 'get'
+						});
+		/*
+		const datos_zoom = await axios({
+							url: conex.host+conex.port+'/turno/addMeeting/' + id_profesional,
+							method: 'get'
+						});				
+		*/
+		console.log('datos_zoom.data.join_url ', datos_zoom.data.join_url);
+		console.log('datos_zoom.data.start_url ', datos_zoom.data.start_url);
+
+		datos = {				
+			id_paciente: datos.id_paciente, 
+			id_tipo_sesion : datos.id_tipo_sesion
+			estado: 0,
+			observacion: datos.observacion,			
+			zoom_paciente: datos_zoom.data.join_url,
+			zoom_profesional: datos_zoom.data.start_url
+		};
 	}
 	
     await pool.query ('UPDATE turno SET ? WHERE id_turno = ?', [datos, id_turno],function(err,sql){
