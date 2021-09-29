@@ -20,6 +20,8 @@ let idUser;
 profesional = await pool.query ('SELECT * FROM persona WHERE id_tipo_persona = 2  and id_persona = ?',[req.params.id_persona] );
 
 if (profesional[0].id_user_zoom == 'NULL'){
+	console.log('ENTRO EN EL IF',profesional[0]);
+
     axios.post('https://api.zoom.us/v2/users',{
        "action": "custCreate",
         "user_info": {
@@ -33,7 +35,7 @@ if (profesional[0].id_user_zoom == 'NULL'){
         headers: header
     })
     .then(function(result) {
-		console.log(result.data);
+		console.log('ENTRO',result.data);
 		
         idUser=result.data.id;
         const profe = {
@@ -77,7 +79,8 @@ if (profesional[0].id_user_zoom == 'NULL'){
         });
 }
 else{
-    idUser = profesional[0].id_user_zoom;
+    console.log('ENTRO EN EL else',idUser);
+	idUser = profesional[0].id_user_zoom;
     axios.post(`https://api.zoom.us/v2/users/${idUser}/meetings`,{
             topic: 'Meeting ',
             type: 2,
