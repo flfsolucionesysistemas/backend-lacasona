@@ -82,7 +82,7 @@ exports.update = async (req, res)=>{
 
 		datos = {				
 			id_paciente: datos.id_paciente, 
-			id_tipo_sesion : datos.id_tipo_sesion
+			id_tipo_sesion : datos.id_tipo_sesion,
 			estado: 0,
 			observacion: datos.observacion,			
 			zoom_paciente: datos_zoom.data.join_url,
