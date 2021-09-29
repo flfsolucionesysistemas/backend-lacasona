@@ -20,7 +20,7 @@ let idUser;
 profesional = await pool.query ('SELECT * FROM persona WHERE id_tipo_persona = 2  and id_persona = ?',[req.params.id_persona] );
 console.log('PROFESSS ',profesional[0]);
 
-if (profesional[0].id_user_zoom == NULL){
+if (profesional[0].id_user_zoom == 'null'){
 	console.log('ENTRO EN EL IF',profesional[0]);
 
     axios.post('https://api.zoom.us/v2/users',{
