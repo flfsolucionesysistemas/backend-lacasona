@@ -33,6 +33,7 @@ if (profesional[0].id_user_zoom == 'NULL'){
         headers: header
     })
     .then(function(result) {
+		console.log(result.data);
         idUser=result.data.id;
         const profe = {
             id_user_zoom: idUser,
