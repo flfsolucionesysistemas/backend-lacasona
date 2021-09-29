@@ -64,12 +64,21 @@ if (profesional[0].id_user_zoom === null){
               headers: header
           })
             .then(function(result) {
-                if(result.status==200 ){
+                if(result.status == 201){
+					data = {
+                        start_url:result.data.start_url,
+                        join_url:result.data.join_url,
+                    }
+					res.status(200).send(data);
+				}
+				/*
+				if(result.status==200 ){
                     data={
                         start_url: result.data.start_url,
                         join_url: result.data.join_url
                     }                    
                 }
+				*/
             })
             .catch(function(err) {
                 console.log(err);
