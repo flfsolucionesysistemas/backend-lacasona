@@ -67,16 +67,17 @@ exports.update = async (req, res)=>{
 
 	}else{
 		let id_profesional = datos.id_profesional;
+		/*
 		const datos_zoom = await axios({
 							url: conex.host+conex.port+'/turno/addMeeting/289' ,
 							method: 'get'
 						});
-		/*
+		*/
 		const datos_zoom = await axios({
 							url: conex.host+conex.port+'/turno/addMeeting/' + id_profesional,
 							method: 'get'
 						});				
-		*/
+		
 		console.log('datos_zoom.data.join_url ', datos_zoom.data.join_url);
 		console.log('datos_zoom.data.start_url ', datos_zoom.data.start_url);
 
