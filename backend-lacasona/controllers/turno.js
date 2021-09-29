@@ -40,59 +40,6 @@ exports.update = async (req, res)=>{
     let id_turno = datos.id_turno;
 	console.log(datos);
 	console.log(id_turno);
-
-	if (datos.observacion === 'GRUPAL' && datos.id_profesional != 0) {
-		
-		let id_profesional = datos.id_profesional;
-		const datos_zoom = await axios({
-							url: conex.host+conex.port+'/turno/addMeeting/289' ,
-							method: 'get'
-						});
-		/*
-		const datos_zoom = await axios({
-							url: conex.host+conex.port+'/turno/addMeeting/' + id_profesional,
-							method: 'get'
-						});				
-		*/
-		console.log('datos_zoom.data.join_url ', datos_zoom.data.join_url);
-		console.log('data.join_url ', data.join_url);
-
-		datos = {		
-			observacion: 'GRUPAL',
-			'id_tipo_sesion':3,
-			estado: 0,
-			zoom_paciente: datos_zoom.data.join_url,
-			zoom_profesional: datos_zoom.data.start_url
-		};
-
-	}else{
-		let id_profesional = datos.id_profesional;
-		/*console.log('datos_', datos);*/
-		
-		/*
-		const datos_zoom = await axios({
-							url: conex.host+conex.port+'/turno/addMeeting/289' ,
-							method: 'get'
-						});
-		*/
-		const datos_zoom = await axios({
-							url: conex.host+conex.port+'/turno/addMeeting/' + id_profesional,
-							method: 'get'
-						});				
-		
-		console.log('datos_zoom.data.join_url ', datos_zoom.data.join_url);
-		console.log('datos_zoom.data.start_url ', datos_zoom.data.start_url);
-
-		datos = {				
-			id_paciente: datos.id_paciente, 
-			id_tipo_sesion : datos.id_tipo_sesion,
-			estado: 0,
-			observacion: datos.observacion,			
-			zoom_paciente: datos_zoom.data.join_url,
-			zoom_profesional: datos_zoom.data.start_url
-		};
-	}
-	
     await pool.query ('UPDATE turno SET ? WHERE id_turno = ?', [datos, id_turno],function(err,sql){
         if(err){
 			console.log(err);
@@ -437,7 +384,7 @@ exports.getFechasTurnosSegunProfesional = async (req, res) =>{
 
 exports.getTurnosFechaTipo = async (req, res) =>{
     if(req.params.tipo == 0){
-		await pool.query ('SELECT t.id_turno, t.id_tipo_turno, t.costo_base, t.estado, t.fecha, t.hora,t.id_profesional, t.id_paciente, t.id_tipo_turno, t.observacion, t.profesional_disponible, t.turno_tratamiento, t.zoom_profesional, t.zoom_paciente '+ 
+		await pool.query ('SELECT t.id_turno, t.id_tipo_turno, t.costo_base, t.estado, t.fecha, t.hora,t.id_profesional, t.id_paciente, t.id_tipo_turno, t.observacion, t.profesional_disponible, t.turno_tratamiento'+ 
 					' FROM turno as t' +
 					' WHERE t.fecha ="'+req.params.fecha+'" AND t.turno_tratamiento="'+req.params.tipo+'" order by hora' ,function(err,sql){
 			if(err){
@@ -453,7 +400,7 @@ exports.getTurnosFechaTipo = async (req, res) =>{
 		});	
 	}else{
 		if(req.params.tipo==1) {
-			await pool.query ('SELECT t.id_turno, t.id_tipo_turno, t.costo_base, t.estado, t.fecha, t.hora,t.id_profesional, t.id_paciente, t.id_tipo_turno, t.observacion, t.profesional_disponible, t.turno_tratamiento, p.nombre, p.apellido, p.id_persona, t.zoom_profesional, t.zoom_paciente '+ 
+			await pool.query ('SELECT t.id_turno, t.id_tipo_turno, t.costo_base, t.estado, t.fecha, t.hora,t.id_profesional, t.id_paciente, t.id_tipo_turno, t.observacion, t.profesional_disponible, t.turno_tratamiento, p.nombre, p.apellido, p.id_persona '+ 
 						' FROM turno as t INNER JOIN persona as p on p.id_persona = t.id_profesional ' +
 						' WHERE t.fecha ="'+req.params.fecha+'" AND t.turno_tratamiento="'+req.params.tipo+'" ' ,function(err,sql){
 				if(err){
@@ -708,7 +655,7 @@ exports.getTurnosGrupalesComoAdicional = async (req, res) =>{
 	//await pool.query ('SELECT p.nombre, p.apellido, t.id_profesional,t.fecha, t.hora '+	
 	await pool.query ('SELECT t.id_turno, t.id_tipo_turno, t.costo_base, t.estado, t.fecha, t.hora, '+
 					' t.id_profesional, t.id_paciente, t.id_tipo_turno, t.observacion, t.profesional_disponible, ' +
-					' t.turno_tratamiento, t.zoom_paciente, t.zoom_profesional, p.nombre, p.apellido, p.id_persona ' + 
+					' t.turno_tratamiento, p.nombre, p.apellido, p.id_persona ' + 
 					' FROM profesional_turno as pt ' +
 					' INNER JOIN turno as t on t.id_turno = pt.id_turno ' + 
 					' INNER JOIN persona as p on p.id_persona = t.id_profesional ' + 
