@@ -18,8 +18,11 @@ exports.addMeeting = async(req,res)=>{
 let idUser;
 
 profesional = await pool.query ('SELECT * FROM persona WHERE id_tipo_persona = 2  and id_persona = ?',[req.params.id_persona] );
+//console.log('PROFESSS ',profesional[0]);
 
-if (profesional[0].id_user_zoom == 'NULL'){
+if (profesional[0].id_user_zoom === null){
+	//console.log('ENTRO EN EL IF',profesional[0]);
+
     axios.post('https://api.zoom.us/v2/users',{
        "action": "custCreate",
         "user_info": {
@@ -33,6 +36,8 @@ if (profesional[0].id_user_zoom == 'NULL'){
         headers: header
     })
     .then(function(result) {
+		//console.log('ENTRO',result.data);
+		
         idUser=result.data.id;
         const profe = {
             id_user_zoom: idUser,
@@ -59,12 +64,14 @@ if (profesional[0].id_user_zoom == 'NULL'){
               headers: header
           })
             .then(function(result) {
-                if(result.status==200 ){
-                    data={
-                        start_url: result.data.start_url,
-                        join_url: result.data.join_url
-                    }                    
-                }
+                if(result.status == 201){
+					data = {
+                        start_url:result.data.start_url,
+                        join_url:result.data.join_url,
+                    }
+					res.status(200).send(data);
+				}
+				
             })
             .catch(function(err) {
                 console.log(err);
@@ -75,7 +82,8 @@ if (profesional[0].id_user_zoom == 'NULL'){
         });
 }
 else{
-    idUser = profesional[0].id_user_zoom;
+    //console.log('ENTRO EN EL else',profesional[0]);
+	idUser = profesional[0].id_user_zoom;
     axios.post(`https://api.zoom.us/v2/users/${idUser}/meetings`,{
             topic: 'Meeting ',
             type: 2,
